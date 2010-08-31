@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Xml.Serialization;
+using MahApps.Twitter.Extensions;
+using Newtonsoft.Json;
+
+namespace MahApps.Twitter.Models
+{
+    public class DirectMessageContainer
+    {
+        [JsonProperty(PropertyName = "direct_message")]
+        public DirectMessage DirectMessage { get; set; }
+    }
+
+    public class DirectMessage : ITwitterResponse
+    {
+        [JsonProperty(PropertyName = "sender_id")]
+        public long? SenderId { get; set;}
+
+        [JsonProperty(PropertyName =  "recipient_id")]
+        public long? RecipientId { get; set;}
+
+        public long? Id { get; set;}
+
+        public String Text { get; set;}
+
+        [JsonProperty(PropertyName = "sender_screen_name")]
+        public String SenderScreenName { get; set; }
+
+        [JsonProperty(PropertyName = "sender")]
+        public User Sender { get; set; }
+
+        [JsonProperty(PropertyName = "recipient_screen_name")]
+        public String RecipientScreenName { get; set; }
+
+        [JsonProperty(PropertyName = "recipient")]
+        public User Recipient { get; set; }
+
+        [JsonProperty(PropertyName = "created_at")]
+        private String CreatedAt { get; set; }
+
+        public DateTime Created { get { return CreatedAt.ParseDateTime(); } }
+    }
+}
