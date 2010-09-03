@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MahApps.Twitter.Extensions;
 using Newtonsoft.Json;
 
 namespace MahApps.Twitter.Models
@@ -84,8 +85,9 @@ namespace MahApps.Twitter.Models
         [JsonProperty(PropertyName = "utc_offset", NullValueHandling = NullValueHandling.Ignore)]
         public long? UTCOffset { get; set; }
 
-        /*
-        [JsonProperty(PropertyName = "created_at")]
-        public DateTime CreatedAt { get; set; }*/
+        [JsonProperty("created_at")]
+        public object CreatedDate { get; set; }
+
+        public DateTime Created { get { return CreatedDate.ToString().ParseDateTime(); } }
     }
 }
