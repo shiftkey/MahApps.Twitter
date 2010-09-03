@@ -35,15 +35,50 @@ namespace MahApps.Twitter.Methods
                 callback(req, res, obj);
             });
         }
-
         public void BeginHomeTimeline(TwitterClient.GenericResponseDelegate callback)
         {
-            Context.BeginRequest(baseAddress + "home_timeline.json", null, WebMethod.Get, (req, res, state) =>
+            BeginHomeTimeline(null, null, null, null, false, false, callback);
+        }
+
+        public void BeginHomeTimeline(Int64 Count, TwitterClient.GenericResponseDelegate callback)
+        {
+            BeginHomeTimeline(null, null, Count, null, false, false, callback);
+        }
+
+        public void BeginHomeTimeline(Int64? SinceId, Int64? MaxId, Int64? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        {
+            Dictionary<String, String> p = new Dictionary<string, string>();
+            if (SinceId != null)
+                p.Add("since_id", SinceId.ToString());
+
+            if (MaxId != null)
+                p.Add("max_id", MaxId.ToString());
+
+            if (Count != null)
+                p.Add("count", Count.ToString());
+
+            if (Page != null)
+                p.Add("page", Page.ToString());
+
+            p.Add("trim_user", TrimUser.ToString());
+            p.Add("include_entities", IncludeEntities.ToString());
+
+            Context.BeginRequest(baseAddress + "home_timeline.json", p, WebMethod.Get, (req, res, state) =>
             {
-                List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
-                callback(req, res, obj);
+                try
+                {
+                    List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
+                    callback(req, res, obj);
+                }
+                catch (Exception ex)
+                {
+
+                }
+                
             });
         }
+
+
 
         public void BeginFriendsTimeline(TwitterClient.GenericResponseDelegate callback)
         {

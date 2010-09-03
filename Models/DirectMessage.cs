@@ -38,9 +38,9 @@ namespace MahApps.Twitter.Models
         [JsonProperty(PropertyName = "recipient")]
         public User Recipient { get; set; }
 
-        [JsonProperty(PropertyName = "created_at")]
-        private String CreatedAt { get; set; }
+        [JsonProperty("created_at")]
+        public object CreatedDate { get; set; }
 
-        public DateTime Created { get { return CreatedAt.ParseDateTime(); } }
+        public DateTime Created { get { return CreatedDate.ToString().ParseDateTime(); } }
     }
 }

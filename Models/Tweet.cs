@@ -43,10 +43,10 @@ namespace MahApps.Twitter.Models
         public Geo Coordinates { get; set; }
 
         public long? Id { get; set; }
-        
-        [JsonProperty(PropertyName =  "created_at")]
-        private String CreatedAt { get; set; }
 
-        public DateTime Created { get{ return CreatedAt.ParseDateTime(); }}
+        [JsonProperty("created_at")]
+        public object CreatedDate { get; set;}
+
+        public DateTime Created { get { return CreatedDate.ToString().ParseDateTime(); } }
     }
 }
