@@ -23,7 +23,9 @@ namespace MahApps.Twitter.Methods
             Context.BeginRequest(baseAddress + "update.json", p, WebMethod.Post, (req, res, state) =>
             {
                 User obj = JsonConvert.DeserializeObject<User>(res.Content);
-                callback(req, res, obj);
+
+                if (callback != null)
+                    callback(req, res, obj);
             });
         }
 
@@ -32,7 +34,9 @@ namespace MahApps.Twitter.Methods
             Context.BeginRequest(baseAddress + "public_timeline.json", null, WebMethod.Get, (req, res, state) =>
             {
                 List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
-                callback(req, res, obj);
+
+                if (callback != null)
+                    callback(req, res, obj);
             });
         }
         public void BeginHomeTimeline(TwitterClient.GenericResponseDelegate callback)
@@ -68,7 +72,9 @@ namespace MahApps.Twitter.Methods
                 try
                 {
                     List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
-                    callback(req, res, obj);
+
+                    if (callback != null)
+                        callback(req, res, obj);
                 }
                 catch (Exception ex)
                 {
