@@ -43,7 +43,6 @@ namespace MahApps.Twitter
                               {
                                   ConsumerKey = ConsumerKey,
                                   ConsumerSecret = ConsumerSecret,
-                                  CallbackUrl = "http://www.mahtweets.com"
                               };
         }
     }
