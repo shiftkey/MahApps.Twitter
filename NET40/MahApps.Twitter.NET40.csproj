@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{24A55C77-8F34-47E6-9283-1F42D4F5CB50}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MahApps.Twitter.NET40</RootNamespace>
+    <AssemblyName>MahApps.Twitter.NET40</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Hammock.ClientProfile">
+      <HintPath>..\Lib\NET4\Hammock.ClientProfile.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.RESTBase">
+      <HintPath>..\Lib\MahApps.RESTBase.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Lib\NET4\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\WP7\Extensions\StringExtensions.cs">
+      <Link>Extensions\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Methods\Account.cs">
+      <Link>Methods\Account.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Methods\DirectMessages.cs">
+      <Link>Methods\DirectMessages.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Methods\Favourites.cs">
+      <Link>Methods\Favourites.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Methods\Friendship.cs">
+      <Link>Methods\Friendship.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Methods\Lists.cs">
+      <Link>Methods\Lists.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Methods\Statuses.cs">
+      <Link>Methods\Statuses.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Methods\Tweets.cs">
+      <Link>Methods\Tweets.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\DirectMessage.cs">
+      <Link>Models\DirectMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\Geo.cs">
+      <Link>Models\Geo.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\ITwitterResponse.cs">
+      <Link>Models\ITwitterResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\Target.cs">
+      <Link>Models\Target.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\Tweet.cs">
+      <Link>Models\Tweet.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\User.cs">
+      <Link>Models\User.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\TwitterClient.cs">
+      <Link>TwitterClient.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

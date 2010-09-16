@@ -42,14 +42,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hammock.WindowsPhone">
-      <HintPath>.\Hammock.WindowsPhone.dll</HintPath>
+      <HintPath>..\Lib\Hammock.WindowsPhone.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.RESTBase">
-      <HintPath>.\MahApps.RESTBase.dll</HintPath>
+      <HintPath>..\Lib\MahApps.RESTBase.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json.Silverlight">
-      <HintPath>.\Newtonsoft.Json.Silverlight.dll</HintPath>
+      <HintPath>..\Lib\Newtonsoft.Json.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
