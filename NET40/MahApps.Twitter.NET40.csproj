@@ -36,7 +36,7 @@
       <HintPath>..\Lib\NET4\Hammock.ClientProfile.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.RESTBase">
-      <HintPath>..\Lib\MahApps.RESTBase.dll</HintPath>
+      <HintPath>..\Lib\NET4\MahApps.RESTBase.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\Lib\NET4\Newtonsoft.Json.dll</HintPath>
