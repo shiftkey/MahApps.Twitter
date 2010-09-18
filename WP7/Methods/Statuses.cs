@@ -14,11 +14,13 @@ namespace MahApps.Twitter.Methods
             : base(Context)
         {
         }
-
-        public void BeginUpdate(String Text, TwitterClient.GenericResponseDelegate callback)
+        public void BeginUpdate(String Text, String ID, TwitterClient.GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
+             Dictionary<String, String> p = new Dictionary<string, string>();
             p.Add("status", Text);
+
+            if (!String.IsNullOrEmpty(ID))
+                p.Add("in_reply_to_status_id", ID);
 
             Context.BeginRequest(baseAddress + "update.json", p, WebMethod.Post, (req, res, state) =>
             {
@@ -27,6 +29,11 @@ namespace MahApps.Twitter.Methods
                 if (callback != null)
                     callback(req, res, obj);
             });
+            
+        }
+        public void BeginUpdate(String Text, TwitterClient.GenericResponseDelegate callback)
+        {
+           BeginUpdate(Text, null, callback);
         }
 
         public void BeginPublicTimeline(TwitterClient.GenericResponseDelegate callback)
