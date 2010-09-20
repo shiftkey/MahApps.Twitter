@@ -24,7 +24,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "update.json", p, WebMethod.Post, (req, res, state) =>
             {
-                User obj = JsonConvert.DeserializeObject<User>(res.Content);
+                Tweet obj = JsonConvert.DeserializeObject<Tweet>(res.Content);
 
                 if (callback != null)
                     callback(req, res, obj);
