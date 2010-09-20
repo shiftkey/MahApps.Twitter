@@ -22,7 +22,7 @@ namespace MahApps.Twitter
         public Account Account { get; set; }
         public Statuses Statuses { get; set; }
         public List Lists { get; set; }
-        public DirectMessage DirectMessages { get; set; }
+        public DirectMessages DirectMessages { get; set; }
         public Favourites Favourites { get; set; }
         public Friendship Friendships { get; set;}
 
@@ -30,6 +30,8 @@ namespace MahApps.Twitter
         {
             Statuses = new Statuses(this);
             Account = new Account(this);
+            DirectMessages = new DirectMessages(this);
+
             OAuthBase = "https://api.twitter.com/oauth/";
             TokenRequestUrl = "request_token";
             TokenAuthUrl = "authorize";
