@@ -20,8 +20,8 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + ".json", null, WebMethod.Get, (req, res, state) =>
             {
-                List<DirectMessage> obj = JsonConvert.DeserializeObject<List<DirectMessage>>(res.Content);
-
+                //List<DirectMessage> obj = JsonConvert.DeserializeObject<List<DirectMessage>>(res.Content);
+                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<DirectMessage>>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -30,8 +30,8 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "/sent.json", null, WebMethod.Get, (req, res, state) =>
             {
-                List<DirectMessage> obj = JsonConvert.DeserializeObject<List<DirectMessage>>(res.Content);
-
+                //List<DirectMessage> obj = JsonConvert.DeserializeObject<List<DirectMessage>>(res.Content);
+                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<DirectMessage>>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });

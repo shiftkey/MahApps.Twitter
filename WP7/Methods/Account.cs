@@ -16,8 +16,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest("account/verify_credentials.json", null, WebMethod.Get, (req, res, state) =>
             {
-                User obj = JsonConvert.DeserializeObject<User>(res.Content);
-
+                ITwitterResponse obj = TwitterClient.Deserialise<User>(res.Content);
                 callback(req, res, obj);
             });
         }
