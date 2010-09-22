@@ -26,6 +26,25 @@ namespace MahApps.Twitter
         public Favourites Favourites { get; set; }
         public Friendship Friendships { get; set;}
 
+        public static ITwitterResponse Deserialise<T>(String Content) where T : ITwitterResponse
+        {
+            try
+            {
+                T obj = JsonConvert.DeserializeObject<T>(Content);
+                return obj;
+            }
+            catch (JsonSerializationException ex)
+            {
+                return new ExceptionResponse()
+                           {
+                               Content = Content,
+                               ErrorMessage = ex.Message
+                           };
+            }
+
+            return null;
+        }
+
         public TwitterClient(String ConsumerKey, String ConsumerSecret, String Callback)
         {
             Statuses = new Statuses(this);
