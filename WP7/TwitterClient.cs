@@ -3,7 +3,7 @@ using System.Collections.Generic;
 #if !SILVERLIGHT
 using System.Timers;
 #endif
-
+using System.Net;
 using Hammock;
 using Hammock.Authentication.OAuth;
 using Hammock.Streaming;
@@ -12,6 +12,7 @@ using MahApps.RESTBase;
 using MahApps.Twitter.Methods;
 using MahApps.Twitter.Models;
 using Newtonsoft.Json;
+using WebHeaderCollection = System.Net.WebHeaderCollection;
 
 namespace MahApps.Twitter
 {
@@ -75,6 +76,38 @@ namespace MahApps.Twitter
 
             if (!String.IsNullOrEmpty(Callback))
                 Credentials.CallbackUrl = Callback;
+        }
+
+        public enum Format
+        {
+            Xml,
+            Json
+        }
+
+        public WebRequest DelegatedRequest(String Url, Format format)
+        {
+            
+            RestRequest request = new RestRequest
+            {
+                Credentials = Credentials,
+                Path = "account/verify_credentials." + ((format == Format.Json) ? "json" : "xml"),
+                Method = WebMethod.Post
+            };
+
+            var url = String.Format("{0}/{1}/{2}", Authority, this.Version, request.Path);
+            var q = this.Credentials.GetQueryFor(url, request, request.Info, WebMethod.Post);
+            var info = (q.Info as OAuthWebQueryInfo);
+           
+
+            var XVerifyCredentialsAuthorization =
+            String.Format("OAuth oauth_consumer_key=\"{0}\",oauth_token=\"{1}\",oauth_signature_method=\"{2}\",oauth_signature=\"{3}\",oauth_timestamp=\"{4}\",oauth_nonce=\"{5}\",oauth_version=\"{6}\"",
+                info.ConsumerKey, info.Token, info.SignatureMethod, info.Signature, info.Timestamp, info.Nonce, info.Version);
+
+            var webReq = (HttpWebRequest) WebRequest.Create(Url);
+            webReq.Headers = new WebHeaderCollection();
+            webReq.Headers["X-Auth-Service-Provider"] = url.ToString();
+            webReq.Headers["X-Verify-Credentials-Authorization"] = XVerifyCredentialsAuthorization;
+            return webReq;
         }
 
 #if !SILVERLIGHT && !WINDOWS_PHONE && !MONO
