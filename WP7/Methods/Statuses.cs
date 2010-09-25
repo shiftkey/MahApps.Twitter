@@ -14,13 +14,19 @@ namespace MahApps.Twitter.Methods
             : base(Context)
         {
         }
-        public void BeginUpdate(String Text, String ID, TwitterClient.GenericResponseDelegate callback)
+        public void BeginUpdate(String Text, String ID, double? Lat, double? Long, TwitterClient.GenericResponseDelegate callback)
         {
-             Dictionary<String, String> p = new Dictionary<string, string>();
+            Dictionary<String, String> p = new Dictionary<string, string>();
             p.Add("status", Text);
 
             if (!String.IsNullOrEmpty(ID))
                 p.Add("in_reply_to_status_id", ID);
+
+            if (Lat != null && Long != null)
+            {
+                p.Add("lat", Lat.ToString());
+                p.Add("long", Long.ToString());
+            }
 
             Context.BeginRequest(baseAddress + "update.json", p, WebMethod.Post, (req, res, state) =>
             {
@@ -31,6 +37,13 @@ namespace MahApps.Twitter.Methods
             });
             
         }
+
+        public void BeginUpdate(String Text, String ID, TwitterClient.GenericResponseDelegate callback)
+        {
+            BeginUpdate(Text, ID, null, null, callback);
+        }
+
+
         public void BeginUpdate(String Text, TwitterClient.GenericResponseDelegate callback)
         {
            BeginUpdate(Text, null, callback);

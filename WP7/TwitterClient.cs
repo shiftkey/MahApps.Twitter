@@ -42,6 +42,14 @@ namespace MahApps.Twitter
                                ErrorMessage = ex.Message
                            };
             }
+            catch (NullReferenceException ex)
+            {
+                return new ExceptionResponse()
+                {
+                    Content = Content,
+                    ErrorMessage = ex.Message
+                };
+            }
 
             return null;
         }
