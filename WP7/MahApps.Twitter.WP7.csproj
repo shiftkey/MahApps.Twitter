@@ -41,8 +41,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hammock.WindowsPhone">
-      <HintPath>..\Lib\Hammock.WindowsPhone.dll</HintPath>
+    <Reference Include="Hammock.WindowsPhone, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>D:\Code\mahtweetsWP7\lib\Hammock.WindowsPhone.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.RESTBase">
       <HintPath>..\Lib\MahApps.RESTBase.dll</HintPath>

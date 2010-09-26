@@ -14,6 +14,18 @@ namespace MahApps.Twitter.Methods
             : base(Context)
         {
         }
+
+        public void BeginRetweet(String ID, TwitterClient.GenericResponseDelegate callback)
+        {
+            Context.BeginRequest(baseAddress + "retweet/" + ID + ".json", null, WebMethod.Post, (req, res, state) =>
+            {
+                //Tweet obj = JsonConvert.DeserializeObject<Tweet>(res.Content);
+                ITwitterResponse obj = TwitterClient.Deserialise<Tweet>(res.Content);
+                if (callback != null)
+                    callback(req, res, obj);
+            });
+        }
+
         public void BeginUpdate(String Text, String ID, double? Lat, double? Long, TwitterClient.GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
@@ -35,7 +47,7 @@ namespace MahApps.Twitter.Methods
                 if (callback != null)
                     callback(req, res, obj);
             });
-            
+
         }
 
         public void BeginUpdate(String Text, String ID, TwitterClient.GenericResponseDelegate callback)
@@ -46,7 +58,7 @@ namespace MahApps.Twitter.Methods
 
         public void BeginUpdate(String Text, TwitterClient.GenericResponseDelegate callback)
         {
-           BeginUpdate(Text, null, callback);
+            BeginUpdate(Text, null, callback);
         }
 
         public void BeginPublicTimeline(TwitterClient.GenericResponseDelegate callback)
@@ -89,19 +101,11 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "home_timeline.json", p, WebMethod.Get, (req, res, state) =>
             {
-               // try
-               // {
-                    ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content); 
-                    //List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
+                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
 
-                    if (callback != null)
-                        callback(req, res, obj);
-              //  }
-              //  catch (Exception ex)
-              //  {
-//
-              //  }
-                
+                if (callback != null)
+                    callback(req, res, obj);
+
             });
         }
 
