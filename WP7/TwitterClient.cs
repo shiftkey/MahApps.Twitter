@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Timers;
 #endif
 using System.Net;
+using System.Text;
 using System.Threading;
 using Hammock;
 using Hammock.Authentication.OAuth;
@@ -101,27 +102,31 @@ namespace MahApps.Twitter
 
         public WebRequest DelegatedRequest(String Url, Format format)
         {
-            var restClient = (RestClient) Client;
+            var restClient = (RestClient)Client;
+            this.Credentials.Version = "1.0";
+            this.Credentials.CallbackUrl = String.Empty;
+
             RestRequest request = new RestRequest
             {
                 Credentials = Credentials,
-                Method = WebMethod.Post,
                 Path = "account/verify_credentials.json",
+                Method = WebMethod.Get
             };
-
+            
             var url = request.BuildEndpoint(restClient);
             var query = restClient.GetQueryFor(request, url);
             var info = (query.Info as OAuthWebQueryInfo);
 
+            var XVerifyCredentialsAuthorization =
+            String.Format("OAuth oauth_consumer_key=\"{0}\",oauth_token=\"{1}\",oauth_signature_method=\"{2}\",oauth_signature=\"{3}\",oauth_timestamp=\"{4}\",oauth_nonce=\"{5}\",oauth_version=\"{6}\"",
+                info.ConsumerKey, info.Token, info.SignatureMethod, info.Signature, info.Timestamp, info.Nonce, info.Version);
 
-            var XAuthServiceProvider = url.ToString();
-            var XVerifyCredentialsAuthorization = String.Format("OAuth oauth_consumer_key=\"{0}\",oauth_token=\"{1}\",oauth_signature_method=\"{2}\",oauth_signature=\"{3}\",oauth_timestamp=\"{4}\",oauth_nonce=\"{5}\",oauth_version=\"{6}\"",info.ConsumerKey, info.Token, info.SignatureMethod, info.Signature, info.Timestamp, info.Nonce, info.Version);
-
-            var webReq = HttpWebRequest.Create(Url);
+            var webReq = (HttpWebRequest)WebRequest.Create(Url);
             webReq.Headers = new WebHeaderCollection();
             webReq.Headers["X-Auth-Service-Provider"] = url.ToString();
             webReq.Headers["X-Verify-Credentials-Authorization"] = XVerifyCredentialsAuthorization;
             return webReq;
+
         }
 
 #if !SILVERLIGHT && !WINDOWS_PHONE && !MONO
