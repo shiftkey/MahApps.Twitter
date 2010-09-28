@@ -100,11 +100,13 @@ namespace MahApps.Twitter
             Json
         }
 
+#if WINDOWS_PHONE
+        //TODO: make this work with .NET 4
         public WebRequest DelegatedRequest(String Url, Format format)
         {
             var restClient = (RestClient)Client;
-            this.Credentials.Version = "1.0";
-            this.Credentials.CallbackUrl = String.Empty;
+            Credentials.Version = "1.0";
+            Credentials.CallbackUrl = String.Empty;
 
             RestRequest request = new RestRequest
             {
@@ -128,6 +130,7 @@ namespace MahApps.Twitter
             return webReq;
 
         }
+#endif
 
 #if !SILVERLIGHT && !WINDOWS_PHONE && !MONO
         #region User Stream bits
