@@ -14,11 +14,20 @@ namespace MahApps.Twitter.Methods
         {
         }
 
+        public void BeginGetFavourites(TwitterClient.GenericResponseDelegate callback)
+        {
+            Context.BeginRequest("favorites.json", null, WebMethod.Get, (req, res, state) =>
+            {
+                ITwitterResponse obj = TwitterClient.Deserialise<Tweet>(res.Content);
+                if (callback != null)
+                    callback(req, res, obj);
+            });
+        }
+
         public void BeginCreate(String ID, TwitterClient.GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "create/" + ID + ".json", null, WebMethod.Post, (req, res, state) =>
             {
-                //Tweet obj = JsonConvert.DeserializeObject<Tweet>(res.Content);
                 ITwitterResponse obj = TwitterClient.Deserialise<Tweet>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
@@ -29,7 +38,6 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "destroy/" + ID + ".json", null, WebMethod.Post, (req, res, state) =>
             {
-                //Tweet obj = JsonConvert.DeserializeObject<Tweet>(res.Content);
                 ITwitterResponse obj = TwitterClient.Deserialise<Tweet>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
