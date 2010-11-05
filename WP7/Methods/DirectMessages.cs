@@ -18,24 +18,68 @@ namespace MahApps.Twitter.Methods
 
         public void BeginDirectMessages(TwitterClient.GenericResponseDelegate callback)
         {
-            Context.BeginRequest(baseAddress + ".json", null, WebMethod.Get, (req, res, state) =>
+            BeginDirectMessages(null, null, null, null, false, false, callback);
+        }
+
+        public void BeginDirectMessages(Int64? SinceId, Int64? MaxId, Int64? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        {
+            Dictionary<String, String> p = new Dictionary<string, string>();
+            if (SinceId != null)
+                p.Add("since_id", SinceId.ToString());
+
+            if (MaxId != null)
+                p.Add("max_id", MaxId.ToString());
+
+            if (Count != null)
+                p.Add("count", Count.ToString());
+
+            if (Page != null)
+                p.Add("page", Page.ToString());
+
+            p.Add("trim_user", TrimUser.ToString());
+            p.Add("include_entities", IncludeEntities.ToString());
+
+            Context.BeginRequest(baseAddress + ".json", p, WebMethod.Get, (req, res, state) =>
             {
-                //List<DirectMessage> obj = JsonConvert.DeserializeObject<List<DirectMessage>>(res.Content);
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<DirectMessage>>(res.Content);
+                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+
                 if (callback != null)
                     callback(req, res, obj);
+
             });
         }
+
         public void BeginSentDirectMessages(TwitterClient.GenericResponseDelegate callback)
         {
-            Context.BeginRequest(baseAddress + "/sent.json", null, WebMethod.Get, (req, res, state) =>
+            BeginSentDirectMessages(null, null, null, null, false, false, callback);
+        }
+
+        public void BeginSentDirectMessages(Int64? SinceId, Int64? MaxId, Int64? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        {
+            Dictionary<String, String> p = new Dictionary<string, string>();
+            if (SinceId != null)
+                p.Add("since_id", SinceId.ToString());
+
+            if (MaxId != null)
+                p.Add("max_id", MaxId.ToString());
+
+            if (Count != null)
+                p.Add("count", Count.ToString());
+
+            if (Page != null)
+                p.Add("page", Page.ToString());
+
+            p.Add("trim_user", TrimUser.ToString());
+            p.Add("include_entities", IncludeEntities.ToString());
+
+            Context.BeginRequest(baseAddress + "/sent.json", p, WebMethod.Get, (req, res, state) =>
             {
-                //List<DirectMessage> obj = JsonConvert.DeserializeObject<List<DirectMessage>>(res.Content);
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<DirectMessage>>(res.Content);
+                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+
                 if (callback != null)
                     callback(req, res, obj);
+
             });
         }
-        
     }
 }

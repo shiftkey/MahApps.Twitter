@@ -95,6 +95,7 @@
     <Compile Include="..\WP7\TwitterClient.cs">
       <Link>TwitterClient.cs</Link>
     </Compile>
+    <Compile Include="Methods\Block.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

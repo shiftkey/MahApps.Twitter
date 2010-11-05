@@ -17,6 +17,7 @@ using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Methods;
 using MahApps.Twitter.Models;
+using MahApps.Twitter.NET40.Methods;
 using Newtonsoft.Json;
 using WebHeaderCollection = System.Net.WebHeaderCollection;
 
@@ -28,10 +29,11 @@ namespace MahApps.Twitter
 
         public Account Account { get; set; }
         public Statuses Statuses { get; set; }
+        public Block Block { get; set; }
        // public List Lists { get; set; }
         public DirectMessages DirectMessages { get; set; }
         public Favourites Favourites { get; set; }
-        //public Friendship Friendships { get; set; }
+        public Friendship Friendships { get; set; }
 
         public static ITwitterResponse Deserialise<T>(String Content) where T : ITwitterResponse
         {
@@ -56,6 +58,14 @@ namespace MahApps.Twitter
                     ErrorMessage = ex.Message
                 };
             }
+            catch (Exception ex)
+            {
+                return new ExceptionResponse()
+                {
+                    Content = Content,
+                    ErrorMessage = ex.Message
+                };
+            }
 
             return null;
         }
@@ -66,7 +76,8 @@ namespace MahApps.Twitter
             Account = new Account(this);
             DirectMessages = new DirectMessages(this);
             Favourites = new Favourites(this);
-
+            Block = new Block(this);
+            Friendships = new Friendship(this);
 
             OAuthBase = "https://api.twitter.com/oauth/";
             TokenRequestUrl = "request_token";
@@ -74,6 +85,8 @@ namespace MahApps.Twitter
             TokenAccessUrl = "access_token";
             Authority = "https://api.twitter.com/";
             Version = "1";
+
+            ServicePointManager.Expect100Continue = false;
 
             Client = new RestClient
                          {
@@ -100,8 +113,6 @@ namespace MahApps.Twitter
             Json
         }
 
-#if WINDOWS_PHONE
-        //TODO: make this work with .NET 4
         public WebRequest DelegatedRequest(String Url, Format format)
         {
             var restClient = (RestClient)Client;
@@ -114,9 +125,10 @@ namespace MahApps.Twitter
                 Path = "account/verify_credentials.json",
                 Method = WebMethod.Get
             };
-            
+
             var url = request.BuildEndpoint(restClient);
-            var query = restClient.GetQueryFor(request, url);
+            var x = new OAuthWebQueryInfo();
+            var query = Credentials.GetQueryFor(url.ToString(), request, x, WebMethod.Post);
             var info = (query.Info as OAuthWebQueryInfo);
 
             var XVerifyCredentialsAuthorization =
@@ -130,7 +142,6 @@ namespace MahApps.Twitter
             return webReq;
 
         }
-#endif
 
 #if !SILVERLIGHT && !WINDOWS_PHONE && !MONO
         #region User Stream bits

@@ -14,6 +14,17 @@ namespace MahApps.Twitter.Methods
             : base(Context)
         {
         }
+        public void BeginGetTweet(String Id, TwitterClient.GenericResponseDelegate callback)
+        {
+            Context.BeginRequest(baseAddress + "show/" +Id + ".json", null, WebMethod.Get, (req, res, state) =>
+            {
+                ITwitterResponse obj = TwitterClient.Deserialise<Tweet>(res.Content);
+
+                if (callback != null)
+                    callback(req, res, obj);
+
+            });
+        }
 
         public void BeginRetweet(String ID, TwitterClient.GenericResponseDelegate callback)
         {
@@ -136,11 +147,34 @@ namespace MahApps.Twitter.Methods
 
         public void BeginMentions(TwitterClient.GenericResponseDelegate callback)
         {
-            Context.BeginRequest(baseAddress + "mentions.json", null, WebMethod.Get, (req, res, state) =>
+            BeginMentions(null, null, null, null, false, false, callback);
+        }
+
+        public void BeginMentions(Int64? SinceId, Int64? MaxId, Int64? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        {
+            Dictionary<String, String> p = new Dictionary<string, string>();
+            if (SinceId != null)
+                p.Add("since_id", SinceId.ToString());
+
+            if (MaxId != null)
+                p.Add("max_id", MaxId.ToString());
+
+            if (Count != null)
+                p.Add("count", Count.ToString());
+
+            if (Page != null)
+                p.Add("page", Page.ToString());
+
+            p.Add("trim_user", TrimUser.ToString());
+            p.Add("include_entities", IncludeEntities.ToString());
+
+            Context.BeginRequest(baseAddress + "mentions.json", p, WebMethod.Get, (req, res, state) =>
             {
-                //List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
                 ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
-                callback(req, res, obj);
+
+                if (callback != null)
+                    callback(req, res, obj);
+
             });
         }
 
