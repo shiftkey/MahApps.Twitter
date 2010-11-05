@@ -137,7 +137,7 @@ namespace MahApps.Twitter.Methods
             Dictionary<String, String> p = new Dictionary<string, string>();
             p.Add("user", Username);
 
-            Context.BeginRequest(baseAddress + "user_timeline_timeline.json", p, WebMethod.Get, (req, res, state) =>
+            Context.BeginRequest(baseAddress + "user_timeline.json", p, WebMethod.Get, (req, res, state) =>
             {
                 //List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
                 ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);

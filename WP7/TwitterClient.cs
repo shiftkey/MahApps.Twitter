@@ -215,7 +215,7 @@ namespace MahApps.Twitter
             try
             {
                 var SaneText = response.Content.Trim();
-                Console.WriteLine(SaneText);
+                //Console.WriteLine(SaneText);
                 ITwitterResponse deserialisedResponse = null;
 
                 if (SaneText.StartsWith("{\"direct_message\""))
