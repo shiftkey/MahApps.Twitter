@@ -59,12 +59,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Methods\Account.cs" />
+    <Compile Include="Methods\Block.cs" />
     <Compile Include="Methods\DirectMessages.cs" />
     <Compile Include="Methods\Favourites.cs" />
     <Compile Include="Methods\Friendship.cs" />
     <Compile Include="Methods\Lists.cs" />
     <Compile Include="Methods\Statuses.cs" />
     <Compile Include="Methods\Tweets.cs" />
+    <Compile Include="Models\List.cs" />
     <Compile Include="TwitterClient.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Models\DirectMessage.cs" />
