@@ -40,6 +40,7 @@ namespace MahApps.Twitter.Methods
         {
             var request = new RestRequest
             {
+                Path =  basePath,
                 Method = Method
             };
 
