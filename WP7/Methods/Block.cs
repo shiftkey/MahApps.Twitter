@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Models;
 
-namespace MahApps.Twitter.NET40.Methods
+namespace MahApps.Twitter.Methods
 {
     public class Block: RestMethodsBase<TwitterClient>
     {

@@ -17,7 +17,6 @@ using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Methods;
 using MahApps.Twitter.Models;
-using MahApps.Twitter.NET40.Methods;
 using Newtonsoft.Json;
 using WebHeaderCollection = System.Net.WebHeaderCollection;
 
@@ -30,6 +29,7 @@ namespace MahApps.Twitter
         public Account Account { get; set; }
         public Statuses Statuses { get; set; }
         public Block Block { get; set; }
+        public Search Search { get; set; }
        // public List Lists { get; set; }
         public DirectMessages DirectMessages { get; set; }
         public Favourites Favourites { get; set; }
@@ -78,6 +78,7 @@ namespace MahApps.Twitter
             Favourites = new Favourites(this);
             Block = new Block(this);
             Friendships = new Friendship(this);
+            Search = new Search(this);
 
             OAuthBase = "https://api.twitter.com/oauth/";
             TokenRequestUrl = "request_token";
@@ -86,7 +87,9 @@ namespace MahApps.Twitter
             Authority = "https://api.twitter.com/";
             Version = "1";
 
+#if !SILVERLIGHT
             ServicePointManager.Expect100Continue = false;
+#endif
 
             Client = new RestClient
                          {
