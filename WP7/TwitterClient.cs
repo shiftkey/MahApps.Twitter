@@ -30,6 +30,7 @@ namespace MahApps.Twitter
         public Statuses Statuses { get; set; }
         public Block Block { get; set; }
         public List Lists { get; set; }
+public Search Search { get; set; }
         public DirectMessages DirectMessages { get; set; }
         public Favourites Favourites { get; set; }
         public Friendship Friendships { get; set; }
@@ -78,6 +79,7 @@ namespace MahApps.Twitter
             Block = new Block(this);
             Friendships = new Friendship(this);
             Lists = new List(this);
+Search = new Search(this);
 
             OAuthBase = "https://api.twitter.com/oauth/";
             TokenRequestUrl = "request_token";
@@ -85,10 +87,11 @@ namespace MahApps.Twitter
             TokenAccessUrl = "access_token";
             Authority = "https://api.twitter.com/";
             Version = "1";
+
 #if !SILVERLIGHT
             ServicePointManager.Expect100Continue = false;
 #endif
-            
+       
             Client = new RestClient
                          {
                              Authority = OAuthBase,

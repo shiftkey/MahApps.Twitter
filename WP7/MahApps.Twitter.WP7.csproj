@@ -64,9 +64,11 @@
     <Compile Include="Methods\Favourites.cs" />
     <Compile Include="Methods\Friendship.cs" />
     <Compile Include="Methods\Lists.cs" />
+    <Compile Include="Methods\Search.cs" />
     <Compile Include="Methods\Statuses.cs" />
     <Compile Include="Methods\Tweets.cs" />
     <Compile Include="Models\List.cs" />
+    <Compile Include="Models\SearchTweets.cs" />
     <Compile Include="TwitterClient.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Models\DirectMessage.cs" />

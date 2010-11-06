@@ -71,6 +71,9 @@
     <Compile Include="..\WP7\Methods\Lists.cs">
       <Link>Methods\Lists.cs</Link>
     </Compile>
+    <Compile Include="..\WP7\Methods\Search.cs">
+      <Link>Methods\Search.cs</Link>
+    </Compile>
     <Compile Include="..\WP7\Methods\Statuses.cs">
       <Link>Methods\Statuses.cs</Link>
     </Compile>
@@ -88,6 +91,9 @@
     </Compile>
     <Compile Include="..\WP7\Models\List.cs">
       <Link>Models\List.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\SearchTweets.cs">
+      <Link>Models\SearchTweets.cs</Link>
     </Compile>
     <Compile Include="..\WP7\Models\Target.cs">
       <Link>Models\Target.cs</Link>
