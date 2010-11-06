@@ -56,6 +56,9 @@
     <Compile Include="..\WP7\Methods\Account.cs">
       <Link>Methods\Account.cs</Link>
     </Compile>
+    <Compile Include="..\WP7\Methods\Block.cs">
+      <Link>Methods\Block.cs</Link>
+    </Compile>
     <Compile Include="..\WP7\Methods\DirectMessages.cs">
       <Link>Methods\DirectMessages.cs</Link>
     </Compile>
@@ -83,6 +86,9 @@
     <Compile Include="..\WP7\Models\ITwitterResponse.cs">
       <Link>Models\ITwitterResponse.cs</Link>
     </Compile>
+    <Compile Include="..\WP7\Models\List.cs">
+      <Link>Models\List.cs</Link>
+    </Compile>
     <Compile Include="..\WP7\Models\Target.cs">
       <Link>Models\Target.cs</Link>
     </Compile>
@@ -95,7 +101,6 @@
     <Compile Include="..\WP7\TwitterClient.cs">
       <Link>TwitterClient.cs</Link>
     </Compile>
-    <Compile Include="Methods\Block.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

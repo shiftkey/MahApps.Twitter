@@ -21,7 +21,7 @@ namespace MahApps.Twitter.Methods
             BeginDirectMessages(null, null, null, null, false, false, callback);
         }
 
-        public void BeginDirectMessages(Int64? SinceId, Int64? MaxId, Int64? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginDirectMessages(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             if (SinceId != null)
@@ -54,7 +54,7 @@ namespace MahApps.Twitter.Methods
             BeginSentDirectMessages(null, null, null, null, false, false, callback);
         }
 
-        public void BeginSentDirectMessages(Int64? SinceId, Int64? MaxId, Int64? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginSentDirectMessages(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             if (SinceId != null)

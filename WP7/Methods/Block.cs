@@ -6,7 +6,7 @@ using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Models;
 
-namespace MahApps.Twitter.NET40.Methods
+namespace MahApps.Twitter.Methods
 {
     public class Block: RestMethodsBase<TwitterClient>
     {

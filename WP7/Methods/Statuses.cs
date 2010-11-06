@@ -87,12 +87,12 @@ namespace MahApps.Twitter.Methods
             BeginHomeTimeline(null, null, null, null, false, false, callback);
         }
 
-        public void BeginHomeTimeline(Int64 Count, TwitterClient.GenericResponseDelegate callback)
+        public void BeginHomeTimeline(long Count, TwitterClient.GenericResponseDelegate callback)
         {
             BeginHomeTimeline(null, null, Count, null, false, false, callback);
         }
 
-        public void BeginHomeTimeline(Int64? SinceId, Int64? MaxId, Int64? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginHomeTimeline(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             if (SinceId != null)
@@ -150,7 +150,7 @@ namespace MahApps.Twitter.Methods
             BeginMentions(null, null, null, null, false, false, callback);
         }
 
-        public void BeginMentions(Int64? SinceId, Int64? MaxId, Int64? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginMentions(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             if (SinceId != null)
