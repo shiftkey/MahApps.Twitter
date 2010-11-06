@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Models;
