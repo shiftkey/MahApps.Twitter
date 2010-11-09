@@ -56,7 +56,7 @@ namespace MahApps.Twitter.Methods
                 p.Add("max_id", MaxId.ToString());
 
             if (Count != null)
-                p.Add("count", Count.ToString());
+                p.Add("per_page", Count.ToString());
 
             if (Page != null)
                 p.Add("page", Page.ToString());

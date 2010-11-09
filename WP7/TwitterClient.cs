@@ -167,7 +167,7 @@ Search = new Search(this);
             {
                 _lastConnectAttempt = DateTime.Now;
                 Callback = callback;
-                Client = new RestClient()
+                var streamClient = new RestClient()
                 {
                     Authority = "https://userstream.twitter.com",
                     VersionPath = "2",
@@ -191,7 +191,7 @@ Search = new Search(this);
                     _timer.Start();
                 }
 
-                StreamingAsyncResult = Client.BeginRequest(req, StreamCallback);
+                StreamingAsyncResult = streamClient.BeginRequest(req, StreamCallback);
             }
             return StreamingAsyncResult;
         }
@@ -234,7 +234,7 @@ Search = new Search(this);
                 }
                 else if (SaneText.Contains("\"retweeted_status\":{"))
                 {
-                    deserialisedResponse = (Retweet)JsonConvert.DeserializeObject<Retweet>(SaneText);
+                    deserialisedResponse = (Tweet)JsonConvert.DeserializeObject<Tweet>(SaneText);
                 }
                 else
                 {
