@@ -8,14 +8,11 @@ using Newtonsoft.Json;
 
 namespace MahApps.Twitter.Models
 {
-    public class Retweet : Tweet
+    public class Tweet : ITwitterResponse
     {
         [JsonProperty(PropertyName = "retweeted_status")]
         public Tweet RetweetedStatus { get; set; }
-    }
 
-    public class Tweet : ITwitterResponse
-    {
         public String Text { get; set; }
 
         [JsonProperty(PropertyName = "in_reply_to_screen_name", NullValueHandling = NullValueHandling.Ignore)]
