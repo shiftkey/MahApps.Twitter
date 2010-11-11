@@ -18,7 +18,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest("favorites.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<Tweet>(res.Content);
+                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
