@@ -120,19 +120,20 @@ Search = new Search(this);
         public WebRequest DelegatedRequest(String Url, Format format)
         {
             var restClient = (RestClient)Client;
+
             Credentials.Version = "1.0";
             Credentials.CallbackUrl = String.Empty;
 
             RestRequest request = new RestRequest
             {
                 Credentials = Credentials,
-                Path = "account/verify_credentials.json",
+                Path = "account/verify_credentials." + ((format == Format.Json) ? "json" : "xml"),
                 Method = WebMethod.Get
             };
 
             var url = request.BuildEndpoint(restClient);
             var x = new OAuthWebQueryInfo();
-            var query = Credentials.GetQueryFor(url.ToString(), request, x, WebMethod.Post);
+            var query = Credentials.GetQueryFor(url.ToString(), request, x, WebMethod.Get);
             var info = (query.Info as OAuthWebQueryInfo);
 
             var XVerifyCredentialsAuthorization =
@@ -230,7 +231,7 @@ Search = new Search(this);
                 }
                 else if (SaneText.StartsWith("{\"target\":"))
                 {
-                    StreamEvent obj = JsonConvert.DeserializeObject<StreamEvent>(SaneText);
+                    deserialisedResponse = (StreamEvent)JsonConvert.DeserializeObject<StreamEvent>(SaneText);
                 }
                 else if (SaneText.Contains("\"retweeted_status\":{"))
                 {

@@ -8,7 +8,7 @@ namespace MahApps.Twitter.Methods
 {
     public class Block: RestMethodsBase<TwitterClient>
     {
-        private String baseAddress = "block/";
+        private String baseAddress = "blocks/";
         public Block(TwitterClient Context)
             : base(Context)
         {
