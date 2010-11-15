@@ -30,7 +30,7 @@ namespace MahApps.Twitter
         public Statuses Statuses { get; set; }
         public Block Block { get; set; }
         public List Lists { get; set; }
-public Search Search { get; set; }
+        public Search Search { get; set; }
         public DirectMessages DirectMessages { get; set; }
         public Favourites Favourites { get; set; }
         public Friendship Friendships { get; set; }
@@ -79,7 +79,7 @@ public Search Search { get; set; }
             Block = new Block(this);
             Friendships = new Friendship(this);
             Lists = new List(this);
-Search = new Search(this);
+            Search = new Search(this);
 
             OAuthBase = "https://api.twitter.com/oauth/";
             TokenRequestUrl = "request_token";
@@ -91,7 +91,7 @@ Search = new Search(this);
 #if !SILVERLIGHT
             ServicePointManager.Expect100Continue = false;
 #endif
-       
+
             Client = new RestClient
                          {
                              Authority = OAuthBase,
@@ -148,10 +148,11 @@ Search = new Search(this);
 
         }
 
-#if !SILVERLIGHT && !WINDOWS_PHONE && !MONO
         #region User Stream bits
+#if !SILVERLIGHT 
         private System.Timers.Timer _timer = null;
         private System.Timers.Timer _reconnectTimer = null;
+#endif
         private DateTime _lastConnectAttempt;
         public bool Reconnect = true;
 
@@ -168,12 +169,15 @@ Search = new Search(this);
             {
                 _lastConnectAttempt = DateTime.Now;
                 Callback = callback;
+                this.Credentials.CallbackUrl = null;
                 var streamClient = new RestClient()
                 {
                     Authority = "https://userstream.twitter.com",
                     VersionPath = "2",
                     Credentials = Credentials,
-
+#if SILVERLIGHT
+                             HasElevatedPermissions = true
+#endif
                 };
 
                 var req = new RestRequest()
@@ -184,7 +188,7 @@ Search = new Search(this);
                         ResultsPerCallback = 1,
                     },
                 };
-
+#if !SILVERLIGHT 
                 if (_timer == null)
                 {
                     _timer = new System.Timers.Timer(20 * 1000);
@@ -193,10 +197,14 @@ Search = new Search(this);
                 }
 
                 StreamingAsyncResult = streamClient.BeginRequest(req, StreamCallback);
+#endif
+#if SILVERLIGHT
+                streamClient.BeginRequest(req, StreamCallback);
+#endif
             }
             return StreamingAsyncResult;
         }
-
+#if !SILVERLIGHT 
         void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (StreamingAsyncResult != null)
@@ -213,7 +221,7 @@ Search = new Search(this);
                     }
                 }
         }
-
+#endif
 
         void StreamCallback(Hammock.RestRequest request, Hammock.RestResponse response, object userState)
         {
@@ -255,6 +263,5 @@ Search = new Search(this);
 
         }
         #endregion
-#endif
     }
 }

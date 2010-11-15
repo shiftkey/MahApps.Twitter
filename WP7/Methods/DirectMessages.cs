@@ -81,5 +81,21 @@ namespace MahApps.Twitter.Methods
 
             });
         }
+
+        public void BeginCreate(String screen_name, String Text, TwitterClient.GenericResponseDelegate callback)
+        {
+            Dictionary<String, String> p = new Dictionary<string, string>();
+            p.Add("screen_name", screen_name);
+            p.Add("text", Text);
+
+            Context.BeginRequest(baseAddress + "/new.json", p, WebMethod.Post, (req, res, state) =>
+            {
+                ITwitterResponse obj = TwitterClient.Deserialise<DirectMessage>(res.Content);
+
+                if (callback != null)
+                    callback(req, res, obj);
+
+            });
+        }
     }
 }

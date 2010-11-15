@@ -16,7 +16,7 @@ namespace MahApps.Twitter.Methods
         }
         public void BeginGetTweet(String Id, TwitterClient.GenericResponseDelegate callback)
         {
-            Context.BeginRequest(baseAddress + "show/" +Id + ".json", null, WebMethod.Get, (req, res, state) =>
+            Context.BeginRequest(baseAddress + "show/" + Id + ".json", null, WebMethod.Get, (req, res, state) =>
             {
                 ITwitterResponse obj = TwitterClient.Deserialise<Tweet>(res.Content);
 
@@ -182,9 +182,9 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "retweeted_by_me.json", null, WebMethod.Get, (req, res, state) =>
             {
-                //List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
                 ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
-                callback(req, res, obj);
+                if (callback != null)
+                    callback(req, res, obj);
             });
         }
 
@@ -192,9 +192,9 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "retweeted_to_me.json", null, WebMethod.Get, (req, res, state) =>
             {
-                //List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
                 ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
-                callback(req, res, obj);
+                if (callback != null)
+                    callback(req, res, obj);
             });
         }
 
@@ -202,9 +202,19 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "retweeted_of_me.json", null, WebMethod.Get, (req, res, state) =>
             {
-                //List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
                 ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
-                callback(req, res, obj);
+                if (callback != null)
+                    callback(req, res, obj);
+            });
+        }
+
+        public void BeginGetFriends(TwitterClient.GenericResponseDelegate callback)
+        {
+            Context.BeginRequest(baseAddress + "friends.json", null, WebMethod.Get, (req, res, state) =>
+            {
+                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<User>>(res.Content);
+                if (callback != null)
+                    callback(req, res, obj);
             });
         }
 
