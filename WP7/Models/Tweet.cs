@@ -45,5 +45,56 @@ namespace MahApps.Twitter.Models
         public object CreatedDate { get; set;}
 
         public DateTime Created { get { return CreatedDate.ToString().ParseDateTime(); } }
+
+        [JsonProperty("entities")]
+        public Entity Entities { get; set; }
+    }
+
+    public class Entity
+    {
+        [JsonProperty("user_mentions")]
+        public List<UserMention> UserMentions { get; set; }
+
+        [JsonProperty("urls")]
+        public List<Url> Urls { get; set; }
+
+        [JsonProperty("hashtags")]
+        public List<Hashtag> Hashtags { get; set; }
+    }
+
+    public class UserMention
+    {
+        public String ID { get; set; }
+
+        [JsonProperty("screen_name")]
+        public String ScreenName { get; set; }
+        public String Name { get; set; }
+
+        [JsonProperty("indices")]
+        public Int32[] Indices { get; set; }
+    }
+
+    public class Url
+    {
+
+        [JsonProperty("indices")]
+        public Int32[] Indices { get; set; }
+
+        [JsonProperty("url")]
+        public String Link { get; set; }
+
+        [JsonProperty("display_url")]
+        public String DisplayUrl { get; set; }
+
+        [JsonProperty("expanded_url")]
+        public String ExpandedUrl { get; set; }
+    }
+
+    public class Hashtag
+    {
+        public String Text { get; set; }
+
+        [JsonProperty("indices")]
+        public Int32[] Indices { get; set; }
     }
 }
