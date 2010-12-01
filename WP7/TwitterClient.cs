@@ -147,7 +147,49 @@ namespace MahApps.Twitter
             return webReq;
 
         }
+        #if !SILVERLIGHT 
+        #region SiteStreams
+        public void BeginSiteStream(String UserID, TweetCallback callback)
+        {
+            
+            Callback = callback;
+            this.Credentials.CallbackUrl = null;
+            var streamClient = new RestClient()
+            {
+                Authority = "http://betastream.twitter.com/",
+                VersionPath = "2b",
+                Credentials = Credentials,
+            };
 
+            var req = new RestRequest()
+            {
+                Path = "site.json?follow=" + UserID,
+                StreamOptions = new StreamOptions()
+                {
+                    ResultsPerCallback = 1,
+                },
+            };
+            streamClient.BeginRequest(req, SiteStreamCallback);
+        }
+        void SiteStreamCallback(Hammock.RestRequest request, Hammock.RestResponse response, object userState)
+        {
+            try
+            {
+                var SaneText = response.Content.Trim();
+                //Console.WriteLine(SaneText);
+                ITwitterResponse deserialisedResponse = null;
+
+                deserialisedResponse = JsonConvert.DeserializeObject<SiteStreamsWrapper>(SaneText); 
+                Callback(request, response, deserialisedResponse);
+            }
+            catch
+            {
+                
+            }
+        }
+
+        #endregion
+#endif
         #region User Stream bits
 #if !SILVERLIGHT 
         private System.Timers.Timer _timer = null;

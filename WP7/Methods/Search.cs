@@ -28,7 +28,7 @@ namespace MahApps.Twitter.Methods
             BeginRequest(p, WebMethod.Get, (req, res, state) =>
                                                   {
                                                       ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper>(res.Content);
-                                                      
+
                                                       if (callback != null)
                                                           callback(req, res, ((ResultsWrapper)obj).Results);
                                                   });
@@ -40,7 +40,7 @@ namespace MahApps.Twitter.Methods
         {
             var request = new RestRequest
             {
-                Path =  basePath,
+                Path = basePath,
                 Method = Method
             };
 
@@ -56,6 +56,17 @@ namespace MahApps.Twitter.Methods
                              };
 
             Client.BeginRequest(request, callback);
+        }
+
+        public void BeginGetSavedSearches(TwitterClient.GenericResponseDelegate callback)
+        {
+            Context.BeginRequest("/saved_searches.json", null, WebMethod.Get, (req, res, state) =>
+                                                                                  {
+                                                                                      ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<SavedSearch>>(res.Content);
+
+                                                                                      if (callback != null)
+                                                                                          callback(req, res, obj);
+                                                                                  });
         }
     }
 }
