@@ -26,4 +26,11 @@ namespace MahApps.Twitter.Models
 
         public DateTime Created { get { return CreatedDate.ToString().ParseDateTime(); } }
     }
+
+    public class SavedSearch : ITwitterResponse
+    {
+        public String Id { get; set; }
+        public String Name { get; set; }
+        public String Query { get; set; }
+    }
 }

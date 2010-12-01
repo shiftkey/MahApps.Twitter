@@ -8,6 +8,22 @@ using Newtonsoft.Json;
 
 namespace MahApps.Twitter.Models
 {
+    public class SiteStreamsWrapper : ITwitterResponse
+    {
+        [JsonProperty(PropertyName = "for_user")]
+        public string ForUser { get; set; }
+
+        [JsonProperty(PropertyName = "message")]
+        public SiteStreamsMessage Message { get; set; }
+    }
+
+    public class SiteStreamsMessage : Tweet
+    {
+        [JsonProperty(PropertyName = "direct_message")]
+        public DirectMessage DirectMessage { get; set; }
+
+    }
+
     public class Tweet : ITwitterResponse
     {
         [JsonProperty(PropertyName = "retweeted_status")]
