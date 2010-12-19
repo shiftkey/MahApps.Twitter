@@ -1,0 +1,49 @@
+# Ignore file for Visual Studio 2008
+
+# use glob syntax
+syntax: glob
+
+# Ignore Visual Studio 2008 files
+*.obj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+*.lib
+*.sbr
+*.scc
+[Bb]in
+[Db]ebug*/
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+[Bb]uild[Ll]og.*
+*.[Pp]ublish.xml
+
+# Custom
+*/AssemblyInfo.cs
+^Plugins\*.dll
+*.orig
+glob:MahTweets/Plugins/
+glob:BuildOutput/*
+glob:MahTweets/Service References/Services.Reporter/Reference.cs
+glob:MahTweets/Service References/Services.Reporter/Reference.svcmap
+glob:MahTweets/Service References/Services.Reporter/Reporter.wsdl
+glob:MahTweets/Service References/Services.Reporter/Reporter.xsd
+glob:MahTweets/Service References/Services.Reporter/Reporter1.wsdl
+glob:MahTweets/Service References/Services.Reporter/Reporter1.xsd
+glob:MahTweets/Service References/Services.Reporter/configuration.svcinfo
+glob:MahTweets/Service References/Services.Reporter/configuration91.svcinfo
