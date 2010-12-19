@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Hammock.Web;
 using MahApps.RESTBase;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -13,7 +14,7 @@ namespace MahApps.Twitter.Methods
         {
         }
 
-        public void BeginBlock(string username, TwitterClient.GenericResponseDelegate callback)
+        public void BeginBlock(string username, GenericResponseDelegate callback)
         {
             var p = new Dictionary<string, string> { { "screen_name", username } };
 
@@ -25,7 +26,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginSpamBlock(string username, TwitterClient.GenericResponseDelegate callback)
+        public void BeginSpamBlock(string username, GenericResponseDelegate callback)
         {
             var p = new Dictionary<string, string> { { "screen_name", username } };
 

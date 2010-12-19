@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Hammock.Web;
 using MahApps.RESTBase;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -13,9 +14,9 @@ namespace MahApps.Twitter.Methods
         {
         }
 
-        public void BeginGetSubscriptions(string Username, TwitterClient.GenericResponseDelegate callback)
+        public void BeginGetSubscriptions(string username, GenericResponseDelegate callback)
         {
-            Context.BeginRequest(Username + "/lists/subscriptions.json", null, WebMethod.Get, (req, res, state) =>
+            Context.BeginRequest(username + "/lists/subscriptions.json", null, WebMethod.Get, (req, res, state) =>
             {
                 ITwitterResponse obj = TwitterClient.Deserialise<ListResult>(res.Content);
 
@@ -30,9 +31,9 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginGetUserLists(string Username, TwitterClient.GenericResponseDelegate callback)
+        public void BeginGetUserLists(string username, GenericResponseDelegate callback)
         {
-            Context.BeginRequest(Username + "/lists.json", null, WebMethod.Get, (req, res, state) =>
+            Context.BeginRequest(username + "/lists.json", null, WebMethod.Get, (req, res, state) =>
             {
                 ITwitterResponse obj = TwitterClient.Deserialise<ListResult>(res.Content);
 
@@ -46,24 +47,24 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginGetList(string Username, string Id, long? SinceId, long? MaxId, long? Count, int? Page, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginGetList(string username, string id, long? sinceId, long? maxId, long? count, int? page, bool includeEntities, GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            if (SinceId != null && (long)SinceId > 0)
-                p.Add("since_id", SinceId.ToString());
+            var p = new Dictionary<string, string>();
+            if (sinceId != null && (long)sinceId > 0)
+                p.Add("since_id", sinceId.ToString());
 
-            if (MaxId != null)
-                p.Add("max_id", MaxId.ToString());
+            if (maxId != null)
+                p.Add("max_id", maxId.ToString());
 
-            if (Count != null)
-                p.Add("per_page", Count.ToString());
+            if (count != null)
+                p.Add("per_page", count.ToString());
 
-            if (Page != null)
-                p.Add("page", Page.ToString());
+            if (page != null)
+                p.Add("page", page.ToString());
 
-            p.Add("include_entities", IncludeEntities.ToString());
+            p.Add("include_entities", includeEntities.ToString());
 
-            Context.BeginRequest(Username + "/lists/"+Id+"/statuses.json", p, WebMethod.Get, (req, res, state) =>
+            Context.BeginRequest(username + "/lists/"+id+"/statuses.json", p, WebMethod.Get, (req, res, state) =>
             {
                 ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
 

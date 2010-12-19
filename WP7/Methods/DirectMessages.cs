@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Hammock.Web;
 using MahApps.RESTBase;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -14,12 +15,12 @@ namespace MahApps.Twitter.Methods
         {
         }
 
-        public void BeginDirectMessages(TwitterClient.GenericResponseDelegate callback)
+        public void BeginDirectMessages(GenericResponseDelegate callback)
         {
             BeginDirectMessages(null, null, null, null, false, false, callback);
         }
 
-        public void BeginDirectMessages(long? sinceId, long? maxId, long? count, int? page, bool trimUser, bool includeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginDirectMessages(long? sinceId, long? maxId, long? count, int? page, bool trimUser, bool includeEntities, GenericResponseDelegate callback)
         {
             var p = new Dictionary<string, string>();
             if (sinceId != null)
@@ -46,12 +47,12 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginSentDirectMessages(TwitterClient.GenericResponseDelegate callback)
+        public void BeginSentDirectMessages(GenericResponseDelegate callback)
         {
             BeginSentDirectMessages(null, null, null, null, false, false, callback);
         }
 
-        public void BeginSentDirectMessages(long? sinceId, long? maxId, long? count, int? page, bool trimUser, bool includeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginSentDirectMessages(long? sinceId, long? maxId, long? count, int? page, bool trimUser, bool includeEntities, GenericResponseDelegate callback)
         {
             var p = new Dictionary<string, string>();
             if (sinceId != null)
@@ -78,7 +79,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginCreate(string screenName, string text, TwitterClient.GenericResponseDelegate callback)
+        public void BeginCreate(string screenName, string text, GenericResponseDelegate callback)
         {
             var p = new Dictionary<string, string> { { "screen_name", screenName }, { "text", text } };
 

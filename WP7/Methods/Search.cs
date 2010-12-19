@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Hammock;
 using Hammock.Web;
 using MahApps.RESTBase;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -13,56 +13,57 @@ namespace MahApps.Twitter.Methods
     }
     public class Search : RestMethodsBase<TwitterClient>
     {
-        private String baseAddress = "http://search.twitter.com";
-        private String basePath = "search.json";
-        public Search(TwitterClient Context)
-            : base(Context)
+        private const string BaseAddress = "http://search.twitter.com";
+        private const string BasePath = "search.json";
+
+        public Search(TwitterClient context)
+            : base(context)
         {
         }
 
-        public void BeginSearch(String q, TwitterClient.GenericResponseDelegate callback)
+        public void BeginSearch(string q, GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("q", q);
+            var p = new Dictionary<string, string> { { "q", q } };
 
             BeginRequest(p, WebMethod.Get, (req, res, state) =>
                                                   {
-                                                      ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper>(res.Content);
+                                                      var obj = TwitterClient.Deserialise<ResultsWrapper>(res.Content);
 
                                                       if (callback != null)
                                                           callback(req, res, ((ResultsWrapper)obj).Results);
                                                   });
         }
 
-
-        internal void BeginRequest(Dictionary<String, String> Parameters, WebMethod Method,
-                                RestCallback callback)
+        internal void BeginRequest(
+            IDictionary<string, string> parameters,
+            WebMethod method,
+            RestCallback callback)
         {
             var request = new RestRequest
             {
-                Path = basePath,
-                Method = Method
+                Path = BasePath,
+                Method = method
             };
 
-            if (Parameters != null)
-                foreach (var p in Parameters)
+            if (parameters != null)
+                foreach (var p in parameters)
                 {
                     request.AddParameter(p.Key, p.Value);
                 }
 
-            var Client = new RestClient()
-                             {
-                                 Authority = baseAddress
-                             };
+            var client = new RestClient
+            {
+                Authority = BaseAddress
+            };
 
-            Client.BeginRequest(request, callback);
+            client.BeginRequest(request, callback);
         }
 
-        public void BeginGetSavedSearches(TwitterClient.GenericResponseDelegate callback)
+        public void BeginGetSavedSearches(GenericResponseDelegate callback)
         {
             Context.BeginRequest("/saved_searches.json", null, WebMethod.Get, (req, res, state) =>
                                                                                   {
-                                                                                      ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<SavedSearch>>(res.Content);
+                                                                                      var obj = TwitterClient.Deserialise<ResultsWrapper<SavedSearch>>(res.Content);
 
                                                                                       if (callback != null)
                                                                                           callback(req, res, obj);

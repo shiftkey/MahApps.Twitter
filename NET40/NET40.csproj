@@ -53,6 +53,9 @@
     <Compile Include="..\WP7\Delegates\Delegates.cs">
       <Link>Delegates\Delegates.cs</Link>
     </Compile>
+    <Compile Include="..\WP7\Extensions\ResponseExtensions.cs">
+      <Link>Extensions\ResponseExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\WP7\Extensions\StringExtensions.cs">
       <Link>Extensions\StringExtensions.cs</Link>
     </Compile>
@@ -112,6 +115,9 @@
     </Compile>
     <Compile Include="..\WP7\Models\ResultsWrapper.cs">
       <Link>Models\ResultsWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\SavedSearch.cs">
+      <Link>Models\SavedSearch.cs</Link>
     </Compile>
     <Compile Include="..\WP7\Models\SearchTweets.cs">
       <Link>Models\SearchTweets.cs</Link>

@@ -1,5 +1,6 @@
 ﻿using Hammock.Web;
 using MahApps.RESTBase;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -11,7 +12,7 @@ namespace MahApps.Twitter.Methods
         {
         }
 
-        public void BeginVerifyCredentials(TwitterClient.GenericResponseDelegate callback)
+        public void BeginVerifyCredentials(GenericResponseDelegate callback)
         {
             Context.BeginRequest("account/verify_credentials.json", null, WebMethod.Get, (req, res, state) =>
             {

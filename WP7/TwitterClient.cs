@@ -19,8 +19,6 @@ namespace MahApps.Twitter
 {
     public class TwitterClient : RestClientBase
     {
-        public delegate void GenericResponseDelegate(RestRequest request, RestResponse response, object data);
-
         public Account Account { get; set; }
         public Statuses Statuses { get; set; }
         public Block Block { get; set; }
@@ -190,9 +188,6 @@ namespace MahApps.Twitter
 #endif
         private DateTime _lastConnectAttempt;
         public bool Reconnect = true;
-
-        //public delegate void VoidDelegate();
-        //public delegate void TweetCallback(RestRequest request, RestResponse response, ITwitterResponse deserialisedResponse);
 
         public event VoidDelegate StreamingReconnectAttemptEvent;
 
