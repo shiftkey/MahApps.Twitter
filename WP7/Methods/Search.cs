@@ -7,12 +7,12 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Search : RestMethodsBase<TwitterClient>
+    public class Search : RestMethodsBase<ITwitterClient>
     {
         private const string BaseAddress = "http://search.twitter.com";
         private const string BasePath = "search.json";
 
-        public Search(TwitterClient context)
+        public Search(ITwitterClient context)
             : base(context)
         {
         }

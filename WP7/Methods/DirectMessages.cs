@@ -6,11 +6,11 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class DirectMessages : RestMethodsBase<TwitterClient>
+    public class DirectMessages : RestMethodsBase<ITwitterClient>
     {
         private const string BaseAddress = "direct_messages";
 
-        public DirectMessages(TwitterClient context)
+        public DirectMessages(ITwitterClient context)
             : base(context)
         {
         }

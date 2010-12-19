@@ -9,11 +9,11 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Statuses : RestMethodsBase<TwitterClient>
+    public class Statuses : RestMethodsBase<ITwitterClient>
     {
         private const string BaseAddress = "statuses/";
 
-        public Statuses(TwitterClient context)
+        public Statuses(ITwitterClient context)
             : base(context)
         {
         }
@@ -56,9 +56,9 @@ namespace MahApps.Twitter.Methods
                 (req, res, state) => res.ParseResult<ResultsWrapper<Tweet>>(callback, req));
         }
 
-        public void BeginUpdate(string text, String ID, GenericResponseDelegate callback)
+        public void BeginUpdate(string text, string id, GenericResponseDelegate callback)
         {
-            BeginUpdate(text, ID, null, null, callback);
+            BeginUpdate(text, id, null, null, callback);
         }
 
         public void BeginUpdate(string text, GenericResponseDelegate callback)

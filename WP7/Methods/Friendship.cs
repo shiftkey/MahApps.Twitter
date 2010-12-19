@@ -7,11 +7,11 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Friendship : RestMethodsBase<TwitterClient>
+    public class Friendship : RestMethodsBase<ITwitterClient>
     {
         private String baseAddress = "friendship/";
-        public Friendship(TwitterClient Context)
-            : base(Context)
+        public Friendship(ITwitterClient context)
+            : base(context)
         {
         }
 
@@ -26,10 +26,10 @@ namespace MahApps.Twitter.Methods
                     callback(req, res, obj);
             });
         }
-        public void BeginDestroy(String Username, GenericResponseDelegate callback)
+        public void BeginDestroy(string username, GenericResponseDelegate callback)
         {
             var p = new Dictionary<string, string>();
-            p.Add("screen_name", Username);
+            p.Add("screen_name", username);
 
             Context.BeginRequest(baseAddress + "destroy.json", p, WebMethod.Post, (req, res, state) =>
             {
