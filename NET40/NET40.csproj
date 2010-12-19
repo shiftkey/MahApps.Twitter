@@ -59,6 +59,9 @@
     <Compile Include="..\WP7\Extensions\StringExtensions.cs">
       <Link>Extensions\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\WP7\ITwitterClient.cs">
+      <Link>ITwitterClient.cs</Link>
+    </Compile>
     <Compile Include="..\WP7\Methods\Account.cs">
       <Link>Methods\Account.cs</Link>
     </Compile>
@@ -115,6 +118,9 @@
     </Compile>
     <Compile Include="..\WP7\Models\ResultsWrapper.cs">
       <Link>Models\ResultsWrapper.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\ResultsWrapper`T.cs">
+      <Link>Models\ResultsWrapper`T.cs</Link>
     </Compile>
     <Compile Include="..\WP7\Models\SavedSearch.cs">
       <Link>Models\SavedSearch.cs</Link>

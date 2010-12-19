@@ -4,6 +4,6 @@
 
     public class ListResult : ITwitterResponse
     {
-        public List<TwitterList> Lists { get; set; }
+        public IList<TwitterList> Lists { get; set; }
     }
 }

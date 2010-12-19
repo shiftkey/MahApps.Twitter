@@ -17,7 +17,7 @@ using System.Timers;
 
 namespace MahApps.Twitter
 {
-    public class TwitterClient : RestClientBase
+    public class TwitterClient : RestClientBase, ITwitterClient
     {
         public Account Account { get; set; }
         public Statuses Statuses { get; set; }
@@ -39,9 +39,9 @@ namespace MahApps.Twitter
             {
                 return new ExceptionResponse
                 {
-                               Content = content,
-                               ErrorMessage = ex.Message
-                           };
+                    Content = content,
+                    ErrorMessage = ex.Message
+                };
             }
             catch (NullReferenceException ex)
             {
@@ -91,14 +91,13 @@ namespace MahApps.Twitter
 #endif
                          };
 
-
             Credentials = new OAuthCredentials
                               {
                                   ConsumerKey = consumerKey,
                                   ConsumerSecret = consumerSecret,
                               };
 
-            if (!String.IsNullOrEmpty(callback))
+            if (!string.IsNullOrEmpty(callback))
                 Credentials.CallbackUrl = callback;
         }
 
@@ -115,7 +114,7 @@ namespace MahApps.Twitter
             Credentials.Version = "1.0";
             Credentials.CallbackUrl = String.Empty;
 
-            RestRequest request = new RestRequest
+            var request = new RestRequest
             {
                 Credentials = Credentials,
                 Path = "account/verify_credentials." + ((format == Format.Json) ? "json" : "xml"),
@@ -125,64 +124,73 @@ namespace MahApps.Twitter
             var endpoint = request.BuildEndpoint(restClient);
             var x = new OAuthWebQueryInfo();
             var query = Credentials.GetQueryFor(endpoint.ToString(), request, x, WebMethod.Get);
-            var info = (query.Info as OAuthWebQueryInfo);
-
-            var XVerifyCredentialsAuthorization =
-            String.Format("OAuth oauth_consumer_key=\"{0}\",oauth_token=\"{1}\",oauth_signature_method=\"{2}\",oauth_signature=\"{3}\",oauth_timestamp=\"{4}\",oauth_nonce=\"{5}\",oauth_version=\"{6}\"",
-                info.ConsumerKey, info.Token, info.SignatureMethod, info.Signature, info.Timestamp, info.Nonce, info.Version);
+            var info = query.Info as OAuthWebQueryInfo;
 
             var webReq = (HttpWebRequest)WebRequest.Create(url);
             webReq.Headers = new WebHeaderCollection();
             webReq.Headers["X-Auth-Service-Provider"] = endpoint.ToString();
-            webReq.Headers["X-Verify-Credentials-Authorization"] = XVerifyCredentialsAuthorization;
+
+            if (info != null)
+            {
+                var xVerifyCredentialsAuthorization =
+                    string.Format("OAuth oauth_consumer_key=\"{0}\",oauth_token=\"{1}\",oauth_signature_method=\"{2}\",oauth_signature=\"{3}\",oauth_timestamp=\"{4}\",oauth_nonce=\"{5}\",oauth_version=\"{6}\"",
+                    info.ConsumerKey,
+                    info.Token,
+                    info.SignatureMethod,
+                    info.Signature,
+                    info.Timestamp,
+                    info.Nonce,
+                    info.Version);
+
+                webReq.Headers["X-Verify-Credentials-Authorization"] = xVerifyCredentialsAuthorization;
+            }
+
             return webReq;
 
         }
-        #if !SILVERLIGHT 
+#if !SILVERLIGHT
         #region SiteStreams
-        public void BeginSiteStream(String UserID, TweetCallback callback)
+        public void BeginSiteStream(string userId, TweetCallback callback)
         {
-            
+
             Callback = callback;
-            this.Credentials.CallbackUrl = null;
-            var streamClient = new RestClient()
+            Credentials.CallbackUrl = null;
+            var streamClient = new RestClient
             {
                 Authority = "http://betastream.twitter.com/",
                 VersionPath = "2b",
                 Credentials = Credentials,
             };
 
-            var req = new RestRequest()
+            var req = new RestRequest
             {
-                Path = "site.json?follow=" + UserID,
-                StreamOptions = new StreamOptions()
+                Path = "site.json?follow=" + userId,
+                StreamOptions = new StreamOptions
                 {
                     ResultsPerCallback = 1,
                 },
             };
             streamClient.BeginRequest(req, SiteStreamCallback);
         }
-        void SiteStreamCallback(Hammock.RestRequest request, Hammock.RestResponse response, object userState)
+
+        void SiteStreamCallback(RestRequest request, RestResponse response, object userState)
         {
             try
             {
-                var SaneText = response.Content.Trim();
-                //Console.WriteLine(SaneText);
-                ITwitterResponse deserialisedResponse = null;
-
-                deserialisedResponse = JsonConvert.DeserializeObject<SiteStreamsWrapper>(SaneText); 
+                var saneText = response.Content.Trim();
+                var deserialisedResponse = JsonConvert.DeserializeObject<SiteStreamsWrapper>(saneText);
                 Callback(request, response, deserialisedResponse);
             }
-            catch
+            catch (Exception ex)
             {
-                
+                Console.WriteLine("Site Stream callback failed, message: " + ex.Message);
             }
         }
 
         #endregion
 #endif
         #region User Stream bits
-#if !SILVERLIGHT 
+#if !SILVERLIGHT
         private System.Timers.Timer _timer = null;
         private System.Timers.Timer _reconnectTimer = null;
 #endif
@@ -200,29 +208,30 @@ namespace MahApps.Twitter
                 _lastConnectAttempt = DateTime.Now;
                 Callback = callback;
                 Credentials.CallbackUrl = null;
-                var streamClient = new RestClient()
+                var streamClient = new RestClient
                 {
                     Authority = "https://userstream.twitter.com",
                     VersionPath = "2",
                     Credentials = Credentials,
 #if SILVERLIGHT
-                             HasElevatedPermissions = true
+                    HasElevatedPermissions = true
 #endif
                 };
 
-                var req = new RestRequest()
+                var req = new RestRequest
                 {
                     Path = "user.json",
-                    StreamOptions = new StreamOptions()
+                    StreamOptions = new StreamOptions
                     {
                         ResultsPerCallback = 1,
                     },
                 };
-#if !SILVERLIGHT 
+
+#if !SILVERLIGHT
                 if (_timer == null)
                 {
-                    _timer = new System.Timers.Timer(20 * 1000);
-                    _timer.Elapsed += new ElapsedEventHandler(Timer_Elapsed);
+                    _timer = new Timer(20000);
+                    _timer.Elapsed += TimeElapsed;
                     _timer.Start();
                 }
 
@@ -232,11 +241,12 @@ namespace MahApps.Twitter
             }
             return StreamingAsyncResult;
         }
-#if !SILVERLIGHT 
-        void Timer_Elapsed(object sender, ElapsedEventArgs e)
+
+#if !SILVERLIGHT
+        private void TimeElapsed(object sender, ElapsedEventArgs e)
         {
             if (StreamingAsyncResult != null)
-                if (StreamingAsyncResult.IsCompleted == true && Reconnect == true)
+                if (StreamingAsyncResult.IsCompleted && Reconnect)
                 {
                     Console.WriteLine("stream disconnected, attempting reconnect");
 
@@ -251,12 +261,12 @@ namespace MahApps.Twitter
         }
 #endif
 
-        void StreamCallback(RestRequest request, RestResponse response, object userState)
+        private void StreamCallback(RestRequest request, RestResponse response, object userState)
         {
             try
             {
                 var saneText = response.Content.Trim();
-                
+
                 ITwitterResponse deserialisedResponse = null;
 
                 if (saneText.StartsWith("{\"direct_message\""))
@@ -276,7 +286,6 @@ namespace MahApps.Twitter
                 else
                 {
                     deserialisedResponse = JsonConvert.DeserializeObject<Tweet>(saneText);
-
                 }
 
                 if (deserialisedResponse != null)

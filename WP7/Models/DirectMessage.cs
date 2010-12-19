@@ -14,16 +14,16 @@ namespace MahApps.Twitter.Models
 
         public long? Id { get; set;}
 
-        public String Text { get; set;}
+        public string Text { get; set;}
 
         [JsonProperty(PropertyName = "sender_screen_name")]
-        public String SenderScreenName { get; set; }
+        public string SenderScreenName { get; set; }
 
         [JsonProperty(PropertyName = "sender")]
         public User Sender { get; set; }
 
         [JsonProperty(PropertyName = "recipient_screen_name")]
-        public String RecipientScreenName { get; set; }
+        public string RecipientScreenName { get; set; }
 
         [JsonProperty(PropertyName = "recipient")]
         public User Recipient { get; set; }

@@ -13,14 +13,14 @@ namespace MahApps.Twitter.Models
         public string Uri { get; set; }
 
         [JsonProperty(PropertyName = "member_count")]
-        public Int32 MemberCounter { get; set; }
+        public int MemberCounter { get; set; }
 
-        public String Slug { get; set; }
+        public string Slug { get; set; }
 
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         [JsonProperty(PropertyName = "full_name")]
-        public String FullName { get; set; }
+        public string FullName { get; set; }
 
         [JsonProperty(PropertyName = "user")]
         public User Owner { get; set; }

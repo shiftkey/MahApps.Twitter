@@ -5,9 +5,9 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Account : RestMethodsBase<TwitterClient>
+    public class Account : RestMethodsBase<ITwitterClient>
     {
-        public Account(TwitterClient context)
+        public Account(ITwitterClient context)
             : base(context)
         {
         }

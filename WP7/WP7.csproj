@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Delegates\Delegates.cs" />
     <Compile Include="Extensions\ResponseExtensions.cs" />
+    <Compile Include="ITwitterClient.cs" />
     <Compile Include="Methods\Account.cs" />
     <Compile Include="Methods\Block.cs" />
     <Compile Include="Methods\DirectMessages.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Models\List.cs" />
     <Compile Include="Models\ListResult.cs" />
     <Compile Include="Models\ResultsWrapper.cs" />
+    <Compile Include="Models\ResultsWrapper`T.cs" />
     <Compile Include="Models\SavedSearch.cs" />
     <Compile Include="Models\SearchTweets.cs" />
     <Compile Include="Models\SiteStreamsMessage.cs" />
