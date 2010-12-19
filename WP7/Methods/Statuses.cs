@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+
+using Hammock;
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Models;
@@ -10,11 +12,11 @@ namespace MahApps.Twitter.Methods
     public class Statuses : RestMethodsBase<TwitterClient>
     {
         private String baseAddress = "statuses/";
-        public Statuses(TwitterClient Context)
-            : base(Context)
+        public Statuses(TwitterClient context)
+            : base(context)
         {
         }
-        public void BeginGetTweet(String Id, TwitterClient.GenericResponseDelegate callback)
+        public void BeginGetTweet(string Id, TwitterClient.GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "show/" + Id + ".json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -26,9 +28,9 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginRetweet(String ID, TwitterClient.GenericResponseDelegate callback)
+        public void BeginRetweet(string id, TwitterClient.GenericResponseDelegate callback)
         {
-            Context.BeginRequest(baseAddress + "retweet/" + ID + ".json", null, WebMethod.Post, (req, res, state) =>
+            Context.BeginRequest(baseAddress + "retweet/" + id + ".json", null, WebMethod.Post, (req, res, state) =>
             {
                 //Tweet obj = JsonConvert.DeserializeObject<Tweet>(res.Content);
                 ITwitterResponse obj = TwitterClient.Deserialise<Tweet>(res.Content);
@@ -37,24 +39,22 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginUpdate(String Text, String ID, double? Lat, double? Long, TwitterClient.GenericResponseDelegate callback)
+        public void BeginUpdate(string text, string id, double? latitude, double? longitude, TwitterClient.GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("status", Text);
+            var p = new Dictionary<string, string> { { "status", text } };
 
-            if (!String.IsNullOrEmpty(ID))
-                p.Add("in_reply_to_status_id", ID);
+            if (!String.IsNullOrEmpty(id))
+                p.Add("in_reply_to_status_id", id);
 
-            if (Lat != null && Long != null)
+            if (latitude != null && longitude != null)
             {
-                p.Add("lat", Lat.ToString());
-                p.Add("long", Long.ToString());
+                p.Add("lat", latitude.ToString());
+                p.Add("long", longitude.ToString());
             }
 
             Context.BeginRequest(baseAddress + "update.json", p, WebMethod.Post, (req, res, state) =>
             {
-                //Tweet obj = JsonConvert.DeserializeObject<Tweet>(res.Content);
-                ITwitterResponse obj = TwitterClient.Deserialise<Tweet>(res.Content);
+                var obj = TwitterClient.Deserialise<Tweet>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -66,7 +66,6 @@ namespace MahApps.Twitter.Methods
             BeginUpdate(Text, ID, null, null, callback);
         }
 
-
         public void BeginUpdate(String Text, TwitterClient.GenericResponseDelegate callback)
         {
             BeginUpdate(Text, null, callback);
@@ -76,71 +75,65 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "public_timeline.json", null, WebMethod.Get, (req, res, state) =>
             {
-                //List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                var obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
         }
+
         public void BeginHomeTimeline(TwitterClient.GenericResponseDelegate callback)
         {
             BeginHomeTimeline(null, null, null, null, false, false, callback);
         }
 
-        public void BeginHomeTimeline(long Count, TwitterClient.GenericResponseDelegate callback)
+        public void BeginHomeTimeline(long count, TwitterClient.GenericResponseDelegate callback)
         {
-            BeginHomeTimeline(null, null, Count, null, false, false, callback);
+            BeginHomeTimeline(null, null, count, null, false, false, callback);
         }
 
-        public void BeginHomeTimeline(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginHomeTimeline(long? sinceId, long? maxId, long? count, int? page, bool trimUser, bool includeEntities, TwitterClient.GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            if (SinceId != null)
-                p.Add("since_id", SinceId.ToString());
+            var p = new Dictionary<string, string>();
+            if (sinceId != null)
+                p.Add("since_id", sinceId.ToString());
 
-            if (MaxId != null)
-                p.Add("max_id", MaxId.ToString());
+            if (maxId != null)
+                p.Add("max_id", maxId.ToString());
 
-            if (Count != null)
-                p.Add("count", Count.ToString());
+            if (count != null)
+                p.Add("count", count.ToString());
 
-            if (Page != null)
-                p.Add("page", Page.ToString());
+            if (page != null)
+                p.Add("page", page.ToString());
 
-            p.Add("trim_user", TrimUser.ToString());
-            p.Add("include_entities", IncludeEntities.ToString());
+            p.Add("trim_user", trimUser.ToString());
+            p.Add("include_entities", includeEntities.ToString());
 
             Context.BeginRequest(baseAddress + "home_timeline.json", p, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                var obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
 
                 if (callback != null)
                     callback(req, res, obj);
-
             });
         }
-
-
 
         public void BeginFriendsTimeline(TwitterClient.GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "friends_timeline.json", null, WebMethod.Get, (req, res, state) =>
             {
-                //List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                var obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
                 callback(req, res, obj);
             });
         }
 
-        public void BeginUserTimeline(String Username, TwitterClient.GenericResponseDelegate callback)
+        public void BeginUserTimeline(String username, TwitterClient.GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("user", Username);
+            var p = new Dictionary<string, string> { { "user", username } };
 
             Context.BeginRequest(baseAddress + "user_timeline.json", p, WebMethod.Get, (req, res, state) =>
             {
-                //List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                var obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
                 callback(req, res, obj);
             });
         }
@@ -150,31 +143,31 @@ namespace MahApps.Twitter.Methods
             BeginMentions(null, null, null, null, false, false, callback);
         }
 
-        public void BeginMentions(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginMentions(long? sinceId, long? maxId, long? count, int? page, bool trimUser, bool includeEntities, TwitterClient.GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            if (SinceId != null)
-                p.Add("since_id", SinceId.ToString());
+            var p = new Dictionary<string, string>();
 
-            if (MaxId != null)
-                p.Add("max_id", MaxId.ToString());
+            if (sinceId != null)
+                p.Add("since_id", sinceId.ToString());
 
-            if (Count != null)
-                p.Add("count", Count.ToString());
+            if (maxId != null)
+                p.Add("max_id", maxId.ToString());
 
-            if (Page != null)
-                p.Add("page", Page.ToString());
+            if (count != null)
+                p.Add("count", count.ToString());
 
-            p.Add("trim_user", TrimUser.ToString());
-            p.Add("include_entities", IncludeEntities.ToString());
+            if (page != null)
+                p.Add("page", page.ToString());
+
+            p.Add("trim_user", trimUser.ToString());
+            p.Add("include_entities", includeEntities.ToString());
 
             Context.BeginRequest(baseAddress + "mentions.json", p, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                var obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
 
                 if (callback != null)
                     callback(req, res, obj);
-
             });
         }
 
@@ -182,7 +175,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "retweeted_by_me.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                var obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -190,19 +183,17 @@ namespace MahApps.Twitter.Methods
 
         public void BeginRetweetedToMe(TwitterClient.GenericResponseDelegate callback)
         {
-            Context.BeginRequest(baseAddress + "retweeted_to_me.json", null, WebMethod.Get, (req, res, state) =>
-            {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
-                if (callback != null)
-                    callback(req, res, obj);
-            });
+            Context.BeginRequest(baseAddress + "retweeted_to_me.json",
+                null,
+                WebMethod.Get,
+                (req, res, state) => ParseResult<ResultsWrapper<Tweet>>(res, callback, req));
         }
 
         public void BeginRetweetedOfMe(TwitterClient.GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "retweeted_of_me.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                var obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -210,12 +201,18 @@ namespace MahApps.Twitter.Methods
 
         public void BeginGetFriends(TwitterClient.GenericResponseDelegate callback)
         {
-            Context.BeginRequest(baseAddress + "friends.json", null, WebMethod.Get, (req, res, state) =>
-            {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<User>>(res.Content);
-                if (callback != null)
-                    callback(req, res, obj);
-            });
+            Context.BeginRequest(baseAddress + "friends.json",
+                null,
+                WebMethod.Get,
+                (req, res, state) => ParseResult<ResultsWrapper<User>>(res, callback, req));
+        }
+
+        private static void ParseResult<T>(RestResponse res, TwitterClient.GenericResponseDelegate callback, RestRequest req)
+            where T : ITwitterResponse
+        {
+            var obj = TwitterClient.Deserialise<T>(res.Content);
+            if (callback != null)
+                callback(req, res, obj);
         }
 
     }

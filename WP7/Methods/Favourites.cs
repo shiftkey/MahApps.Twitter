@@ -7,10 +7,10 @@ namespace MahApps.Twitter.Methods
 {
     public class Favourites : RestMethodsBase<TwitterClient>
     {
-        private String baseAddress = "favorites/";
+        private const string BaseAddress = "favorites/";
 
-        public Favourites(TwitterClient Context)
-            : base(Context)
+        public Favourites(TwitterClient context)
+            : base(context)
         {
         }
 
@@ -24,9 +24,9 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginCreate(String ID, TwitterClient.GenericResponseDelegate callback)
+        public void BeginCreate(String id, TwitterClient.GenericResponseDelegate callback)
         {
-            Context.BeginRequest(baseAddress + "create/" + ID + ".json", null, WebMethod.Post, (req, res, state) =>
+            Context.BeginRequest(BaseAddress + "create/" + id + ".json", null, WebMethod.Post, (req, res, state) =>
             {
                 ITwitterResponse obj = TwitterClient.Deserialise<Tweet>(res.Content);
                 if (callback != null)
@@ -34,9 +34,9 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginDestroy(String ID, TwitterClient.GenericResponseDelegate callback)
+        public void BeginDestroy(String id, TwitterClient.GenericResponseDelegate callback)
         {
-            Context.BeginRequest(baseAddress + "destroy/" + ID + ".json", null, WebMethod.Post, (req, res, state) =>
+            Context.BeginRequest(BaseAddress + "destroy/" + id + ".json", null, WebMethod.Post, (req, res, state) =>
             {
                 ITwitterResponse obj = TwitterClient.Deserialise<Tweet>(res.Content);
                 if (callback != null)
