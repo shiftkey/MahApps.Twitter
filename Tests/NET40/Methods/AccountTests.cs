@@ -21,7 +21,6 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
 
             var twitterClient = Substitute.For<ITwitterClient>();
 
-            // TODO: set up invalid JSON result
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
                                     {
@@ -52,7 +51,6 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
 
             var twitterClient = Substitute.For<ITwitterClient>();
 
-            // TODO: set up invalid JSON result
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
                          {
