@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\WP7\Delegates\Delegates.cs">
+      <Link>Delegates\Delegates.cs</Link>
+    </Compile>
     <Compile Include="..\WP7\Extensions\StringExtensions.cs">
       <Link>Extensions\StringExtensions.cs</Link>
     </Compile>

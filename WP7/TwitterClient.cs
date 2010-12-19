@@ -5,6 +5,7 @@ using Hammock.Authentication.OAuth;
 using Hammock.Streaming;
 using Hammock.Web;
 using MahApps.RESTBase;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Methods;
 using MahApps.Twitter.Models;
 using Newtonsoft.Json;
@@ -190,8 +191,8 @@ namespace MahApps.Twitter
         private DateTime _lastConnectAttempt;
         public bool Reconnect = true;
 
-        public delegate void VoidDelegate();
-        public delegate void TweetCallback(RestRequest request, RestResponse response, ITwitterResponse deserialisedResponse);
+        //public delegate void VoidDelegate();
+        //public delegate void TweetCallback(RestRequest request, RestResponse response, ITwitterResponse deserialisedResponse);
 
         public event VoidDelegate StreamingReconnectAttemptEvent;
 

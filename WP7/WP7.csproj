@@ -58,6 +58,7 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Delegates\Delegates.cs" />
     <Compile Include="Methods\Account.cs" />
     <Compile Include="Methods\Block.cs" />
     <Compile Include="Methods\DirectMessages.cs" />
