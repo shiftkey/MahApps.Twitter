@@ -1,34 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MahApps.Twitter.Models
+﻿namespace MahApps.Twitter.Models
 {
     public class Geo : ITwitterResponse
     {
-        public String Type { get; set; }
+        public string Type { get; set; }
 
-        public Double[] Coordinates { get; set; }
+        public double[] Coordinates { get; set; }
 
-        public Double? Lat
+        public double? Lat
         {
             get
             {
                 if (Coordinates != null)
                     return Coordinates[0];
-                else
-                    return null;
+
+                return null;
             }
         }
-        public Double? Long
+        public double? Long
         {
             get
             {
                 if (Coordinates != null)
                     return Coordinates[1];
-                else
-                    return null;
+
+                return null;
             }
         }
     }

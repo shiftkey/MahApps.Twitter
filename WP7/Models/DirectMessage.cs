@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
 using MahApps.Twitter.Extensions;
 using Newtonsoft.Json;
 
 namespace MahApps.Twitter.Models
 {
-    public class DirectMessageContainer
-    {
-        [JsonProperty(PropertyName = "direct_message")]
-        public DirectMessage DirectMessage { get; set; }
-    }
-
     public class DirectMessage : ITwitterResponse
     {
         [JsonProperty(PropertyName = "sender_id")]

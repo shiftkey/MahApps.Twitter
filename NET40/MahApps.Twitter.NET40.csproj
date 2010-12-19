@@ -83,8 +83,20 @@
     <Compile Include="..\WP7\Models\DirectMessage.cs">
       <Link>Models\DirectMessage.cs</Link>
     </Compile>
+    <Compile Include="..\WP7\Models\DirectMessageContainer.cs">
+      <Link>Models\DirectMessageContainer.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\Entity.cs">
+      <Link>Models\Entity.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\ExceptionResponse.cs">
+      <Link>Models\ExceptionResponse.cs</Link>
+    </Compile>
     <Compile Include="..\WP7\Models\Geo.cs">
       <Link>Models\Geo.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\Hashtag.cs">
+      <Link>Models\Hashtag.cs</Link>
     </Compile>
     <Compile Include="..\WP7\Models\ITwitterResponse.cs">
       <Link>Models\ITwitterResponse.cs</Link>
@@ -92,8 +104,20 @@
     <Compile Include="..\WP7\Models\List.cs">
       <Link>Models\List.cs</Link>
     </Compile>
+    <Compile Include="..\WP7\Models\ListResult.cs">
+      <Link>Models\ListResult.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\ResultsWrapper.cs">
+      <Link>Models\ResultsWrapper.cs</Link>
+    </Compile>
     <Compile Include="..\WP7\Models\SearchTweets.cs">
       <Link>Models\SearchTweets.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\SiteStreamsMessage.cs">
+      <Link>Models\SiteStreamsMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\SiteStreamsWrapper.cs">
+      <Link>Models\SiteStreamsWrapper.cs</Link>
     </Compile>
     <Compile Include="..\WP7\Models\Target.cs">
       <Link>Models\Target.cs</Link>
@@ -101,8 +125,14 @@
     <Compile Include="..\WP7\Models\Tweet.cs">
       <Link>Models\Tweet.cs</Link>
     </Compile>
+    <Compile Include="..\WP7\Models\Url.cs">
+      <Link>Models\Url.cs</Link>
+    </Compile>
     <Compile Include="..\WP7\Models\User.cs">
       <Link>Models\User.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\UserMention.cs">
+      <Link>Models\UserMention.cs</Link>
     </Compile>
     <Compile Include="..\WP7\TwitterClient.cs">
       <Link>TwitterClient.cs</Link>

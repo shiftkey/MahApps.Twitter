@@ -46,7 +46,6 @@
         <WRAP_LIMIT>160</WRAP_LIMIT>
       </FormatSettings>
       <UsingsSettings>
-        <AddImportsToDeepestScope>True</AddImportsToDeepestScope>
         <QualifiedUsingAtNestedScope>True</QualifiedUsingAtNestedScope>
       </UsingsSettings>
       <Naming2>
