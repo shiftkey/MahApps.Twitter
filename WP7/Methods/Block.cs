@@ -1,40 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Block: RestMethodsBase<TwitterClient>
+    public class Block : RestMethodsBase<TwitterClient>
     {
-        private String baseAddress = "blocks/";
-        public Block(TwitterClient Context)
-            : base(Context)
+        private const string BaseAddress = "blocks/";
+        public Block(TwitterClient context)
+            : base(context)
         {
         }
 
-        public void BeginBlock(String Username, TwitterClient.GenericResponseDelegate callback)
+        public void BeginBlock(string username, TwitterClient.GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("screen_name", Username);
+            var p = new Dictionary<string, string> { { "screen_name", username } };
 
-            Context.BeginRequest(baseAddress + "create.json", p, WebMethod.Post, (req, res, state) =>
+            Context.BeginRequest(BaseAddress + "create.json", p, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<User>(res.Content);
+                var obj = TwitterClient.Deserialise<User>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
         }
 
-        public void BeginSpamBlock (String Username, TwitterClient.GenericResponseDelegate callback)
+        public void BeginSpamBlock(string username, TwitterClient.GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("screen_name", Username);
+            var p = new Dictionary<string, string> { { "screen_name", username } };
 
             Context.BeginRequest("report_spam.json", p, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<User>(res.Content);
+                var obj = TwitterClient.Deserialise<User>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });

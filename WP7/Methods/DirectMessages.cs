@@ -1,51 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Models;
-using Newtonsoft.Json;
 
 namespace MahApps.Twitter.Methods
 {
     public class DirectMessages : RestMethodsBase<TwitterClient>
     {
-        public DirectMessages(TwitterClient Context)
-            : base(Context)
+        private const string BaseAddress = "direct_messages";
+
+        public DirectMessages(TwitterClient context)
+            : base(context)
         {
         }
-
-        private String baseAddress = "direct_messages";
 
         public void BeginDirectMessages(TwitterClient.GenericResponseDelegate callback)
         {
             BeginDirectMessages(null, null, null, null, false, false, callback);
         }
 
-        public void BeginDirectMessages(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginDirectMessages(long? sinceId, long? maxId, long? count, int? page, bool trimUser, bool includeEntities, TwitterClient.GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            if (SinceId != null)
-                p.Add("since_id", SinceId.ToString());
+            var p = new Dictionary<string, string>();
+            if (sinceId != null)
+                p.Add("since_id", sinceId.ToString());
 
-            if (MaxId != null)
-                p.Add("max_id", MaxId.ToString());
+            if (maxId != null)
+                p.Add("max_id", maxId.ToString());
 
-            if (Count != null)
-                p.Add("count", Count.ToString());
+            if (count != null)
+                p.Add("count", count.ToString());
 
-            if (Page != null)
-                p.Add("page", Page.ToString());
+            if (page != null)
+                p.Add("page", page.ToString());
 
-            p.Add("trim_user", TrimUser.ToString());
-            p.Add("include_entities", IncludeEntities.ToString());
+            p.Add("trim_user", trimUser.ToString());
+            p.Add("include_entities", includeEntities.ToString());
 
-            Context.BeginRequest(baseAddress + ".json", p, WebMethod.Get, (req, res, state) =>
+            Context.BeginRequest(BaseAddress + ".json", p, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<DirectMessage>>(res.Content);
+                var obj = TwitterClient.Deserialise<ResultsWrapper<DirectMessage>>(res.Content);
 
                 if (callback != null)
                     callback(req, res, obj);
-
             });
         }
 
@@ -54,43 +51,40 @@ namespace MahApps.Twitter.Methods
             BeginSentDirectMessages(null, null, null, null, false, false, callback);
         }
 
-        public void BeginSentDirectMessages(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginSentDirectMessages(long? sinceId, long? maxId, long? count, int? page, bool trimUser, bool includeEntities, TwitterClient.GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            if (SinceId != null)
-                p.Add("since_id", SinceId.ToString());
+            var p = new Dictionary<string, string>();
+            if (sinceId != null)
+                p.Add("since_id", sinceId.ToString());
 
-            if (MaxId != null)
-                p.Add("max_id", MaxId.ToString());
+            if (maxId != null)
+                p.Add("max_id", maxId.ToString());
 
-            if (Count != null)
-                p.Add("count", Count.ToString());
+            if (count != null)
+                p.Add("count", count.ToString());
 
-            if (Page != null)
-                p.Add("page", Page.ToString());
+            if (page != null)
+                p.Add("page", page.ToString());
 
-            p.Add("trim_user", TrimUser.ToString());
-            p.Add("include_entities", IncludeEntities.ToString());
+            p.Add("trim_user", trimUser.ToString());
+            p.Add("include_entities", includeEntities.ToString());
 
-            Context.BeginRequest(baseAddress + "/sent.json", p, WebMethod.Get, (req, res, state) =>
+            Context.BeginRequest(BaseAddress + "/sent.json", p, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<DirectMessage>>(res.Content);
+                var obj = TwitterClient.Deserialise<ResultsWrapper<DirectMessage>>(res.Content);
 
                 if (callback != null)
                     callback(req, res, obj);
-
             });
         }
 
-        public void BeginCreate(String screen_name, String Text, TwitterClient.GenericResponseDelegate callback)
+        public void BeginCreate(string screenName, string text, TwitterClient.GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("screen_name", screen_name);
-            p.Add("text", Text);
+            var p = new Dictionary<string, string> { { "screen_name", screenName }, { "text", text } };
 
-            Context.BeginRequest(baseAddress + "/new.json", p, WebMethod.Post, (req, res, state) =>
+            Context.BeginRequest(BaseAddress + "/new.json", p, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<DirectMessage>(res.Content);
+                var obj = TwitterClient.Deserialise<DirectMessage>(res.Content);
 
                 if (callback != null)
                     callback(req, res, obj);
