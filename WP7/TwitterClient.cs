@@ -71,6 +71,13 @@ namespace MahApps.Twitter
         }
 
         public TwitterClient(String ConsumerKey, String ConsumerSecret, String Callback)
+            : base(new RestClient
+                       {
+                           Authority = "https://api.twitter.com/oauth/",
+#if SILVERLIGHT
+                           HasElevatedPermissions = true
+#endif
+                       })
         {
             Statuses = new Statuses(this);
             Account = new Account(this);
@@ -92,13 +99,13 @@ namespace MahApps.Twitter
             ServicePointManager.Expect100Continue = false;
 #endif
 
-            Client = new RestClient
-                         {
-                             Authority = OAuthBase,
-#if SILVERLIGHT
-                             HasElevatedPermissions = true
-#endif
-                         };
+            //            Client = new RestClient
+            //                         {
+            //                             Authority = OAuthBase,
+            //#if SILVERLIGHT
+            //                             HasElevatedPermissions = true
+            //#endif
+            //                         };
 
 
             Credentials = new OAuthCredentials
@@ -147,7 +154,7 @@ namespace MahApps.Twitter
             return webReq;
 
         }
-        #if !SILVERLIGHT 
+#if !SILVERLIGHT
         #region SiteStreams
         public IAsyncResult BeginSiteStream(String UserID, TweetCallback callback)
         {
@@ -218,7 +225,7 @@ namespace MahApps.Twitter
                     VersionPath = "2",
                     Credentials = Credentials,
 #if SILVERLIGHT
-                             HasElevatedPermissions = true
+                    HasElevatedPermissions = true
 #endif
                 };
 
