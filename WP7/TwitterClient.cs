@@ -149,7 +149,7 @@ namespace MahApps.Twitter
         }
         #if !SILVERLIGHT 
         #region SiteStreams
-        public void BeginSiteStream(String UserID, TweetCallback callback)
+        public IAsyncResult BeginSiteStream(String UserID, TweetCallback callback)
         {
             
             Callback = callback;
@@ -169,7 +169,7 @@ namespace MahApps.Twitter
                     ResultsPerCallback = 1,
                 },
             };
-            streamClient.BeginRequest(req, SiteStreamCallback);
+            return streamClient.BeginRequest(req, SiteStreamCallback);
         }
         void SiteStreamCallback(Hammock.RestRequest request, Hammock.RestResponse response, object userState)
         {

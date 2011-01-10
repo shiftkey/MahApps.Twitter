@@ -40,7 +40,7 @@ namespace MahApps.Twitter.Methods
         public void BeginUpdate(String Text, String ID, double? Lat, double? Long, TwitterClient.GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("status", Text);
+            p.Add("status", Uri.EscapeDataString(Text));
 
             if (!String.IsNullOrEmpty(ID))
                 p.Add("in_reply_to_status_id", ID);
