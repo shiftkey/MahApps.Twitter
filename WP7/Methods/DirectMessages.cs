@@ -86,7 +86,7 @@ namespace MahApps.Twitter.Methods
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             p.Add("screen_name", screen_name);
-            p.Add("text", Text);
+            p.Add("text", Uri.EscapeDataString(Text));
 
             Context.BeginRequest(baseAddress + "/new.json", p, WebMethod.Post, (req, res, state) =>
             {
