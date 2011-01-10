@@ -8,7 +8,7 @@ namespace MahApps.Twitter.Methods
 {
     public class Friendship : RestMethodsBase<TwitterClient>
     {
-        private String baseAddress = "friendship/";
+        private String baseAddress = "friendships/";
         public Friendship(TwitterClient Context)
             : base(Context)
         {
