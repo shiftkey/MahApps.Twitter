@@ -7,10 +7,6 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class ResultsWrapper : ITwitterResponse
-    {
-        public List<SearchTweet> Results { get; set; }
-    }
     public class Search : RestMethodsBase<ITwitterClient>
     {
         private String baseAddress = "http://search.twitter.com";
