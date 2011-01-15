@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Models;
-using Newtonsoft.Json;
 
 namespace MahApps.Twitter.Methods
 {
-    public class DirectMessages : RestMethodsBase<TwitterClient>
+    public class DirectMessages : RestMethodsBase<ITwitterClient>
     {
-        public DirectMessages(TwitterClient Context)
-            : base(Context)
+        public DirectMessages(ITwitterClient context)
+            : base(context)
         {
         }
 

@@ -6,11 +6,11 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Block: RestMethodsBase<TwitterClient>
+    public class Block: RestMethodsBase<ITwitterClient>
     {
         private String baseAddress = "blocks/";
-        public Block(TwitterClient Context)
-            : base(Context)
+        public Block(ITwitterClient context)
+            : base(context)
         {
         }
 

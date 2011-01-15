@@ -5,12 +5,12 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Favourites : RestMethodsBase<TwitterClient>
+    public class Favourites : RestMethodsBase<ITwitterClient>
     {
         private String baseAddress = "favorites/";
 
-        public Favourites(TwitterClient Context)
-            : base(Context)
+        public Favourites(ITwitterClient context)
+            : base(context)
         {
         }
 

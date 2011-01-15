@@ -11,12 +11,13 @@ namespace MahApps.Twitter.Methods
     {
         public List<SearchTweet> Results { get; set; }
     }
-    public class Search : RestMethodsBase<TwitterClient>
+    public class Search : RestMethodsBase<ITwitterClient>
     {
         private String baseAddress = "http://search.twitter.com";
         private String basePath = "search.json";
-        public Search(TwitterClient Context)
-            : base(Context)
+
+        public Search(ITwitterClient context)
+            : base(context)
         {
         }
 

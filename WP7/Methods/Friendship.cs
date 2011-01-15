@@ -6,11 +6,11 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Friendship : RestMethodsBase<TwitterClient>
+    public class Friendship : RestMethodsBase<ITwitterClient>
     {
         private String baseAddress = "friendships/";
-        public Friendship(TwitterClient Context)
-            : base(Context)
+        public Friendship(ITwitterClient context)
+            : base(context)
         {
         }
 

@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Hammock;
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Models;
-using Newtonsoft.Json;
 using File = MahApps.RESTBase.File;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Account : RestMethodsBase<TwitterClient>
+    public class Account : RestMethodsBase<ITwitterClient>
     {
-        public Account(TwitterClient Context)
+        public Account(ITwitterClient Context)
             : base(Context)
         {
         }

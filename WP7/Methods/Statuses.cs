@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Models;
-using Newtonsoft.Json;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Statuses : RestMethodsBase<TwitterClient>
+    public class Statuses : RestMethodsBase<ITwitterClient>
     {
         private String baseAddress = "statuses/";
-        public Statuses(TwitterClient Context)
+        public Statuses(ITwitterClient Context)
             : base(Context)
         {
         }
@@ -139,7 +138,6 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "user_timeline.json", p, WebMethod.Get, (req, res, state) =>
             {
-                //List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
                 ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
                 callback(req, res, obj);
             });
@@ -217,6 +215,18 @@ namespace MahApps.Twitter.Methods
                     callback(req, res, obj);
             });
         }
+
+        public void BeginGetFollowers(TwitterClient.GenericResponseDelegate callback)
+        {
+            Context.BeginRequest(baseAddress + "friends.json", null, WebMethod.Get, (req, res, state) =>
+            {
+                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<User>>(res.Content);
+                if (callback != null)
+                    callback(req, res, obj);
+            });
+        }
+
+
 
     }
 }

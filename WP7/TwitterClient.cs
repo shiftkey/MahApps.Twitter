@@ -22,7 +22,7 @@ using WebHeaderCollection = System.Net.WebHeaderCollection;
 
 namespace MahApps.Twitter
 {
-    public class TwitterClient : RestClientBase
+    public class TwitterClient : RestClientBase, ITwitterClient
     {
         public delegate void GenericResponseDelegate(RestRequest request, RestResponse response, object Response);
 

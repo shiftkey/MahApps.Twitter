@@ -6,10 +6,10 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class List : RestMethodsBase<TwitterClient>
+    public class List : RestMethodsBase<ITwitterClient>
     {
-        public List(TwitterClient Context)
-            : base(Context)
+        public List(ITwitterClient context)
+            : base(context)
         {
         }
 
