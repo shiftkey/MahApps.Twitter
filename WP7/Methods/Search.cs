@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Hammock;
 using Hammock.Web;
 using MahApps.RESTBase;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -17,7 +18,7 @@ namespace MahApps.Twitter.Methods
         {
         }
 
-        public void BeginSearch(String q, TwitterClient.GenericResponseDelegate callback)
+        public void BeginSearch(String q, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             p.Add("q", q);
@@ -55,7 +56,7 @@ namespace MahApps.Twitter.Methods
             Client.BeginRequest(request, callback);
         }
 
-        public void BeginGetSavedSearches(TwitterClient.GenericResponseDelegate callback)
+        public void BeginGetSavedSearches(GenericResponseDelegate callback)
         {
             Context.BeginRequest("/saved_searches.json", null, WebMethod.Get, (req, res, state) =>
                                                                                   {

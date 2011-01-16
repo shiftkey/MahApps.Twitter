@@ -2,6 +2,7 @@
 using System.IO;
 using Hammock.Web;
 using MahApps.RESTBase;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Models;
 using File = MahApps.RESTBase.File;
 
@@ -14,7 +15,7 @@ namespace MahApps.Twitter.Methods
         {
         }
 
-        public void BeginVerifyCredentials(TwitterClient.GenericResponseDelegate callback)
+        public void BeginVerifyCredentials(GenericResponseDelegate callback)
         {
             Context.BeginRequest("account/verify_credentials.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -23,7 +24,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginUpdateProfileImage(FileInfo f, TwitterClient.GenericResponseDelegate callback)
+        public void BeginUpdateProfileImage(FileInfo f, GenericResponseDelegate callback)
         {
             Dictionary<string, File> files = new Dictionary<string, File>();
             files.Add("image", new File(f.FullName, f.Name));

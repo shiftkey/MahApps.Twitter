@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Hammock.Web;
 using MahApps.RESTBase;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -13,7 +14,7 @@ namespace MahApps.Twitter.Methods
         {
         }
 
-        public void BeginGetSubscriptions(string Username, TwitterClient.GenericResponseDelegate callback)
+        public void BeginGetSubscriptions(string Username, GenericResponseDelegate callback)
         {
             Context.BeginRequest(Username + "/lists/subscriptions.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -30,7 +31,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginGetUserLists(string Username, TwitterClient.GenericResponseDelegate callback)
+        public void BeginGetUserLists(string Username, GenericResponseDelegate callback)
         {
             Context.BeginRequest(Username + "/lists.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -46,7 +47,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginGetList(string Username, string Id, long? SinceId, long? MaxId, long? Count, int? Page, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginGetList(string Username, string Id, long? SinceId, long? MaxId, long? Count, int? Page, bool IncludeEntities, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             if (SinceId != null && (long)SinceId > 0)

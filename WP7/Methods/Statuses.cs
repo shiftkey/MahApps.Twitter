@@ -37,7 +37,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginUpdate(String Text, String ID, double? Lat, double? Long, TwitterClient.GenericResponseDelegate callback)
+        public void BeginUpdate(String Text, String ID, double? Lat, double? Long, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             p.Add("status", Uri.EscapeDataString(Text));

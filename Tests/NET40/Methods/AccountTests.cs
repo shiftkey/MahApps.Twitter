@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Hammock;
 using Hammock.Web;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Methods;
 using MahApps.Twitter.Models;
 using NSubstitute;
@@ -33,7 +34,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var account = new Account(twitterClient);
 
             // assert
-            TwitterClient.GenericResponseDelegate endVerifyCredentials = (a, b, c) =>
+            GenericResponseDelegate endVerifyCredentials = (a, b, c) =>
             {
                 var user = c as User;
                 Assert.That(user, Is.Null);
@@ -63,7 +64,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var account = new Account(twitterClient);
 
             // assert
-            TwitterClient.GenericResponseDelegate endVerifyCredentials = (a, b, c) =>
+            GenericResponseDelegate endVerifyCredentials = (a, b, c) =>
             {
                 var user = c as User;
                 Assert.That(user, Is.Not.Null);

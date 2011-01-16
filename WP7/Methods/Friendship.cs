@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Hammock.Web;
 using MahApps.RESTBase;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -14,7 +15,7 @@ namespace MahApps.Twitter.Methods
         {
         }
 
-        public void BeginCreate(String Username, TwitterClient.GenericResponseDelegate callback)
+        public void BeginCreate(String Username, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             p.Add("screen_name", Username);
@@ -26,7 +27,7 @@ namespace MahApps.Twitter.Methods
                     callback(req, res, obj);
             });
         }
-        public void BeginDestroy(String Username, TwitterClient.GenericResponseDelegate callback)
+        public void BeginDestroy(String Username, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             p.Add("screen_name", Username);

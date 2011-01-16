@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Hammock.Web;
 using MahApps.RESTBase;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -15,12 +16,12 @@ namespace MahApps.Twitter.Methods
 
         private String baseAddress = "direct_messages";
 
-        public void BeginDirectMessages(TwitterClient.GenericResponseDelegate callback)
+        public void BeginDirectMessages(GenericResponseDelegate callback)
         {
             BeginDirectMessages(null, null, null, null, false, false, callback);
         }
 
-        public void BeginDirectMessages(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginDirectMessages(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             if (SinceId != null)
@@ -48,12 +49,12 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginSentDirectMessages(TwitterClient.GenericResponseDelegate callback)
+        public void BeginSentDirectMessages(GenericResponseDelegate callback)
         {
             BeginSentDirectMessages(null, null, null, null, false, false, callback);
         }
 
-        public void BeginSentDirectMessages(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginSentDirectMessages(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             if (SinceId != null)
@@ -81,7 +82,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginCreate(String screen_name, String Text, TwitterClient.GenericResponseDelegate callback)
+        public void BeginCreate(String screen_name, String Text, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             p.Add("screen_name", screen_name);

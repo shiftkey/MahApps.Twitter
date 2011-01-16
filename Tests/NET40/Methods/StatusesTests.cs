@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Hammock;
 using Hammock.Web;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Methods;
 using MahApps.Twitter.Models;
 using NSubstitute;
@@ -33,7 +34,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var statuses = new Statuses(twitterClient);
 
             // assert
-            TwitterClient.GenericResponseDelegate endPublishTimeline = (a, b, c) =>
+            GenericResponseDelegate endPublishTimeline = (a, b, c) =>
             {
                 var tweets = c as IEnumerable<Tweet>;
                 Assert.That(tweets.Count(), Is.GreaterThan(0));
@@ -63,7 +64,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var statuses = new Statuses(twitterClient);
 
             // assert
-            TwitterClient.GenericResponseDelegate endGetTweet = (a, b, c) =>
+            GenericResponseDelegate endGetTweet = (a, b, c) =>
             {
                 var tweet = c as Tweet;
                 Assert.That(tweet, Is.Not.Null);
@@ -94,7 +95,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var statuses = new Statuses(twitterClient);
 
             // assert
-            TwitterClient.GenericResponseDelegate endGetTweet = (a, b, c) =>
+            GenericResponseDelegate endGetTweet = (a, b, c) =>
                                                                     {
                                                                         var exception = c as ExceptionResponse;
                                                                         Assert.That(exception, Is.Not.Null);
