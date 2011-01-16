@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Hammock.Web;
 using MahApps.RESTBase;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -13,7 +14,7 @@ namespace MahApps.Twitter.Methods
             : base(Context)
         {
         }
-        public void BeginGetTweet(String Id, TwitterClient.GenericResponseDelegate callback)
+        public void BeginGetTweet(String Id, GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "show/" + Id + ".json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -25,7 +26,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginRetweet(String ID, TwitterClient.GenericResponseDelegate callback)
+        public void BeginRetweet(String ID, GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "retweet/" + ID + ".json", null, WebMethod.Post, (req, res, state) =>
             {
@@ -60,18 +61,18 @@ namespace MahApps.Twitter.Methods
 
         }
 
-        public void BeginUpdate(String Text, String ID, TwitterClient.GenericResponseDelegate callback)
+        public void BeginUpdate(String Text, String ID, GenericResponseDelegate callback)
         {
             BeginUpdate(Text, ID, null, null, callback);
         }
 
 
-        public void BeginUpdate(String Text, TwitterClient.GenericResponseDelegate callback)
+        public void BeginUpdate(String Text, GenericResponseDelegate callback)
         {
             BeginUpdate(Text, null, callback);
         }
 
-        public void BeginPublicTimeline(TwitterClient.GenericResponseDelegate callback)
+        public void BeginPublicTimeline(GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "public_timeline.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -81,17 +82,17 @@ namespace MahApps.Twitter.Methods
                     callback(req, res, obj);
             });
         }
-        public void BeginHomeTimeline(TwitterClient.GenericResponseDelegate callback)
+        public void BeginHomeTimeline(GenericResponseDelegate callback)
         {
             BeginHomeTimeline(null, null, null, null, false, false, callback);
         }
 
-        public void BeginHomeTimeline(long Count, TwitterClient.GenericResponseDelegate callback)
+        public void BeginHomeTimeline(long Count, GenericResponseDelegate callback)
         {
             BeginHomeTimeline(null, null, Count, null, false, false, callback);
         }
 
-        public void BeginHomeTimeline(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginHomeTimeline(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             if (SinceId != null)
@@ -121,7 +122,7 @@ namespace MahApps.Twitter.Methods
 
 
 
-        public void BeginFriendsTimeline(TwitterClient.GenericResponseDelegate callback)
+        public void BeginFriendsTimeline(GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "friends_timeline.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -131,7 +132,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginUserTimeline(String Username, TwitterClient.GenericResponseDelegate callback)
+        public void BeginUserTimeline(String Username, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             p.Add("user", Username);
@@ -143,12 +144,12 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginMentions(TwitterClient.GenericResponseDelegate callback)
+        public void BeginMentions(GenericResponseDelegate callback)
         {
             BeginMentions(null, null, null, null, false, false, callback);
         }
 
-        public void BeginMentions(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, TwitterClient.GenericResponseDelegate callback)
+        public void BeginMentions(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             if (SinceId != null)
@@ -176,7 +177,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginRetweetedByMe(TwitterClient.GenericResponseDelegate callback)
+        public void BeginRetweetedByMe(GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "retweeted_by_me.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -186,7 +187,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginRetweetedToMe(TwitterClient.GenericResponseDelegate callback)
+        public void BeginRetweetedToMe(GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "retweeted_to_me.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -196,7 +197,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginRetweetedOfMe(TwitterClient.GenericResponseDelegate callback)
+        public void BeginRetweetedOfMe(GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "retweeted_of_me.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -206,7 +207,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginGetFriends(TwitterClient.GenericResponseDelegate callback)
+        public void BeginGetFriends(GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "friends.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -216,7 +217,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginGetFollowers(TwitterClient.GenericResponseDelegate callback)
+        public void BeginGetFollowers(GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "friends.json", null, WebMethod.Get, (req, res, state) =>
             {

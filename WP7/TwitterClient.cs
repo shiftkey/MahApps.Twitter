@@ -9,7 +9,6 @@ using System.Threading;
 using Hammock;
 using Hammock.Authentication.OAuth;
 #if SILVERLIGHT
-
 using Hammock.Silverlight.Compat;
 #endif
 using Hammock.Streaming;
@@ -24,7 +23,7 @@ namespace MahApps.Twitter
 {
     public class TwitterClient : RestClientBase, ITwitterClient
     {
-        public delegate void GenericResponseDelegate(RestRequest request, RestResponse response, object Response);
+        
 
         public Account Account { get; set; }
         public Statuses Statuses { get; set; }
