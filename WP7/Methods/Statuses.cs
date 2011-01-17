@@ -227,6 +227,15 @@ namespace MahApps.Twitter.Methods
             });
         }
 
+        public void BeginDestroy(String Id, GenericResponseDelegate callback)
+        {
+            Context.BeginRequest(baseAddress + "destroy/"+Id+".json", null, WebMethod.Get, (req, res, state) =>
+            {
+                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<User>>(res.Content);
+                if (callback != null)
+                    callback(req, res, obj);
+            });
+        }
 
 
     }
