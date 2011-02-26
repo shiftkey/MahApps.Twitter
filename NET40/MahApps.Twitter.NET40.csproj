@@ -36,9 +36,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\NET4\Hammock.ClientProfile.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.RESTBase">
-      <HintPath>..\Lib\NET4\MahApps.RESTBase.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\NET4\Newtonsoft.Json.dll</HintPath>
@@ -122,6 +119,12 @@
       <Link>TwitterClient.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MahAppsRestBase\NET4\MahApps.RESTBase.NET4.csproj">
+      <Project>{BB1C4900-7635-414A-AFB2-78CB5453B6A6}</Project>
+      <Name>MahApps.RESTBase.NET4</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

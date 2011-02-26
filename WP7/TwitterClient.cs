@@ -14,6 +14,8 @@ using Hammock.Silverlight.Compat;
 using Hammock.Streaming;
 using Hammock.Web;
 using MahApps.RESTBase;
+using MahApps.RESTBase.Delegates;
+using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Methods;
 using MahApps.Twitter.Models;
 using Newtonsoft.Json;
@@ -23,7 +25,7 @@ namespace MahApps.Twitter
 {
     public class TwitterClient : RestClientBase, ITwitterClient
     {
-        
+
 
         public Account Account { get; set; }
         public Statuses Statuses { get; set; }
@@ -97,16 +99,6 @@ namespace MahApps.Twitter
 #if !SILVERLIGHT
             ServicePointManager.Expect100Continue = false;
 #endif
-
-            //            Client = new RestClient
-            //                         {
-            //                             Authority = OAuthBase,
-            //#if SILVERLIGHT
-            //                             HasElevatedPermissions = true
-            //#endif
-            //                         };
-
-
             Credentials = new OAuthCredentials
                               {
                                   ConsumerKey = ConsumerKey,
@@ -151,8 +143,18 @@ namespace MahApps.Twitter
             webReq.Headers["X-Auth-Service-Provider"] = url.ToString();
             webReq.Headers["X-Verify-Credentials-Authorization"] = XVerifyCredentialsAuthorization;
             return webReq;
-
         }
+
+        public void BeginXAuthAuthenticate(String username, String password, AccessTokenCallbackDelegate callback)
+        {
+            Dictionary<String, String> p = new Dictionary<string, string>();
+            p.Add("x_auth_username", username);
+            p.Add("x_auth_password", password);
+            p.Add("x_auth_mode", "client_auth");
+
+            BeginRequest("access_token", p, WebMethod.Post, (req, res, state) => EndGetAccessToken(req, res, state, callback));
+        }
+
 #if !SILVERLIGHT
         #region SiteStreams
         public IAsyncResult BeginSiteStream(String UserID, TweetCallback callback)
