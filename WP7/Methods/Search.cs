@@ -28,7 +28,7 @@ namespace MahApps.Twitter.Methods
                                                       ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper>(res.Content);
 
                                                       if (callback != null)
-                                                          callback(req, res, ((ResultsWrapper)obj).Results);
+                                                          callback(req, res, (!(obj is ExceptionResponse)) ? ((ResultsWrapper)obj).Results : null);
                                                   });
         }
 
