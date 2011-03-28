@@ -164,7 +164,7 @@ namespace MahApps.Twitter
             this.Credentials.CallbackUrl = null;
             var streamClient = new RestClient()
             {
-                Authority = "http://betastream.twitter.com/",
+                Authority = "http://sitestream.twitter.com/",
                 VersionPath = "2b",
                 Credentials = Credentials,
             };
