@@ -15,10 +15,9 @@ namespace MahApps.Twitter.Methods
         {
         }
 
-        public void BeginCreate(String Username, GenericResponseDelegate callback)
+        public void BeginCreate(string username, GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("screen_name", Username);
+            var p = new Dictionary<string, string> {{"screen_name", username}};
 
             Context.BeginRequest(baseAddress + "create.json", p, WebMethod.Post, (req, res, state) =>
             {
@@ -27,16 +26,27 @@ namespace MahApps.Twitter.Methods
                     callback(req, res, obj);
             });
         }
-        public void BeginDestroy(String Username, GenericResponseDelegate callback)
+        public void BeginDestroy(string username, GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("screen_name", Username);
+            var p = new Dictionary<string, string> {{"screen_name", username}};
 
             Context.BeginRequest(baseAddress + "destroy.json", p, WebMethod.Post, (req, res, state) =>
             {
                 ITwitterResponse obj = TwitterClient.Deserialise<User>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
+            });
+        }
+
+        public void BeginShow(string Username, GenericResponseDelegate callback)
+        {
+            var p = new Dictionary<string, string> {{"target_screen_name", Username}};
+
+            Context.BeginRequest(baseAddress + "show.json", p, WebMethod.Get, (req, res, state) =>
+            {
+                ITwitterResponse obj = TwitterClient.Deserialise<RelationshipWrapper>(res.Content);
+                if (callback != null)
+                    callback(req, res, ((RelationshipWrapper)obj).Relationship);
             });
         }
     }

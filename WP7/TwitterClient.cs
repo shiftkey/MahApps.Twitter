@@ -35,6 +35,7 @@ namespace MahApps.Twitter
         public DirectMessages DirectMessages { get; set; }
         public Favourites Favourites { get; set; }
         public Friendship Friendships { get; set; }
+        public Users Users { get; set; }
 
         public static ITwitterResponse Deserialise<T>(String Content) where T : ITwitterResponse
         {
@@ -88,6 +89,7 @@ namespace MahApps.Twitter
             Friendships = new Friendship(this);
             Lists = new List(this);
             Search = new Search(this);
+            Users = new Users(this);
 
             OAuthBase = "https://api.twitter.com/oauth/";
             TokenRequestUrl = "request_token";
@@ -210,12 +212,13 @@ namespace MahApps.Twitter
         public delegate void TweetCallback(RestRequest request, RestResponse response, ITwitterResponse DeserialisedResponse);
 
         public event VoidDelegate StreamingReconnectAttemptEvent;
+        public event VoidDelegate StreamingDisconnectedEvent;
 
         public TweetCallback Callback { get; set; }
         public IAsyncResult StreamingAsyncResult { get; set; }
         public IAsyncResult BeginStream(TweetCallback callback)
         {
-            if (StreamingAsyncResult == null)
+            if (StreamingAsyncResult == null || StreamingAsyncResult.IsCompleted)
             {
                 _lastConnectAttempt = DateTime.Now;
                 Callback = callback;
@@ -260,6 +263,8 @@ namespace MahApps.Twitter
             if (StreamingAsyncResult != null)
                 if (StreamingAsyncResult.IsCompleted == true && Reconnect == true)
                 {
+                    if (StreamingDisconnectedEvent != null)
+                        StreamingDisconnectedEvent();
                     Console.WriteLine("stream disconnected, attempting reconnect");
 
                     if (DateTime.Now.Subtract(_lastConnectAttempt) > TimeSpan.FromMinutes(2))
