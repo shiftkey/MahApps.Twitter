@@ -37,7 +37,7 @@ namespace MahApps.Twitter
         public Friendship Friendships { get; set; }
         public Users Users { get; set; }
 
-        public static ITwitterResponse Deserialise<T>(String Content) where T : ITwitterResponse
+        public ITwitterResponse Deserialise<T>(String Content) where T : ITwitterResponse
         {
             try
             {
@@ -108,7 +108,7 @@ namespace MahApps.Twitter
                               };
 
             if (!String.IsNullOrEmpty(Callback))
-                Credentials.CallbackUrl = Callback;
+                ((OAuthCredentials)Credentials).CallbackUrl = Callback;
         }
 
         public enum Format
@@ -121,8 +121,8 @@ namespace MahApps.Twitter
         {
             var restClient = (RestClient)Client;
 
-            Credentials.Version = "1.0";
-            Credentials.CallbackUrl = String.Empty;
+            ((OAuthCredentials)Credentials).Version = "1.0";
+            ((OAuthCredentials)Credentials).CallbackUrl = String.Empty;
 
             RestRequest request = new RestRequest
             {
@@ -163,7 +163,7 @@ namespace MahApps.Twitter
         {
             
             Callback = callback;
-            this.Credentials.CallbackUrl = null;
+            ((OAuthCredentials)Credentials).CallbackUrl = null;
             var streamClient = new RestClient()
             {
                 Authority = "http://sitestream.twitter.com/",
@@ -222,7 +222,7 @@ namespace MahApps.Twitter
             {
                 _lastConnectAttempt = DateTime.Now;
                 Callback = callback;
-                this.Credentials.CallbackUrl = null;
+                ((OAuthCredentials)Credentials).CallbackUrl = null;
                 var streamClient = new RestClient()
                 {
                     Authority = "https://userstream.twitter.com",

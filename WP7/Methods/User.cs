@@ -22,7 +22,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "search.json", p, WebMethod.Get, (req, res, state) =>
             {
-                var obj = TwitterClient.Deserialise<ResultsWrapper<User>>(res.Content);
+                var obj = Context.Deserialise<ResultsWrapper<User>>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });

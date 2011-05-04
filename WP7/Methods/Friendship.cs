@@ -21,7 +21,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "create.json", p, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<User>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<User>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -32,7 +32,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "destroy.json", p, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<User>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<User>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -44,7 +44,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "show.json", p, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<RelationshipWrapper>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<RelationshipWrapper>(res.Content);
                 if (callback != null)
                     callback(req, res, ((RelationshipWrapper)obj).Relationship);
             });

@@ -18,7 +18,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "show/" + Id + ".json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<Tweet>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<Tweet>(res.Content);
 
                 if (callback != null)
                     callback(req, res, obj);
@@ -31,7 +31,7 @@ namespace MahApps.Twitter.Methods
             Context.BeginRequest(baseAddress + "retweet/" + ID + ".json", null, WebMethod.Post, (req, res, state) =>
             {
                 //Tweet obj = JsonConvert.DeserializeObject<Tweet>(res.Content);
-                ITwitterResponse obj = TwitterClient.Deserialise<Tweet>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<Tweet>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -54,7 +54,7 @@ namespace MahApps.Twitter.Methods
             Context.BeginRequest(baseAddress + "update.json", p, WebMethod.Post, (req, res, state) =>
             {
                 //Tweet obj = JsonConvert.DeserializeObject<Tweet>(res.Content);
-                ITwitterResponse obj = TwitterClient.Deserialise<Tweet>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<Tweet>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -77,7 +77,7 @@ namespace MahApps.Twitter.Methods
             Context.BeginRequest(baseAddress + "public_timeline.json", null, WebMethod.Get, (req, res, state) =>
             {
                 //List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<Tweet>>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -112,7 +112,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "home_timeline.json", p, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<Tweet>>(res.Content);
 
                 if (callback != null)
                     callback(req, res, obj);
@@ -127,7 +127,7 @@ namespace MahApps.Twitter.Methods
             Context.BeginRequest(baseAddress + "friends_timeline.json", null, WebMethod.Get, (req, res, state) =>
             {
                 //List<Tweet> obj = JsonConvert.DeserializeObject<List<Tweet>>(res.Content);
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<Tweet>>(res.Content);
                 callback(req, res, obj);
             });
         }
@@ -139,7 +139,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "user_timeline.json", p, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<Tweet>>(res.Content);
                 callback(req, res, obj);
             });
         }
@@ -169,7 +169,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "mentions.json", p, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<Tweet>>(res.Content);
 
                 if (callback != null)
                     callback(req, res, obj);
@@ -181,7 +181,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "retweeted_by_me.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<Tweet>>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -191,7 +191,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "retweeted_to_me.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<Tweet>>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -201,7 +201,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "retweeted_of_me.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<Tweet>>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -211,7 +211,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "friends.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<User>>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<User>>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -221,7 +221,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "friends.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<User>>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<User>>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -231,7 +231,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "destroy/"+Id+".json", null, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<User>>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<User>>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });

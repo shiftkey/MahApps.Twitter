@@ -22,7 +22,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "create.json", p, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<User>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<User>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -35,7 +35,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest("report_spam.json", p, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<User>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<User>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });

@@ -10,8 +10,8 @@ namespace MahApps.Twitter.Methods
 {
     public class Account : RestMethodsBase<ITwitterClient>
     {
-        public Account(ITwitterClient Context)
-            : base(Context)
+        public Account(ITwitterClient context)
+            : base(context)
         {
         }
 
@@ -19,7 +19,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest("account/verify_credentials.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<User>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<User>(res.Content);
                 callback(req, res, obj);
             });
         }
@@ -31,7 +31,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest("account/update_profile_image.json", null, files, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<User>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<User>(res.Content);
 
                 if (callback != null)
                     callback(req, res, obj);
