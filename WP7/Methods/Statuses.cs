@@ -135,7 +135,7 @@ namespace MahApps.Twitter.Methods
         public void BeginUserTimeline(String Username, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("user", Username);
+            p.Add("screen_name", Username);
 
             Context.BeginRequest(baseAddress + "user_timeline.json", p, WebMethod.Get, (req, res, state) =>
             {

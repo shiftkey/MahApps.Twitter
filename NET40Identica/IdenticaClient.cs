@@ -42,7 +42,8 @@ namespace MahApps.Identica
 
             Client = new RestClient
                          {
-                             Authority = "http://identi.ca/api"
+                             Authority = "http://identi.ca/api", 
+
                          };
             Authority = "http://identi.ca/api";
         }
