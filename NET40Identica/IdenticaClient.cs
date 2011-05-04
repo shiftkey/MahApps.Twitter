@@ -1,4 +1,5 @@
 ﻿using System;
+using Hammock;
 using Hammock.Authentication;
 using Hammock.Authentication.Basic;
 using MahApps.RESTBase;
@@ -38,6 +39,12 @@ namespace MahApps.Identica
                 Username = username,
                 Password = password
             };
+
+            Client = new RestClient
+                         {
+                             Authority = "http://identi.ca/api"
+                         };
+            Authority = "http://identi.ca/api";
         }
 
         public ITwitterResponse Deserialise<T>(string content) where T : ITwitterResponse
