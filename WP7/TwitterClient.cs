@@ -19,6 +19,7 @@ using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Methods;
 using MahApps.Twitter.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WebHeaderCollection = System.Net.WebHeaderCollection;
 
 namespace MahApps.Twitter
@@ -241,6 +242,7 @@ namespace MahApps.Twitter
                         ResultsPerCallback = 1,
                     },
                 };
+
 #if !SILVERLIGHT 
                 if (_timer == null)
                 {
@@ -248,7 +250,7 @@ namespace MahApps.Twitter
                     _timer.Elapsed += new ElapsedEventHandler(Timer_Elapsed);
                     _timer.Start();
                 }
-
+                
                 StreamingAsyncResult = streamClient.BeginRequest(req, StreamCallback);
 #endif
 #if SILVERLIGHT
@@ -295,6 +297,15 @@ namespace MahApps.Twitter
                 else if (SaneText.StartsWith("{\"target\":"))
                 {
                     deserialisedResponse = (StreamEvent)JsonConvert.DeserializeObject<StreamEvent>(SaneText);
+                }
+                else if (SaneText.StartsWith("{\"delete\":"))
+                {
+                    /*{"delete":{"status":{"user_id_str":"44504925","id_str":"66791879353708544","id":66791879353708544,"user_id":44504925}}}*/
+                    var o = JObject.Parse(SaneText);
+                    var id = (long) o["delete"]["status"]["id"];
+                    var userid = (long)o["delete"]["status"]["user_id"];
+
+                    deserialisedResponse = new Delete {Id = id, UserId = userid};
                 }
                 else if (SaneText.Contains("\"retweeted_status\":{"))
                 {

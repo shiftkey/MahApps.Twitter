@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Net;
 using Hammock;
 using Hammock.Authentication;
 using Hammock.Authentication.Basic;
+using Hammock.Tasks;
 using MahApps.RESTBase;
 using MahApps.Twitter;
 using MahApps.Twitter.Methods;
@@ -42,9 +44,10 @@ namespace MahApps.Identica
 
             Client = new RestClient
                          {
-                             Authority = "http://identi.ca/api", 
+                             Authority = "http://identi.ca/api",
 
-                         };
+                         };            
+            
             Authority = "http://identi.ca/api";
         }
 
