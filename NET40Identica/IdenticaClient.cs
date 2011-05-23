@@ -49,6 +49,8 @@ namespace MahApps.Identica
                          };            
             
             Authority = "http://identi.ca/api";
+
+            Encode = false;
         }
 
         public ITwitterResponse Deserialise<T>(string content) where T : ITwitterResponse
@@ -85,5 +87,7 @@ namespace MahApps.Identica
 
             return null;
         }
+
+        public bool Encode { get; set; }
     }
 }

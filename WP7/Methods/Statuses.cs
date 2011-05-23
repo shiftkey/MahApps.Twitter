@@ -37,18 +37,19 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginUpdate(String Text, String ID, double? Lat, double? Long, GenericResponseDelegate callback)
+        public void BeginUpdate(string text, string id, double? lat, double? @long, GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("status", Uri.EscapeDataString(Text));
+            var p = new Dictionary<string, string>();
 
-            if (!String.IsNullOrEmpty(ID))
-                p.Add("in_reply_to_status_id", ID);
+            p.Add("status", Context.Encode ? Uri.EscapeDataString(text) : text);
 
-            if (Lat != null && Long != null)
+            if (!String.IsNullOrEmpty(id))
+                p.Add("in_reply_to_status_id", id);
+
+            if (lat != null && @long != null)
             {
-                p.Add("lat", Lat.ToString());
-                p.Add("long", Long.ToString());
+                p.Add("lat", lat.ToString());
+                p.Add("long", @long.ToString());
             }
 
             Context.BeginRequest(baseAddress + "update.json", p, WebMethod.Post, (req, res, state) =>
@@ -61,15 +62,15 @@ namespace MahApps.Twitter.Methods
 
         }
 
-        public void BeginUpdate(String Text, String ID, GenericResponseDelegate callback)
+        public void BeginUpdate(string text, string id, GenericResponseDelegate callback)
         {
-            BeginUpdate(Text, ID, null, null, callback);
+            BeginUpdate(text, id, null, null, callback);
         }
 
 
-        public void BeginUpdate(String Text, GenericResponseDelegate callback)
+        public void BeginUpdate(string text, GenericResponseDelegate callback)
         {
-            BeginUpdate(Text, null, callback);
+            BeginUpdate(text, null, callback);
         }
 
         public void BeginPublicTimeline(GenericResponseDelegate callback)

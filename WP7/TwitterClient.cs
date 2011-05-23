@@ -73,6 +73,8 @@ namespace MahApps.Twitter
             return null;
         }
 
+        public bool Encode { get; set; }
+
         public TwitterClient(String ConsumerKey, String ConsumerSecret, String Callback)
             : base(new RestClient
                        {
@@ -82,6 +84,7 @@ namespace MahApps.Twitter
 #endif
                        })
         {
+            Encode = true;
             Statuses = new Statuses(this);
             Account = new Account(this);
             DirectMessages = new DirectMessages(this);
