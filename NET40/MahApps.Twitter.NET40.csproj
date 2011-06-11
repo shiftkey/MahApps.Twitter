@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Output\NET4\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -88,6 +88,9 @@
     <Compile Include="..\WP7\Methods\Tweets.cs">
       <Link>Methods\Tweets.cs</Link>
     </Compile>
+    <Compile Include="..\WP7\Methods\User.cs">
+      <Link>Methods\User.cs</Link>
+    </Compile>
     <Compile Include="..\WP7\Models\DirectMessage.cs">
       <Link>Models\DirectMessage.cs</Link>
     </Compile>
@@ -102,6 +105,12 @@
     </Compile>
     <Compile Include="..\WP7\Models\List.cs">
       <Link>Models\List.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\Relationship.cs">
+      <Link>Models\Relationship.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\RelationShipEntity.cs">
+      <Link>Models\RelationShipEntity.cs</Link>
     </Compile>
     <Compile Include="..\WP7\Models\ResultsWrapper.cs">
       <Link>Models\ResultsWrapper.cs</Link>

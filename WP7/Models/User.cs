@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MahApps.Twitter.Extensions;
 using Newtonsoft.Json;
 
@@ -47,7 +44,8 @@ namespace MahApps.Twitter.Models
 
         public string Lang { get; set; }
 
-        /*public long Following { get; set; }*/
+        [JsonProperty(PropertyName = "following", NullValueHandling = NullValueHandling.Ignore)]
+        public bool Following { get; set; }
 
         [JsonProperty(PropertyName = "followers_count", NullValueHandling = NullValueHandling.Ignore)]
         public long? FollowersCount { get; set; }

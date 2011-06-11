@@ -1,10 +1,14 @@
 ﻿using MahApps.RESTBase;
 using MahApps.Twitter.Methods;
+using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter
 {
     public interface ITwitterClient : IRestClientBase
     {
+        ITwitterResponse Deserialise<T>(string content) where T : ITwitterResponse;
+        bool Encode { get; set; }
+		
         Account Account { get; }
         Statuses Statuses { get; }
         Block Block { get; }

@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
 
 namespace MahApps.Twitter.Models
 {
+    public class Delete : ITwitterResponse
+    {
+        public long? Id { get; set; }
+        public long? UserId { get; set; }
+    }
     public class StreamEvent : ITwitterResponse
     {
         [JsonProperty(PropertyName = "target")]

@@ -19,6 +19,7 @@ using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Methods;
 using MahApps.Twitter.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WebHeaderCollection = System.Net.WebHeaderCollection;
 
 namespace MahApps.Twitter
@@ -35,8 +36,9 @@ namespace MahApps.Twitter
         public DirectMessages DirectMessages { get; set; }
         public Favourites Favourites { get; set; }
         public Friendship Friendships { get; set; }
+        public Users Users { get; set; }
 
-        public static ITwitterResponse Deserialise<T>(String Content) where T : ITwitterResponse
+        public ITwitterResponse Deserialise<T>(String Content) where T : ITwitterResponse
         {
             try
             {
@@ -71,6 +73,8 @@ namespace MahApps.Twitter
             return null;
         }
 
+        public bool Encode { get; set; }
+
         public TwitterClient(String ConsumerKey, String ConsumerSecret, String Callback)
             : base(new RestClient
                        {
@@ -80,6 +84,7 @@ namespace MahApps.Twitter
 #endif
                        })
         {
+            Encode = true;
             Statuses = new Statuses(this);
             Account = new Account(this);
             DirectMessages = new DirectMessages(this);
@@ -88,6 +93,7 @@ namespace MahApps.Twitter
             Friendships = new Friendship(this);
             Lists = new List(this);
             Search = new Search(this);
+            Users = new Users(this);
 
             OAuthBase = "https://api.twitter.com/oauth/";
             TokenRequestUrl = "request_token";
@@ -106,7 +112,7 @@ namespace MahApps.Twitter
                               };
 
             if (!String.IsNullOrEmpty(Callback))
-                Credentials.CallbackUrl = Callback;
+                ((OAuthCredentials)Credentials).CallbackUrl = Callback;
         }
 
         public enum Format
@@ -119,8 +125,8 @@ namespace MahApps.Twitter
         {
             var restClient = (RestClient)Client;
 
-            Credentials.Version = "1.0";
-            Credentials.CallbackUrl = String.Empty;
+            ((OAuthCredentials)Credentials).Version = "1.0";
+            ((OAuthCredentials)Credentials).CallbackUrl = String.Empty;
 
             RestRequest request = new RestRequest
             {
@@ -161,10 +167,10 @@ namespace MahApps.Twitter
         {
             
             Callback = callback;
-            this.Credentials.CallbackUrl = null;
+            ((OAuthCredentials)Credentials).CallbackUrl = null;
             var streamClient = new RestClient()
             {
-                Authority = "http://betastream.twitter.com/",
+                Authority = "http://sitestream.twitter.com/",
                 VersionPath = "2b",
                 Credentials = Credentials,
             };
@@ -210,16 +216,17 @@ namespace MahApps.Twitter
         public delegate void TweetCallback(RestRequest request, RestResponse response, ITwitterResponse DeserialisedResponse);
 
         public event VoidDelegate StreamingReconnectAttemptEvent;
+        public event VoidDelegate StreamingDisconnectedEvent;
 
         public TweetCallback Callback { get; set; }
         public IAsyncResult StreamingAsyncResult { get; set; }
         public IAsyncResult BeginStream(TweetCallback callback)
         {
-            if (StreamingAsyncResult == null)
+            if (StreamingAsyncResult == null || StreamingAsyncResult.IsCompleted)
             {
                 _lastConnectAttempt = DateTime.Now;
                 Callback = callback;
-                this.Credentials.CallbackUrl = null;
+                ((OAuthCredentials)Credentials).CallbackUrl = null;
                 var streamClient = new RestClient()
                 {
                     Authority = "https://userstream.twitter.com",
@@ -238,6 +245,7 @@ namespace MahApps.Twitter
                         ResultsPerCallback = 1,
                     },
                 };
+
 #if !SILVERLIGHT 
                 if (_timer == null)
                 {
@@ -245,7 +253,7 @@ namespace MahApps.Twitter
                     _timer.Elapsed += new ElapsedEventHandler(Timer_Elapsed);
                     _timer.Start();
                 }
-
+                
                 StreamingAsyncResult = streamClient.BeginRequest(req, StreamCallback);
 #endif
 #if SILVERLIGHT
@@ -260,6 +268,8 @@ namespace MahApps.Twitter
             if (StreamingAsyncResult != null)
                 if (StreamingAsyncResult.IsCompleted == true && Reconnect == true)
                 {
+                    if (StreamingDisconnectedEvent != null)
+                        StreamingDisconnectedEvent();
                     Console.WriteLine("stream disconnected, attempting reconnect");
 
                     if (DateTime.Now.Subtract(_lastConnectAttempt) > TimeSpan.FromMinutes(2))
@@ -290,6 +300,15 @@ namespace MahApps.Twitter
                 else if (SaneText.StartsWith("{\"target\":"))
                 {
                     deserialisedResponse = (StreamEvent)JsonConvert.DeserializeObject<StreamEvent>(SaneText);
+                }
+                else if (SaneText.StartsWith("{\"delete\":"))
+                {
+                    /*{"delete":{"status":{"user_id_str":"44504925","id_str":"66791879353708544","id":66791879353708544,"user_id":44504925}}}*/
+                    var o = JObject.Parse(SaneText);
+                    var id = (long) o["delete"]["status"]["id"];
+                    var userid = (long)o["delete"]["status"]["user_id"];
+
+                    deserialisedResponse = new Delete {Id = id, UserId = userid};
                 }
                 else if (SaneText.Contains("\"retweeted_status\":{"))
                 {

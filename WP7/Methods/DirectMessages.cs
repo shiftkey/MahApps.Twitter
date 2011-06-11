@@ -23,7 +23,7 @@ namespace MahApps.Twitter.Methods
 
         public void BeginDirectMessages(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
+            var p = new Dictionary<string, string>();
             if (SinceId != null)
                 p.Add("since_id", SinceId.ToString());
 
@@ -41,7 +41,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + ".json", p, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<DirectMessage>>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<DirectMessage>>(res.Content);
 
                 if (callback != null)
                     callback(req, res, obj);
@@ -56,7 +56,7 @@ namespace MahApps.Twitter.Methods
 
         public void BeginSentDirectMessages(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
+            var p = new Dictionary<string, string>();
             if (SinceId != null)
                 p.Add("since_id", SinceId.ToString());
 
@@ -74,7 +74,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "/sent.json", p, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<DirectMessage>>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<DirectMessage>>(res.Content);
 
                 if (callback != null)
                     callback(req, res, obj);
@@ -82,15 +82,17 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginCreate(String screen_name, String Text, GenericResponseDelegate callback)
+        public void BeginCreate(string screenName, string text, GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("screen_name", screen_name);
-            p.Add("text", Uri.EscapeDataString(Text));
+            var p = new Dictionary<string, string>
+                        {
+                            {"screen_name", screenName}, 
+                            {"text", Context.Encode ? Uri.EscapeDataString(text) : text}
+                        };
 
             Context.BeginRequest(baseAddress + "/new.json", p, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = TwitterClient.Deserialise<DirectMessage>(res.Content);
+                ITwitterResponse obj = Context.Deserialise<DirectMessage>(res.Content);
 
                 if (callback != null)
                     callback(req, res, obj);

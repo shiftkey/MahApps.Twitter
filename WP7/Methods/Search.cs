@@ -25,10 +25,10 @@ namespace MahApps.Twitter.Methods
 
             BeginRequest(p, WebMethod.Get, (req, res, state) =>
                                                   {
-                                                      ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper>(res.Content);
+                                                      ITwitterResponse obj = Context.Deserialise<ResultsWrapper>(res.Content);
 
                                                       if (callback != null)
-                                                          callback(req, res, ((ResultsWrapper)obj).Results);
+                                                          callback(req, res, (!(obj is ExceptionResponse)) ? ((ResultsWrapper)obj).Results : null);
                                                   });
         }
 
@@ -60,7 +60,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest("/saved_searches.json", null, WebMethod.Get, (req, res, state) =>
                                                                                   {
-                                                                                      ITwitterResponse obj = TwitterClient.Deserialise<ResultsWrapper<SavedSearch>>(res.Content);
+                                                                                      ITwitterResponse obj = Context.Deserialise<ResultsWrapper<SavedSearch>>(res.Content);
 
                                                                                       if (callback != null)
                                                                                           callback(req, res, obj);
