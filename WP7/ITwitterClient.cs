@@ -8,7 +8,7 @@ namespace MahApps.Twitter
     {
         ITwitterResponse Deserialise<T>(string content) where T : ITwitterResponse;
         bool Encode { get; set; }
-		
+
         Account Account { get; }
         Statuses Statuses { get; }
         Block Block { get; }
@@ -16,6 +16,8 @@ namespace MahApps.Twitter
         Search Search { get; }
         DirectMessages DirectMessages { get; }
         Favourites Favourites { get; }
+        
         Friendship Friendships { get; }
+        Users Users { get; }
     }
 }
