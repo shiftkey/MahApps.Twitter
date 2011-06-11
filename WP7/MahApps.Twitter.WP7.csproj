@@ -67,7 +67,9 @@
     <Compile Include="Methods\Block.cs" />
     <Compile Include="Methods\DirectMessages.cs" />
     <Compile Include="Methods\Favourites.cs" />
+    <Compile Include="Methods\FriendsAndFollowers.cs" />
     <Compile Include="Methods\Friendship.cs" />
+    <Compile Include="Models\IdLookup.cs" />
     <Compile Include="Methods\Lists.cs" />
     <Compile Include="Methods\Search.cs" />
     <Compile Include="Methods\Statuses.cs" />

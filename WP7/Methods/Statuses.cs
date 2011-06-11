@@ -208,26 +208,6 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginGetFriends(GenericResponseDelegate callback)
-        {
-            Context.BeginRequest(baseAddress + "friends.json", null, WebMethod.Get, (req, res, state) =>
-            {
-                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<User>>(res.Content);
-                if (callback != null)
-                    callback(req, res, obj);
-            });
-        }
-
-        public void BeginGetFollowers(GenericResponseDelegate callback)
-        {
-            Context.BeginRequest(baseAddress + "friends.json", null, WebMethod.Get, (req, res, state) =>
-            {
-                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<User>>(res.Content);
-                if (callback != null)
-                    callback(req, res, obj);
-            });
-        }
-
         public void BeginDestroy(String Id, GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "destroy/"+Id+".json", null, WebMethod.Post, (req, res, state) =>

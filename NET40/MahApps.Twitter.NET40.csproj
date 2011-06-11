@@ -32,14 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hammock.ClientProfile, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c148cfba29ed1a4d, processorArchitecture=MSIL">
+    <Reference Include="Hammock.ClientProfile">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\NET4\Hammock.ClientProfile.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.RESTBase">
       <HintPath>..\Lib\NET4\MahApps.RESTBase.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\NET4\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -73,6 +73,9 @@
     <Compile Include="..\WP7\Methods\Favourites.cs">
       <Link>Methods\Favourites.cs</Link>
     </Compile>
+    <Compile Include="..\WP7\Methods\FriendsAndFollowers.cs">
+      <Link>Methods\FriendsAndFollowers.cs</Link>
+    </Compile>
     <Compile Include="..\WP7\Methods\Friendship.cs">
       <Link>Methods\Friendship.cs</Link>
     </Compile>
@@ -99,6 +102,9 @@
     </Compile>
     <Compile Include="..\WP7\Models\Geo.cs">
       <Link>Models\Geo.cs</Link>
+    </Compile>
+    <Compile Include="..\WP7\Models\IdLookup.cs">
+      <Link>Models\IdLookup.cs</Link>
     </Compile>
     <Compile Include="..\WP7\Models\ITwitterResponse.cs">
       <Link>Models\ITwitterResponse.cs</Link>

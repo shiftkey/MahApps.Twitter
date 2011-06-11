@@ -38,7 +38,7 @@
     <Reference Include="MahApps.RESTBase">
       <HintPath>..\Lib\NET4\MahApps.RESTBase.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\NET4\Newtonsoft.Json.dll</HintPath>
     </Reference>

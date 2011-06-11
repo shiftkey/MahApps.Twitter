@@ -35,6 +35,7 @@ namespace MahApps.Twitter
         public Search Search { get; set; }
         public DirectMessages DirectMessages { get; set; }
         public Favourites Favourites { get; set; }
+        public FriendsAndFollowers FriendsAndFollowers { get; set; }
         public Friendship Friendships { get; set; }
         public Users Users { get; set; }
 
@@ -94,6 +95,7 @@ namespace MahApps.Twitter
             Lists = new List(this);
             Search = new Search(this);
             Users = new Users(this);
+            FriendsAndFollowers = new FriendsAndFollowers(this);
 
             OAuthBase = "https://api.twitter.com/oauth/";
             TokenRequestUrl = "request_token";
@@ -220,7 +222,7 @@ namespace MahApps.Twitter
 
         public TweetCallback Callback { get; set; }
         public IAsyncResult StreamingAsyncResult { get; set; }
-        public IAsyncResult BeginStream(TweetCallback callback)
+        public IAsyncResult BeginStream(TweetCallback callback, List<string> tracks)
         {
             if (StreamingAsyncResult == null || StreamingAsyncResult.IsCompleted)
             {
@@ -245,6 +247,9 @@ namespace MahApps.Twitter
                         ResultsPerCallback = 1,
                     },
                 };
+
+                if (tracks != null)
+                    req.AddParameter("track", string.Join(",", tracks.ToArray()));
 
 #if !SILVERLIGHT 
                 if (_timer == null)
@@ -275,7 +280,7 @@ namespace MahApps.Twitter
                     if (DateTime.Now.Subtract(_lastConnectAttempt) > TimeSpan.FromMinutes(2))
                     {
                         _lastConnectAttempt = DateTime.Now;
-                        BeginStream(Callback);
+                        BeginStream(Callback, null);
                         if (StreamingReconnectAttemptEvent != null)
                             StreamingReconnectAttemptEvent();
                     }
