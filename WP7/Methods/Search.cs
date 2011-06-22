@@ -8,12 +8,12 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Search : RestMethodsBase<ITwitterClient>
+    public class Search : RestMethodsBase<IBaseTwitterClient>
     {
         private String baseAddress = "http://search.twitter.com";
         private String basePath = "search.json";
 
-        public Search(ITwitterClient context)
+        public Search(IBaseTwitterClient context)
             : base(context)
         {
         }

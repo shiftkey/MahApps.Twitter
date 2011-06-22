@@ -6,9 +6,9 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class FriendsAndFollowers : RestMethodsBase<ITwitterClient>
+    public class FriendsAndFollowers : RestMethodsBase<IBaseTwitterClient>
     {
-        public FriendsAndFollowers(ITwitterClient context)
+        public FriendsAndFollowers(IBaseTwitterClient context)
             : base(context)
         {
 

@@ -21,7 +21,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var response = Substitute.For<RestResponse>();
             response.Content.Returns("foo");
 
-            var twitterClient = Substitute.For<ITwitterClient>();
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
 
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
@@ -51,7 +51,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var response = Substitute.For<RestResponse>();
             response.Content.Returns(" { screen_name: \"shiftkey\" } ");
 
-            var twitterClient = Substitute.For<ITwitterClient>();
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
 
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>

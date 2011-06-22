@@ -7,9 +7,9 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class DirectMessages : RestMethodsBase<ITwitterClient>
+    public class DirectMessages : RestMethodsBase<IBaseTwitterClient>
     {
-        public DirectMessages(ITwitterClient context)
+        public DirectMessages(IBaseTwitterClient context)
             : base(context)
         {
         }

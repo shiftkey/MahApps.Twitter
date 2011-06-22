@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace MahApps.Identica
 {
-    public class IdenticaClient : RestClientBase, ITwitterClient
+    public class IdenticaClient : RestClientBase, IBaseTwitterClient
     {
         public Account Account { get; set; }
         public Statuses Statuses { get; set; }

@@ -8,9 +8,9 @@ using File = MahApps.RESTBase.File;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Account : RestMethodsBase<ITwitterClient>
+    public class Account : RestMethodsBase<IBaseTwitterClient>
     {
-        public Account(ITwitterClient context)
+        public Account(IBaseTwitterClient context)
             : base(context)
         {
         }

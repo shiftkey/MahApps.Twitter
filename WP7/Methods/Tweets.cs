@@ -2,9 +2,9 @@
 
 namespace MahApps.Twitter.Methods
 {
-    public class Tweets : RestMethodsBase<ITwitterClient>
+    public class Tweets : RestMethodsBase<IBaseTwitterClient>
     {
-        public Tweets(ITwitterClient context)
+        public Tweets(IBaseTwitterClient context)
             : base(context)
         {
         }

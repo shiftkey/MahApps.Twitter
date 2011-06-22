@@ -7,10 +7,10 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Statuses : RestMethodsBase<ITwitterClient>
+    public class Statuses : RestMethodsBase<IBaseTwitterClient>
     {
         private String baseAddress = "statuses/";
-        public Statuses(ITwitterClient Context)
+        public Statuses(IBaseTwitterClient Context)
             : base(Context)
         {
         }

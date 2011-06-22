@@ -6,11 +6,11 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Favourites : RestMethodsBase<ITwitterClient>
+    public class Favourites : RestMethodsBase<IBaseTwitterClient>
     {
         private String baseAddress = "favorites/";
 
-        public Favourites(ITwitterClient context)
+        public Favourites(IBaseTwitterClient context)
             : base(context)
         {
         }
