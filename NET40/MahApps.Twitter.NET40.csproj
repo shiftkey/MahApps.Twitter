@@ -58,6 +58,9 @@
     <Compile Include="..\WP7\Extensions\StringExtensions.cs">
       <Link>Extensions\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\WP7\IBaseTwitterClient.cs">
+      <Link>IBaseTwitterClient.cs</Link>
+    </Compile>
     <Compile Include="..\WP7\ITwitterClient.cs">
       <Link>ITwitterClient.cs</Link>
     </Compile>
