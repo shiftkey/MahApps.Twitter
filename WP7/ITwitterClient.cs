@@ -14,6 +14,7 @@ namespace MahApps.Twitter
         Block Block { get; }
         List Lists { get; }
         Search Search { get; }
+        FriendsAndFollowers FriendsAndFollowers { get; set; }
         DirectMessages DirectMessages { get; }
         Favourites Favourites { get; }
         

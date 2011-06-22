@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Net;
 using Hammock;
-using Hammock.Authentication;
 using Hammock.Authentication.Basic;
-using Hammock.Tasks;
 using MahApps.RESTBase;
 using MahApps.Twitter;
 using MahApps.Twitter.Methods;
@@ -20,6 +17,7 @@ namespace MahApps.Identica
         public List Lists { get; set; }
         public Search Search { get; set; }
         public DirectMessages DirectMessages { get; set; }
+        public FriendsAndFollowers FriendsAndFollowers { get; set; }
         public Favourites Favourites { get; set; }
         public Friendship Friendships { get; set; }
         public Users Users { get; set; }
@@ -35,6 +33,7 @@ namespace MahApps.Identica
             Lists = new List(this);
             Search = new Search(this);
             Users = new Users(this);
+            FriendsAndFollowers = new FriendsAndFollowers(this);
 
             Credentials = new BasicAuthCredentials
             {

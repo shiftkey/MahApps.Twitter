@@ -26,8 +26,6 @@ namespace MahApps.Twitter
 {
     public class TwitterClient : RestClientBase, ITwitterClient
     {
-
-
         public Account Account { get; set; }
         public Statuses Statuses { get; set; }
         public Block Block { get; set; }
@@ -39,18 +37,18 @@ namespace MahApps.Twitter
         public Friendship Friendships { get; set; }
         public Users Users { get; set; }
 
-        public ITwitterResponse Deserialise<T>(String Content) where T : ITwitterResponse
+        public ITwitterResponse Deserialise<T>(string content) where T : ITwitterResponse
         {
             try
             {
-                T obj = JsonConvert.DeserializeObject<T>(Content);
+                T obj = JsonConvert.DeserializeObject<T>(content);
                 return obj;
             }
             catch (JsonSerializationException ex)
             {
                 return new ExceptionResponse()
                            {
-                               Content = Content,
+                               Content = content,
                                ErrorMessage = ex.Message
                            };
             }
@@ -58,7 +56,7 @@ namespace MahApps.Twitter
             {
                 return new ExceptionResponse()
                 {
-                    Content = Content,
+                    Content = content,
                     ErrorMessage = ex.Message
                 };
             }
@@ -66,7 +64,7 @@ namespace MahApps.Twitter
             {
                 return new ExceptionResponse()
                 {
-                    Content = Content,
+                    Content = content,
                     ErrorMessage = ex.Message
                 };
             }
