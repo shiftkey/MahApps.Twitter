@@ -7,35 +7,34 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
-    public class Block: RestMethodsBase<IBaseTwitterClient>
+    public class Block : RestMethodsBase<IBaseTwitterClient>
     {
-        private String baseAddress = "blocks/";
+        private const string BaseAddress = "blocks/";
+
         public Block(IBaseTwitterClient context)
             : base(context)
         {
         }
 
-        public void BeginBlock(String Username, GenericResponseDelegate callback)
+        public virtual void BeginBlock(string username, GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("screen_name", Username);
+            var p = new Dictionary<string, string> { { "screen_name", username } };
 
-            Context.BeginRequest(baseAddress + "create.json", p, WebMethod.Post, (req, res, state) =>
+            Context.BeginRequest(BaseAddress + "create.json", p, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<User>(res.Content);
+                var obj = Context.Deserialise<User>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
         }
 
-        public void BeginSpamBlock (String Username, GenericResponseDelegate callback)
+        public virtual void BeginSpamBlock(string username, GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("screen_name", Username);
+            var p = new Dictionary<string, string> { { "screen_name", username } };
 
             Context.BeginRequest("report_spam.json", p, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<User>(res.Content);
+                var obj = Context.Deserialise<User>(res.Content);
                 if (callback != null)
                     callback(req, res, obj);
             });
