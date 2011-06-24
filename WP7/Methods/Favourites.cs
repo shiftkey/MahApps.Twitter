@@ -15,7 +15,7 @@ namespace MahApps.Twitter.Methods
         {
         }
 
-        public void BeginGetFavourites(GenericResponseDelegate callback)
+        public virtual void BeginGetFavourites(GenericResponseDelegate callback)
         {
             Context.BeginRequest("favorites.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -25,7 +25,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginCreate(String ID, GenericResponseDelegate callback)
+        public virtual void BeginCreate(String ID, GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "create/" + ID + ".json", null, WebMethod.Post, (req, res, state) =>
             {
@@ -35,7 +35,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginDestroy(String ID, GenericResponseDelegate callback)
+        public virtual void BeginDestroy(String ID, GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "destroy/" + ID + ".json", null, WebMethod.Post, (req, res, state) =>
             {

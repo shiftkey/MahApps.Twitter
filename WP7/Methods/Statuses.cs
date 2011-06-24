@@ -14,7 +14,7 @@ namespace MahApps.Twitter.Methods
             : base(Context)
         {
         }
-        public void BeginGetTweet(String Id, GenericResponseDelegate callback)
+        public virtual void BeginGetTweet(String Id, GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "show/" + Id + ".json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -26,7 +26,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginRetweet(String ID, GenericResponseDelegate callback)
+        public virtual void BeginRetweet(String ID, GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "retweet/" + ID + ".json", null, WebMethod.Post, (req, res, state) =>
             {
@@ -37,7 +37,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginUpdate(string text, string id, double? lat, double? @long, GenericResponseDelegate callback)
+        public virtual void BeginUpdate(string text, string id, double? lat, double? @long, GenericResponseDelegate callback)
         {
             var p = new Dictionary<string, string>();
 
@@ -62,18 +62,18 @@ namespace MahApps.Twitter.Methods
 
         }
 
-        public void BeginUpdate(string text, string id, GenericResponseDelegate callback)
+        public virtual void BeginUpdate(string text, string id, GenericResponseDelegate callback)
         {
             BeginUpdate(text, id, null, null, callback);
         }
 
 
-        public void BeginUpdate(string text, GenericResponseDelegate callback)
+        public virtual void BeginUpdate(string text, GenericResponseDelegate callback)
         {
             BeginUpdate(text, null, callback);
         }
 
-        public void BeginPublicTimeline(GenericResponseDelegate callback)
+        public virtual void BeginPublicTimeline(GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "public_timeline.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -83,17 +83,17 @@ namespace MahApps.Twitter.Methods
                     callback(req, res, obj);
             });
         }
-        public void BeginHomeTimeline(GenericResponseDelegate callback)
+        public virtual void BeginHomeTimeline(GenericResponseDelegate callback)
         {
             BeginHomeTimeline(null, null, null, null, false, false, callback);
         }
 
-        public void BeginHomeTimeline(long Count, GenericResponseDelegate callback)
+        public virtual void BeginHomeTimeline(long Count, GenericResponseDelegate callback)
         {
             BeginHomeTimeline(null, null, Count, null, false, false, callback);
         }
 
-        public void BeginHomeTimeline(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, GenericResponseDelegate callback)
+        public virtual void BeginHomeTimeline(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             if (SinceId != null)
@@ -123,7 +123,7 @@ namespace MahApps.Twitter.Methods
 
 
 
-        public void BeginFriendsTimeline(GenericResponseDelegate callback)
+        public virtual void BeginFriendsTimeline(GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "friends_timeline.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -133,7 +133,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginUserTimeline(String Username, GenericResponseDelegate callback)
+        public virtual void BeginUserTimeline(String Username, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             p.Add("screen_name", Username);
@@ -145,12 +145,12 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginMentions(GenericResponseDelegate callback)
+        public virtual void BeginMentions(GenericResponseDelegate callback)
         {
             BeginMentions(null, null, null, null, false, false, callback);
         }
 
-        public void BeginMentions(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, GenericResponseDelegate callback)
+        public virtual void BeginMentions(long? SinceId, long? MaxId, long? Count, int? Page, bool TrimUser, bool IncludeEntities, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();
             if (SinceId != null)
@@ -178,7 +178,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginRetweetedByMe(GenericResponseDelegate callback)
+        public virtual void BeginRetweetedByMe(GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "retweeted_by_me.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -188,7 +188,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginRetweetedToMe(GenericResponseDelegate callback)
+        public virtual void BeginRetweetedToMe(GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "retweeted_to_me.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -198,7 +198,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginRetweetedOfMe(GenericResponseDelegate callback)
+        public virtual void BeginRetweetedOfMe(GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "retweeted_of_me.json", null, WebMethod.Get, (req, res, state) =>
             {
@@ -208,7 +208,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginDestroy(String Id, GenericResponseDelegate callback)
+        public virtual void BeginDestroy(String Id, GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "destroy/"+Id+".json", null, WebMethod.Post, (req, res, state) =>
             {
@@ -217,7 +217,5 @@ namespace MahApps.Twitter.Methods
                     callback(req, res, obj);
             });
         }
-
-
     }
 }
