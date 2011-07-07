@@ -21,7 +21,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var response = Substitute.For<RestResponse>();
             response.Content.Returns(File.ReadAllText(@".\Data\statuses\public_timeline.txt"));
 
-            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            var twitterClient = Substitute.For<TwitterClient>("a", "b", "c");
 
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
@@ -51,7 +51,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var response = Substitute.For<RestResponse>();
             response.Content.Returns(File.ReadAllText(@".\Data\statuses\show-existing.txt"));
 
-            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            var twitterClient = Substitute.For<TwitterClient>("a", "b", "c");
 
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
@@ -82,7 +82,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var response = Substitute.For<RestResponse>();
             response.Content.Returns(File.ReadAllText(@".\Data\statuses\show-missing.txt"));
 
-            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            var twitterClient = Substitute.For<TwitterClient>("a", "b", "c");
 
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>

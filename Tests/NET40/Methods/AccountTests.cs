@@ -47,11 +47,13 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         [Test]
         public void BeginVerifyCredentials_WithValidResponseFromClient_ContainsUser()
         {
+
+
             var request = Substitute.For<RestRequest>();
             var response = Substitute.For<RestResponse>();
             response.Content.Returns(" { screen_name: \"shiftkey\" } ");
 
-            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            var twitterClient = Substitute.For<TwitterClient>("a","b","c");
 
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
