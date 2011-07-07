@@ -63,18 +63,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\data\statuses\public_timeline.txt">
-      <Link>Data\statuses\public_timeline.txt</Link>
+    <None Include="..\data\statuses\home_timeline.json">
+      <Link>Data\statuses\home_timeline.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="..\data\statuses\public_timeline.json">
+      <Link>Data\statuses\public_timeline.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\data\statuses\show-existing.txt">
       <Link>Data\statuses\show-existing.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\data\statuses\show-missing.txt">
       <Link>Data\statuses\show-missing.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\data\statuses\user_timeline.json">
+      <Link>Data\statuses\user_timeline.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

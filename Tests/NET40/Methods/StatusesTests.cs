@@ -17,15 +17,56 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         [Test]
         public void BeginPublicTimeline_ForAnonymousUser_ReturnsAtLeastOneTweet()
         {
-            var request = Substitute.For<RestRequest>();
-            var response = Substitute.For<RestResponse>();
-            response.Content.Returns(File.ReadAllText(@".\Data\statuses\public_timeline.txt"));
-
-            var twitterClient = Substitute.For<TwitterClient>("a", "b", "c");
+            var wasCalled = false;
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
 
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
+                                 {
+                                     var path = c.Args().First() as string;
+                                     var url = path.Replace("/", "\\");
+
+                                     var request = Substitute.For<RestRequest>();
+                                     var response = Substitute.For<RestResponse>();
+                                     response.Content.Returns(File.ReadAllText(@".\Data\" + url));
+
+                                     var callback = c.Args().Last() as RestCallback;
+                                     if (callback != null)
+                                         callback(request, response, null);
+                                 });
+
+            var statuses = new Statuses(twitterClient);
+
+            // assert
+            GenericResponseDelegate endPublishTimeline = (a, b, c) =>
+                                                             {
+                                                                 wasCalled = true;
+                                                                 var tweets = c as IEnumerable<Tweet>;
+                                                                 Assert.That(tweets.Count(), Is.GreaterThan(0));
+                                                             };
+
+            // act
+            statuses.BeginPublicTimeline(endPublishTimeline);
+
+            Assert.That(wasCalled);
+        }
+
+        [Test]
+        public void BeginUserTimeline_ForAnonymousUser_ReturnsAtLeastOneTweet()
+        {
+            var wasCalled = false;
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string,string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+                         .Do(c =>
                          {
+                             var path = c.Args().First() as string;
+                             var url = path.Replace("/", "\\");
+
+                             var request = Substitute.For<RestRequest>();
+                             var response = Substitute.For<RestResponse>();
+                             response.Content.Returns(File.ReadAllText(@".\Data\" + url));
+
                              var callback = c.Args().Last() as RestCallback;
                              if (callback != null)
                                  callback(request, response, null);
@@ -34,14 +75,17 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var statuses = new Statuses(twitterClient);
 
             // assert
-            GenericResponseDelegate endPublishTimeline = (a, b, c) =>
+            GenericResponseDelegate endUserTimeline = (a, b, c) =>
             {
+                wasCalled = true;
                 var tweets = c as IEnumerable<Tweet>;
                 Assert.That(tweets.Count(), Is.GreaterThan(0));
             };
 
             // act
-            statuses.BeginPublicTimeline(endPublishTimeline);
+            statuses.BeginUserTimeline("someone", endUserTimeline);
+
+            Assert.That(wasCalled);
         }
 
         [Test]

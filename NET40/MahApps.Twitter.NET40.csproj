@@ -55,6 +55,9 @@
     <Compile Include="..\WP7\Delegates.cs">
       <Link>Delegates.cs</Link>
     </Compile>
+    <Compile Include="..\WP7\Extensions\JsonExtensions.cs">
+      <Link>Extensions\JsonExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\WP7\Extensions\StringExtensions.cs">
       <Link>Extensions\StringExtensions.cs</Link>
     </Compile>

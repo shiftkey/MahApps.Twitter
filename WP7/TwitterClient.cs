@@ -37,6 +37,7 @@ namespace MahApps.Twitter
         public Friendship Friendships { get; set; }
         public Users Users { get; set; }
 
+        [Obsolete("Use the extension method JsonExtensions.Deserialize as this is a stateless method")]
         public ITwitterResponse Deserialise<T>(string content) where T : ITwitterResponse
         {
             try
