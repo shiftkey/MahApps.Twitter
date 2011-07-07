@@ -7,6 +7,7 @@ using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Methods;
 using MahApps.Twitter.Models;
 using NSubstitute;
+using NSubstitute.Core;
 using NUnit.Framework;
 
 namespace MahApps.Twitter.NET40.UnitTests.Methods
@@ -23,16 +24,12 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
                                  {
-                                     var path = c.Args().First() as string;
-                                     var url = path.Replace("/", "\\");
-
-                                     var request = Substitute.For<RestRequest>();
                                      var response = Substitute.For<RestResponse>();
-                                     response.Content.Returns(File.ReadAllText(@".\Data\" + url));
+                                     response.Content.Returns(File.ReadAllText(MapPathToTestData(c)));
 
                                      var callback = c.Args().Last() as RestCallback;
                                      if (callback != null)
-                                         callback(request, response, null);
+                                         callback(null, response, null);
                                  });
 
             var statuses = new Statuses(twitterClient);
@@ -48,7 +45,14 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginPublicTimeline(endPublishTimeline);
 
-            Assert.That(wasCalled);
+            Assert.That(wasCalled, "A callback needs to occur");
+        }
+
+        private static string MapPathToTestData(CallInfo c)
+        {
+            var path = c.Args().First() as string;
+            var url = path.Replace("/", "\\");
+            return @".\Data\" + url;
         }
 
         [Test]
@@ -57,19 +61,15 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var wasCalled = false;
             var twitterClient = Substitute.For<IBaseTwitterClient>();
 
-            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string,string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
                          {
-                             var path = c.Args().First() as string;
-                             var url = path.Replace("/", "\\");
-
-                             var request = Substitute.For<RestRequest>();
                              var response = Substitute.For<RestResponse>();
-                             response.Content.Returns(File.ReadAllText(@".\Data\" + url));
+                             response.Content.Returns(File.ReadAllText(MapPathToTestData(c)));
 
                              var callback = c.Args().Last() as RestCallback;
                              if (callback != null)
-                                 callback(request, response, null);
+                                 callback(null, response, null);
                          });
 
             var statuses = new Statuses(twitterClient);
@@ -85,48 +85,53 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginUserTimeline("someone", endUserTimeline);
 
-            Assert.That(wasCalled);
+            Assert.That(wasCalled, "A callback needs to occur");
         }
 
         [Test]
         public void BeginGetTweet_WhichFindsATweet_ReturnsSuccessfulTweet()
         {
-            var request = Substitute.For<RestRequest>();
+            var wasCalled = false;
+
             var response = Substitute.For<RestResponse>();
             response.Content.Returns(File.ReadAllText(@".\Data\statuses\show-existing.txt"));
 
-            var twitterClient = Substitute.For<TwitterClient>("a", "b", "c");
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
 
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
                          {
                              var callback = c.Args().Last() as RestCallback;
                              if (callback != null)
-                                 callback(request, response, null);
+                                 callback(null, response, null);
                          });
 
             var statuses = new Statuses(twitterClient);
 
             // assert
             GenericResponseDelegate endGetTweet = (a, b, c) =>
-            {
-                var tweet = c as Tweet;
-                Assert.That(tweet, Is.Not.Null);
-                Assert.That(tweet.Id, Is.EqualTo(16381619317248000));
-            };
+                                                      {
+                                                          wasCalled = true;
+                                                          var tweet = c as Tweet;
+                                                          Assert.That(tweet, Is.Not.Null);
+                                                          Assert.That(tweet.Id, Is.EqualTo(16381619317248000));
+                                                      };
 
             // act
             statuses.BeginGetTweet("16381619317248000", endGetTweet);
+
+            Assert.That(wasCalled, "A callback needs to occur");
         }
 
         [Test]
         public void BeginGetTweet_WhichDoesNotFindATweet_ReturnsExceptionResponse()
         {
+            var wasCalled = false;
             var request = Substitute.For<RestRequest>();
             var response = Substitute.For<RestResponse>();
             response.Content.Returns(File.ReadAllText(@".\Data\statuses\show-missing.txt"));
 
-            var twitterClient = Substitute.For<TwitterClient>("a", "b", "c");
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
 
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
@@ -141,12 +146,16 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // assert
             GenericResponseDelegate endGetTweet = (a, b, c) =>
                                                                     {
+                                                                        wasCalled = true;
+
                                                                         var exception = c as ExceptionResponse;
                                                                         Assert.That(exception, Is.Not.Null);
                                                                     };
 
             // act
             statuses.BeginGetTweet("12345", endGetTweet);
+
+            Assert.That(wasCalled, "A callback needs to occur");
         }
     }
 }

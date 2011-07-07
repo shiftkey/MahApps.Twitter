@@ -10,18 +10,18 @@ namespace MahApps.Twitter.Methods
 {
     public class Statuses : RestMethodsBase<IBaseTwitterClient>
     {
-        private string baseAddress = "statuses/";
+        private const string baseAddress = "statuses/";
 
         public Statuses(IBaseTwitterClient context)
             : base(context)
         {
         }
+
         public virtual void BeginGetTweet(String Id, GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "show/" + Id + ".json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<Tweet>(res.Content);
-
+                var obj = res.Content.Deserialize<Tweet>();
                 if (callback != null)
                     callback(req, res, obj);
             });
