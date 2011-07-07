@@ -17,7 +17,7 @@ namespace MahApps.Twitter.Methods
 
         }
 
-        public void BeginSearch(string q, GenericResponseDelegate callback)
+        public virtual void BeginSearch(string q, GenericResponseDelegate callback)
         {
             var p = new Dictionary<string, string> { { "q", q } };
 
@@ -29,7 +29,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginLookup(int[] userIds, GenericResponseDelegate callback)
+        public virtual void BeginLookup(int[] userIds, GenericResponseDelegate callback)
         {
             string result = string.Join(",", userIds.Take(100).Select(x => x.ToString()).ToArray());
             var p = new Dictionary<string, string> { { "user_id", result } };
