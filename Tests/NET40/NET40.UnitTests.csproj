@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CallInfoExtensions.cs" />
     <Compile Include="Extensions\JsonExtensionTests.cs" />
     <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Methods\AccountTests.cs" />
@@ -65,6 +66,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\data\account\update_profile_image.json">
+      <Link>Data\account\update_profile_image.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\data\statuses\home_timeline.json">
       <Link>Data\statuses\home_timeline.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using Hammock;
 using Hammock.Web;
 using MahApps.Twitter.Delegates;
@@ -47,13 +48,11 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         [Test]
         public void BeginVerifyCredentials_WithValidResponseFromClient_ContainsUser()
         {
-
-
             var request = Substitute.For<RestRequest>();
             var response = Substitute.For<RestResponse>();
             response.Content.Returns(" { screen_name: \"shiftkey\" } ");
 
-            var twitterClient = Substitute.For<TwitterClient>("a","b","c");
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
 
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
@@ -75,6 +74,38 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
 
             // act
             account.BeginVerifyCredentials(endVerifyCredentials);
+        }
+
+        [Test]
+        public void BeginUpdateProfileImage_WithValidResponseFromClient_ContainsUser()
+        {
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+                         .Do(c =>
+                         {
+                             var response = Substitute.For<RestResponse>();
+                             response.Content.Returns(c.MapRequestPathToTestData());
+
+                             var callback = c.Args().Last() as RestCallback;
+                             if (callback != null)
+                                 callback(null, response, null);
+                         });
+
+            var account = new Account(twitterClient);
+
+            // assert
+            GenericResponseDelegate endUpdateProfileImage = (a, b, c) =>
+            {
+                var user = c as User;
+                Assert.That(user, Is.Not.Null);
+                Assert.That(user.ScreenName, Is.EqualTo("shiftkey"));
+            };
+
+            var f = new FileInfo("something");
+
+            // act
+            account.BeginUpdateProfileImage(f, endUpdateProfileImage);
         }
         
     }
