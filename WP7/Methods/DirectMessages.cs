@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Delegates;
+using MahApps.Twitter.Extensions;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -41,7 +42,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + ".json", p, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<DirectMessage>>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<ResultsWrapper<DirectMessage>>();
 
                 if (callback != null)
                     callback(req, res, obj);
@@ -74,7 +75,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "/sent.json", p, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<DirectMessage>>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<ResultsWrapper<DirectMessage>>();
 
                 if (callback != null)
                     callback(req, res, obj);
@@ -92,7 +93,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "/new.json", p, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<DirectMessage>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<DirectMessage>();
 
                 if (callback != null)
                     callback(req, res, obj);

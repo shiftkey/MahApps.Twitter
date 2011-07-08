@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Delegates;
+using MahApps.Twitter.Extensions;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -18,7 +19,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(Username + "/lists/subscriptions.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<ListResult>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<ListResult>();
 
                 if (callback != null)
                 {
@@ -35,7 +36,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(Username + "/lists.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<ListResult>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<ListResult>();
 
                 if (callback != null)
                 {
@@ -66,7 +67,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(Username + "/lists/"+Id+"/statuses.json", p, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<ResultsWrapper<Tweet>>();
 
                 if (callback != null)
                     callback(req, res, obj);

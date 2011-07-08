@@ -6,7 +6,7 @@ namespace MahApps.Twitter
 {
     public interface IBaseTwitterClient : IRestClientBase
     {
-        ITwitterResponse Deserialise<T>(string content) where T : ITwitterResponse;
+        //ITwitterResponse Deserialise<T>(string content) where T : ITwitterResponse;
         bool Encode { get; set; }
 
         Account Account { get; }

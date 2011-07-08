@@ -4,6 +4,7 @@ using System.Linq;
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Delegates;
+using MahApps.Twitter.Extensions;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -23,7 +24,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "search.json", p, WebMethod.Get, (req, res, state) =>
             {
-                var obj = Context.Deserialise<ResultsWrapper<User>>(res.Content);
+                var obj = res.Content.Deserialize<ResultsWrapper<User>>();
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -36,7 +37,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "lookup.json", p, WebMethod.Post, (req, res, state) =>
             {
-                var obj = Context.Deserialise<ResultsWrapper<User>>(res.Content);
+                var obj = res.Content.Deserialize<ResultsWrapper<User>>();
                 if (callback != null)
                     callback(req, res, obj);
             });

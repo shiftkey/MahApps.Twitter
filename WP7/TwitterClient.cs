@@ -69,8 +69,6 @@ namespace MahApps.Twitter
                     ErrorMessage = ex.Message
                 };
             }
-
-            return null;
         }
 
         public bool Encode { get; set; }

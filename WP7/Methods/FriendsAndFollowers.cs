@@ -2,6 +2,7 @@
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Delegates;
+using MahApps.Twitter.Extensions;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -32,7 +33,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(addr + "/ids.json", p, WebMethod.Get, (req, res, state) =>
             {
-                var obj = Context.Deserialise<IdLookup>(res.Content);
+                var obj = res.Content.Deserialize<IdLookup>();
                 if (callback != null)
                     callback(req, res, obj);
             });

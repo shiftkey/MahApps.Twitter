@@ -2,6 +2,7 @@
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Delegates;
+using MahApps.Twitter.Extensions;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -19,7 +20,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest("favorites.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<ResultsWrapper<Tweet>>();
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -29,7 +30,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "create/" + ID + ".json", null, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<Tweet>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<Tweet>();
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -39,7 +40,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "destroy/" + ID + ".json", null, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<Tweet>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<Tweet>();
                 if (callback != null)
                     callback(req, res, obj);
             });

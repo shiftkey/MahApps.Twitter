@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Delegates;
+using MahApps.Twitter.Extensions;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -22,7 +23,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(BaseAddress + "create.json", p, WebMethod.Post, (req, res, state) =>
             {
-                var obj = Context.Deserialise<User>(res.Content);
+                var obj = res.Content.Deserialize<User>();
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -34,7 +35,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest("report_spam.json", p, WebMethod.Post, (req, res, state) =>
             {
-                var obj = Context.Deserialise<User>(res.Content);
+                var obj = res.Content.Deserialize<User>();
                 if (callback != null)
                     callback(req, res, obj);
             });

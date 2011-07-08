@@ -165,7 +165,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest(baseAddress + "mentions.json", p, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<ResultsWrapper<Tweet>>();
 
                 if (callback != null)
                     callback(req, res, obj);
@@ -177,7 +177,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "retweeted_by_me.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<ResultsWrapper<Tweet>>();
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -187,7 +187,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "retweeted_to_me.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<ResultsWrapper<Tweet>>();
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -197,7 +197,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "retweeted_of_me.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<Tweet>>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<ResultsWrapper<Tweet>>();
                 if (callback != null)
                     callback(req, res, obj);
             });
@@ -207,7 +207,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest(baseAddress + "destroy/" + Id + ".json", null, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<ResultsWrapper<User>>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<ResultsWrapper<User>>();
                 if (callback != null)
                     callback(req, res, obj);
             });

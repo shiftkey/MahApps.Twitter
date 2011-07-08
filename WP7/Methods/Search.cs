@@ -4,6 +4,7 @@ using Hammock;
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Delegates;
+using MahApps.Twitter.Extensions;
 using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
@@ -25,7 +26,7 @@ namespace MahApps.Twitter.Methods
 
             BeginRequest(p, WebMethod.Get, (req, res, state) =>
                                                   {
-                                                      ITwitterResponse obj = Context.Deserialise<ResultsWrapper>(res.Content);
+                                                      ITwitterResponse obj = res.Content.Deserialize<ResultsWrapper>();
 
                                                       if (callback != null)
                                                           callback(req, res, (!(obj is ExceptionResponse)) ? ((ResultsWrapper)obj).Results : null);
@@ -60,7 +61,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest("/saved_searches.json", null, WebMethod.Get, (req, res, state) =>
                                                                                   {
-                                                                                      ITwitterResponse obj = Context.Deserialise<ResultsWrapper<SavedSearch>>(res.Content);
+                                                                                      ITwitterResponse obj = res.Content.Deserialize<ResultsWrapper<SavedSearch>>();
 
                                                                                       if (callback != null)
                                                                                           callback(req, res, obj);

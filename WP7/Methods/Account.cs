@@ -3,6 +3,7 @@ using System.IO;
 using Hammock.Web;
 using MahApps.RESTBase;
 using MahApps.Twitter.Delegates;
+using MahApps.Twitter.Extensions;
 using MahApps.Twitter.Models;
 using File = MahApps.RESTBase.File;
 
@@ -19,7 +20,7 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest("account/verify_credentials.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<User>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<User>();
                 callback(req, res, obj);
             });
         }
@@ -31,7 +32,7 @@ namespace MahApps.Twitter.Methods
 
             Context.BeginRequest("account/update_profile_image.json", null, files, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = Context.Deserialise<User>(res.Content);
+                ITwitterResponse obj = res.Content.Deserialize<User>();
 
                 if (callback != null)
                     callback(req, res, obj);
