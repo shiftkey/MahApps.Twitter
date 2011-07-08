@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Methods\AccountTests.cs" />
     <Compile Include="Methods\StatusesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
