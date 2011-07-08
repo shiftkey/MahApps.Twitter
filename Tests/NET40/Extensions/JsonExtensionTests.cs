@@ -11,7 +11,6 @@ namespace MahApps.Twitter.NET40.UnitTests.Extensions
         class SomeObjectWithValue : ITwitterResponse
         {
             public int X { get; set; }
-
         }
 
         [Test]
