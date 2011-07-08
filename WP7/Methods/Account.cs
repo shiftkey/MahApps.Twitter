@@ -20,21 +20,22 @@ namespace MahApps.Twitter.Methods
         {
             Context.BeginRequest("account/verify_credentials.json", null, WebMethod.Get, (req, res, state) =>
             {
-                ITwitterResponse obj = res.Content.Deserialize<User>();
-                callback(req, res, obj);
+                var obj = res.Content.Deserialize<User>();
+                if (callback != null)
+                    callback(req, res, obj);
             });
         }
 
         public void BeginUpdateProfileImage(FileInfo f, GenericResponseDelegate callback)
         {
-            Dictionary<string, File> files = new Dictionary<string, File>();
+            var files = new Dictionary<string, File>();
 
             if (f.Exists)
                 files.Add("image", new File(f.FullName, f.Name));
 
             Context.BeginRequest("account/update_profile_image.json", null, files, WebMethod.Post, (req, res, state) =>
             {
-                ITwitterResponse obj = res.Content.Deserialize<User>();
+                var obj = res.Content.Deserialize<User>();
 
                 if (callback != null)
                     callback(req, res, obj);
