@@ -102,7 +102,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
                 Assert.That(user.ScreenName, Is.EqualTo("shiftkey"));
             };
 
-            var f = new FileInfo("something");
+            var f = new FileInfo("something.jpg");
 
             // act
             account.BeginUpdateProfileImage(f, endUpdateProfileImage);
