@@ -37,39 +37,6 @@ namespace MahApps.Twitter
         public Friendship Friendships { get; set; }
         public Users Users { get; set; }
 
-        [Obsolete("Use the extension method JsonExtensions.Deserialize as this is a stateless method")]
-        public ITwitterResponse Deserialise<T>(string content) where T : ITwitterResponse
-        {
-            try
-            {
-                T obj = JsonConvert.DeserializeObject<T>(content);
-                return obj;
-            }
-            catch (JsonSerializationException ex)
-            {
-                return new ExceptionResponse()
-                           {
-                               Content = content,
-                               ErrorMessage = ex.Message
-                           };
-            }
-            catch (NullReferenceException ex)
-            {
-                return new ExceptionResponse()
-                {
-                    Content = content,
-                    ErrorMessage = ex.Message
-                };
-            }
-            catch (Exception ex)
-            {
-                return new ExceptionResponse()
-                {
-                    Content = content,
-                    ErrorMessage = ex.Message
-                };
-            }
-        }
 
         public bool Encode { get; set; }
 

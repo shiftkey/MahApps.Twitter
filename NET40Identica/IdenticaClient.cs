@@ -1,11 +1,8 @@
-﻿using System;
-using Hammock;
+﻿using Hammock;
 using Hammock.Authentication.Basic;
 using MahApps.RESTBase;
 using MahApps.Twitter;
 using MahApps.Twitter.Methods;
-using MahApps.Twitter.Models;
-using Newtonsoft.Json;
 
 namespace MahApps.Identica
 {
@@ -50,39 +47,6 @@ namespace MahApps.Identica
             Authority = "http://identi.ca/api";
 
             Encode = false;
-        }
-
-        public ITwitterResponse Deserialise<T>(string content) where T : ITwitterResponse
-        {
-            try
-            {
-                T obj = JsonConvert.DeserializeObject<T>(content);
-                return obj;
-            }
-            catch (JsonSerializationException ex)
-            {
-                return new ExceptionResponse()
-                {
-                    Content = content,
-                    ErrorMessage = ex.Message
-                };
-            }
-            catch (NullReferenceException ex)
-            {
-                return new ExceptionResponse()
-                {
-                    Content = content,
-                    ErrorMessage = ex.Message
-                };
-            }
-            catch (Exception ex)
-            {
-                return new ExceptionResponse()
-                {
-                    Content = content,
-                    ErrorMessage = ex.Message
-                };
-            }
         }
 
         public bool Encode { get; set; }
