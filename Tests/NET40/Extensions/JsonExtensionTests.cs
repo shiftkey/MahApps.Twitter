@@ -25,6 +25,19 @@ namespace MahApps.Twitter.NET40.UnitTests.Extensions
         }
 
         [Test]
+        public void Deserialize_WithNullString_ReturnsException()
+        {
+            // act
+            string str = null;
+            var response = str.Deserialize<SomeObject>();
+
+            // assert
+            var error = response as ExceptionResponse;
+            Assert.That(error, Is.Not.Null);
+            Assert.That(!string.IsNullOrWhiteSpace(error.ErrorMessage));
+        }
+
+        [Test]
         public void Deserialize_WithInvalidJson_ReturnsException()
         {
             // act
