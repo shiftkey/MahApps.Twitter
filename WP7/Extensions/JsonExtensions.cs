@@ -21,14 +21,14 @@ namespace MahApps.Twitter.Extensions
                                ErrorMessage = ex.Message
                            };
             }
-            catch (NullReferenceException ex)
-            {
-                return new ExceptionResponse
-                           {
-                               Content = json,
-                               ErrorMessage = ex.Message
-                           };
-            }
+            //catch (NullReferenceException ex)
+            //{
+            //    return new ExceptionResponse
+            //               {
+            //                   Content = json,
+            //                   ErrorMessage = ex.Message
+            //               };
+            //}
             catch (Exception ex)
             {
                 return new ExceptionResponse
