@@ -28,7 +28,9 @@ namespace MahApps.Twitter.Methods
         public void BeginUpdateProfileImage(FileInfo f, GenericResponseDelegate callback)
         {
             Dictionary<string, File> files = new Dictionary<string, File>();
-            files.Add("image", new File(f.FullName, f.Name));
+
+            if (f.Exists)
+                files.Add("image", new File(f.FullName, f.Name));
 
             Context.BeginRequest("account/update_profile_image.json", null, files, WebMethod.Post, (req, res, state) =>
             {

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Hammock;
 using Hammock.Web;
@@ -81,7 +82,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         {
             var twitterClient = Substitute.For<IBaseTwitterClient>();
 
-            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<IDictionary<string, RESTBase.File>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
                          {
                              var response = Substitute.For<RestResponse>();
@@ -102,11 +103,62 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
                 Assert.That(user.ScreenName, Is.EqualTo("shiftkey"));
             };
 
-            var f = new FileInfo("something.jpg");
+            var f = new FileInfo("akihabara.png");
 
             // act
             account.BeginUpdateProfileImage(f, endUpdateProfileImage);
         }
-        
+
+        [Test]
+        public void BeginUpdateProfileImage_WithValidFile_ContainsFile()
+        {
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<IDictionary<string, RESTBase.File>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+                       .Do(c =>
+                               {
+                                   var files = c.Args()[2] as IDictionary<string, RESTBase.File>;
+                                   Assert.That(files.Count() == 1);
+                               });
+
+            var account = new Account(twitterClient);
+
+            // assert
+            GenericResponseDelegate endUpdateProfileImage = (a, b, c) =>
+            {
+
+            };
+
+            var f = new FileInfo("akihabara.png");
+
+            // act
+            account.BeginUpdateProfileImage(f, endUpdateProfileImage);
+        }
+
+        [Test]
+        public void BeginUpdateProfileImage_WithInvalidFile_DoesNotSend()
+        {
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<IDictionary<string, RESTBase.File>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+                       .Do(c =>
+                       {
+                           var files = c.Args()[2] as IDictionary<string, RESTBase.File>;
+                           Assert.That(files.Count() == 0);
+                       });
+
+            var account = new Account(twitterClient);
+
+            // assert
+            GenericResponseDelegate endUpdateProfileImage = (a, b, c) =>
+            {
+
+            };
+
+            var f = new FileInfo("fakefile.foo");
+
+            // act
+            account.BeginUpdateProfileImage(f, endUpdateProfileImage);
+        }
     }
 }
