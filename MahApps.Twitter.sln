@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{376D03A1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Twitter.Tests", "src\Tests\NET40\MahApps.Twitter.Tests.csproj", "{BC6429F9-AE66-4336-9F16-FBD4D1B0DEF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Identica", "src\NET40Identica\MahApps.Identica.csproj", "{215A4573-7B76-4EEB-9EDB-AE8174E1CB2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Identica", "src\Identica\MahApps.Identica.csproj", "{215A4573-7B76-4EEB-9EDB-AE8174E1CB2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

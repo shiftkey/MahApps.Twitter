@@ -16,6 +16,6 @@
     </dependencies>
   </metadata>
   	<files>
-		<file src="..\NET4\bin\Release\*.dll" target="lib\net40" />
+		<file src="..\Identica\bin\Release\*.dll" target="lib\net40" />
 	</files>
 </package>
