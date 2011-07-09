@@ -97,6 +97,10 @@
       <Link>Data\direct_messages.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\data\direct_messages\sent.json">
+      <Link>Data\direct_messages\sent.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\data\friendships\create.json">
       <Link>Data\friendships\create.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
