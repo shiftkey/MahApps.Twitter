@@ -2,7 +2,7 @@
 using MahApps.Twitter.Models;
 using NUnit.Framework;
 
-namespace MahApps.Twitter.NET40.UnitTests.Models
+namespace MahApps.Twitter.Tests.Models
 {
     [TestFixture]
     public class GeoTests

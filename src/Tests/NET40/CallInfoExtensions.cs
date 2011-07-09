@@ -4,7 +4,7 @@ using System.Linq;
 using NSubstitute.Core;
 using NUnit.Framework;
 
-namespace MahApps.Twitter.NET40.UnitTests
+namespace MahApps.Twitter.Tests
 {
     public static class CallInfoExtensions
     {

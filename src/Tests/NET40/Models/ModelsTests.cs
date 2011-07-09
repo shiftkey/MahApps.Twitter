@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MahApps.Twitter.Models;
 using NUnit.Framework;
 
-namespace MahApps.Twitter.NET40.UnitTests.Models
+namespace MahApps.Twitter.Tests.Models
 {
     [TestFixture]
     public class ModelsTests

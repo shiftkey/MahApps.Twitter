@@ -9,7 +9,7 @@ using MahApps.Twitter.Models;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace MahApps.Twitter.NET40.UnitTests.Methods
+namespace MahApps.Twitter.Tests.Methods
 {
     [TestFixture]
     public class StatusesTests

@@ -5,7 +5,7 @@ using Hammock.Web;
 using MahApps.RESTBase;
 using NSubstitute;
 
-namespace MahApps.Twitter.NET40.UnitTests
+namespace MahApps.Twitter.Tests
 {
     public static class ClientExtensions
     {

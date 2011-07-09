@@ -2,7 +2,7 @@
 using MahApps.Twitter.Extensions;
 using NUnit.Framework;
 
-namespace MahApps.Twitter.NET40.UnitTests.Extensions
+namespace MahApps.Twitter.Tests.Extensions
 {
     [TestFixture]
     public class StringExtensionsTests
