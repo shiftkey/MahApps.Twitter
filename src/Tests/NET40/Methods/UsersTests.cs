@@ -51,6 +51,28 @@ namespace MahApps.Twitter.Tests.Methods
         }
 
         [Test]
+        public void BeginLookup_WithValidUser_ReturnsUsers()
+        {
+            var wasCalled = false;
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            twitterClient.SetReponseBasedOnRequestPath();
+            var users = new Users(twitterClient);
+
+            // assert
+            GenericResponseDelegate endSearch = (a, b, c) =>
+            {
+                wasCalled = true;
+                var results = c as IEnumerable<User>;
+                Assert.That(results, Is.Not.Empty);
+            };
+
+            // act
+            users.BeginLookup(new[] { 1,2 }, endSearch);
+
+            Assert.That(wasCalled, Errors.CallbackDidNotFire);
+        }
+
+        [Test]
         [ExpectedException(typeof(ArgumentNullException))]
         public void BeginLookup_WithNoIds_ThrowsException()
         {

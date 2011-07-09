@@ -125,6 +125,7 @@
     </None>
     <None Include="..\data\users\lookup.json">
       <Link>Data\users\lookup.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\data\users\search.json">
       <Link>Data\users\search.json</Link>
