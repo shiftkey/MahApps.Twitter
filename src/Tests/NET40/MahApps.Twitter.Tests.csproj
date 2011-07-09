@@ -64,6 +64,7 @@
     <Compile Include="Extensions\JsonExtensionTests.cs" />
     <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Methods\AccountTests.cs" />
+    <Compile Include="Methods\BlockTests.cs" />
     <Compile Include="Methods\StatusesTests.cs" />
     <Compile Include="Models\GeoTests.cs" />
     <Compile Include="Models\ModelsTests.cs" />
