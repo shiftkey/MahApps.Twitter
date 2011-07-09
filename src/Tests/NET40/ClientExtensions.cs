@@ -54,4 +54,9 @@ namespace MahApps.Twitter.NET40.UnitTests
                 });
         }
     }
+
+    public static class Errors
+    {
+        public const string CallbackDidNotFire = "A callback was expected, but did not fire";
+    }
 }

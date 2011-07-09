@@ -86,6 +86,14 @@
       <Link>Data\account\verify_credentials.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\data\blocks\create.json">
+      <Link>Data\blocks\create.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\data\report_spam.json">
+      <Link>Data\report_spam.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\data\statuses\home_timeline.json">
       <Link>Data\statuses\home_timeline.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

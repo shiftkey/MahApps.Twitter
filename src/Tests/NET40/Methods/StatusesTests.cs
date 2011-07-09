@@ -7,7 +7,6 @@ using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Methods;
 using MahApps.Twitter.Models;
 using NSubstitute;
-using NSubstitute.Core;
 using NUnit.Framework;
 
 namespace MahApps.Twitter.NET40.UnitTests.Methods
@@ -15,8 +14,6 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
     [TestFixture]
     public class StatusesTests
     {
-        private const string CallbackDidNotFire = "A callback was expected, but did not fire";
-
         [Test]
         public void BeginPublicTimeline_ForAnonymousUser_ReturnsAtLeastOneTweet()
         {
@@ -36,7 +33,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginPublicTimeline(endPublishTimeline);
 
-            Assert.That(wasCalled, CallbackDidNotFire);
+            Assert.That(wasCalled, Errors.CallbackDidNotFire);
         }
 
         [Test]
@@ -58,7 +55,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginUserTimeline("someone", endUserTimeline);
 
-            Assert.That(wasCalled, CallbackDidNotFire);
+            Assert.That(wasCalled, Errors.CallbackDidNotFire);
         }
 
         [Test]
@@ -81,7 +78,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginGetTweet("16381619317248000", endGetTweet);
 
-            Assert.That(wasCalled, CallbackDidNotFire);
+            Assert.That(wasCalled, Errors.CallbackDidNotFire);
         }
 
         [Test]
@@ -105,7 +102,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginGetTweet("12345", endGetTweet);
 
-            Assert.That(wasCalled, CallbackDidNotFire);
+            Assert.That(wasCalled, Errors.CallbackDidNotFire);
         }
 
         [Test]
@@ -128,7 +125,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginRetweet("16381619317248000", endGetTweet);
 
-            Assert.That(wasCalled, CallbackDidNotFire);
+            Assert.That(wasCalled, Errors.CallbackDidNotFire);
         }
 
         [Test]
@@ -152,7 +149,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginRetweet("12345", endGetTweet);
 
-            Assert.That(wasCalled, CallbackDidNotFire);
+            Assert.That(wasCalled, Errors.CallbackDidNotFire);
         }
 
         [Test]
@@ -176,7 +173,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginUpdate("some words go here", endBeginUpdate);
 
-            Assert.That(wasCalled, CallbackDidNotFire);
+            Assert.That(wasCalled, Errors.CallbackDidNotFire);
         }
 
         [Test]
@@ -243,7 +240,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginMentions(endGetMentions);
 
-            Assert.That(wasCalled, CallbackDidNotFire);
+            Assert.That(wasCalled, Errors.CallbackDidNotFire);
         }
 
         [Test]
@@ -267,12 +264,12 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         public void BeginMentions_WithParameters_HasParametersSet()
         {
             // arrange
-            int sinceId = 100;
-            int maxId = 200;
-            int count = 20;
-            int page = 1;
-            bool trimUser = true;
-            bool includeEntities = true;
+            const int sinceId = 100;
+            const int maxId = 200;
+            const int count = 20;
+            const int page = 1;
+            const bool trimUser = true;
+            const bool includeEntities = true;
             
             // act
             var twitterClient = Substitute.For<IBaseTwitterClient>();
