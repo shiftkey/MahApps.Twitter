@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>MahApps.Twitter</id>
+    <id>MahApps.Identica</id>
     <version>1.0</version>
     <authors>Paul Jenkins, Brendan Forster</authors>
     <owners>MahApps</owners>
@@ -17,6 +17,5 @@
   </metadata>
   	<files>
 		<file src="..\NET4\bin\Release\*.dll" target="lib\net40" />
-		<file src="..\WP7\bin\Release\*.dll" target="lib\sl3-wp" />
 	</files>
 </package>
