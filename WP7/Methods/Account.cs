@@ -54,5 +54,20 @@ namespace MahApps.Twitter.Methods
             });
         }
 
+        public void BeginUpdateProfileImage(FileInfo f, Action<User> callback)
+        {
+            var files = new Dictionary<string, File>();
+
+            if (f.Exists)
+                files.Add("image", new File(f.FullName, f.Name));
+
+            Context.BeginRequest("account/update_profile_image.json", null, files, WebMethod.Post, (req, res, state) =>
+            {
+                var user = res.Content.Deserialize<User>() as User;
+                if (user != null && callback != null)
+                    callback(user);
+            });
+        }
+
     }
 }

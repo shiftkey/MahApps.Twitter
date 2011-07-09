@@ -91,7 +91,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var account = new Account(twitterClient);
 
             // act
-            account.BeginVerifyCredentials(a => { });
+            account.BeginVerifyCredentials(User.DoNothing);
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var f = new FileInfo("akihabara.png");
 
             // act
-            account.BeginUpdateProfileImage(f, null);
+            account.BeginUpdateProfileImage(f, User.DoNothing);
         }
 
         [Test]
@@ -145,7 +145,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var f = new FileInfo("akihabara.png");
 
             // act
-            account.BeginUpdateProfileImage(f, null);
+            account.BeginUpdateProfileImage(f, User.DoNothing);
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             var f = new FileInfo("fakefile.foo");
 
             // act
-            account.BeginUpdateProfileImage(f, null);
+            account.BeginUpdateProfileImage(f, User.DoNothing);
         }
     }
 }

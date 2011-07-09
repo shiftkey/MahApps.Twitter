@@ -87,5 +87,7 @@ namespace MahApps.Twitter.Models
         public object CreatedDate { get; set; }
 
         public DateTime Created { get { return CreatedDate.ToString().ParseDateTime(); } }
+
+        public static Action<User> DoNothing = user => { };
     }
 }
