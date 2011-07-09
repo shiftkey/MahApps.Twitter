@@ -96,6 +96,10 @@
       <Link>Data\friendships\create.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\data\friendships\destroy.json">
+      <Link>Data\friendships\destroy.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\data\report_spam.json">
       <Link>Data\report_spam.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
