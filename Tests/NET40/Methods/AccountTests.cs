@@ -166,35 +166,5 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             account.BeginUpdateProfileImage(f, null);
         }
-
-        private static void ConfigureToReturnInvalidResponse(IBaseTwitterClient twitterClient)
-        {
-            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
-                .Do(c =>
-                {
-                    var request = Substitute.For<RestRequest>();
-                    var response = Substitute.For<RestResponse>();
-                    response.Content.Returns("foo");
-
-                    var callback = c.Args().Last() as RestCallback;
-                    if (callback != null)
-                        callback(request, response, null);
-                });
-        }
-
-        private static void ConfigureForValidResponse(IBaseTwitterClient twitterClient)
-        {
-            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
-                .Do(c =>
-                {
-                    var request = Substitute.For<RestRequest>();
-                    var response = Substitute.For<RestResponse>();
-                    response.Content.Returns(c.MapRequestPathToTestData());
-
-                    var callback = c.Args().Last() as RestCallback;
-                    if (callback != null)
-                        callback(request, response, null);
-                });
-        }
     }
 }
