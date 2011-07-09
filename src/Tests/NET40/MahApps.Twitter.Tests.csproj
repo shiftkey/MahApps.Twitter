@@ -65,6 +65,7 @@
     <Compile Include="Extensions\StringExtensionsTests.cs" />
     <Compile Include="Methods\AccountTests.cs" />
     <Compile Include="Methods\BlockTests.cs" />
+    <Compile Include="Methods\DirectMessagesTests.cs" />
     <Compile Include="Methods\FriendshipTests.cs" />
     <Compile Include="Methods\StatusesTests.cs" />
     <Compile Include="Methods\UsersTests.cs" />
@@ -90,6 +91,10 @@
     </None>
     <None Include="..\data\blocks\create.json">
       <Link>Data\blocks\create.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\data\direct_messages.json">
+      <Link>Data\direct_messages.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\data\friendships\create.json">
