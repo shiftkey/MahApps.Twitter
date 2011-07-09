@@ -66,6 +66,7 @@
     <Compile Include="Methods\AccountTests.cs" />
     <Compile Include="Methods\BlockTests.cs" />
     <Compile Include="Methods\StatusesTests.cs" />
+    <Compile Include="Methods\UsersTests.cs" />
     <Compile Include="Models\GeoTests.cs" />
     <Compile Include="Models\ModelsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +121,13 @@
     </None>
     <None Include="..\data\statuses\user_timeline.json">
       <Link>Data\statuses\user_timeline.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\data\users\lookup.json">
+      <Link>Data\users\lookup.json</Link>
+    </None>
+    <None Include="..\data\users\search.json">
+      <Link>Data\users\search.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
