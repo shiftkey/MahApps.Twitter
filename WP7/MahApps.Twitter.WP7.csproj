@@ -41,18 +41,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hammock.WindowsPhone">
-      <HintPath>..\Lib\WP7\Hammock.WindowsPhone.dll</HintPath>
+    <Reference Include="Hammock.WindowsPhone, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.RESTBase.1.0.8\lib\sl3-wp\Hammock.WindowsPhone.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib.WindowsPhone">
-      <HintPath>..\Lib\WP7\ICSharpCode.SharpZipLib.WindowsPhone.dll</HintPath>
+    <Reference Include="ICSharpCode.SharpZipLib.WindowsPhone, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.RESTBase.1.0.8\lib\sl3-wp\ICSharpCode.SharpZipLib.WindowsPhone.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.RESTBase">
-      <HintPath>..\Lib\WP7\MahApps.RESTBase.dll</HintPath>
+    <Reference Include="MahApps.RESTBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.RESTBase.1.0.8\lib\sl3-wp\MahApps.RESTBase.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="Newtonsoft.Json.Silverlight">
-      <HintPath>..\Lib\WP7\Newtonsoft.Json.Silverlight.dll</HintPath>
+    <Reference Include="Newtonsoft.Json.WindowsPhone">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\sl3-wp\Newtonsoft.Json.WindowsPhone.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -92,6 +92,9 @@
     <Compile Include="Models\Tweet.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
