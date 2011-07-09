@@ -10,9 +10,10 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Twitter client using REST API, Search API, User Streams and Site Stream. Supports WP7 and .NET 4 Client Profile.</description>
     <tags>Twitter WP7 ClientProfile</tags>
-    <!--<dependencies>
-      <dependency id="SampleDependency" version="1.0" />
-    </dependencies>-->
+    <dependencies>
+      <dependency id="MahApps.RestBase" version="1.0.8" />
+	  <dependency id="Newtonsoft.Json" version="4.0.2" />
+    </dependencies>
   </metadata>
   	<files>
 		<file src="..\NET40\bin\Release\*.dll" target="lib\net40" />
