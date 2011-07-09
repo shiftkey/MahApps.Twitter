@@ -2,6 +2,7 @@
 using System.Linq;
 using Hammock;
 using Hammock.Web;
+using MahApps.RESTBase;
 using NSubstitute;
 
 namespace MahApps.Twitter.NET40.UnitTests
@@ -36,6 +37,21 @@ namespace MahApps.Twitter.NET40.UnitTests
                             if (callback != null)
                                 callback(request, response, null);
                         });
+        }
+
+        public static void SetFileReponseBasedOnRequestPath(this IBaseTwitterClient twitterClient)
+        {
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<IDictionary<string,File>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+                .Do(c =>
+                {
+                    var request = Substitute.For<RestRequest>();
+                    var response = Substitute.For<RestResponse>();
+                    response.Content.Returns(c.MapRequestPathToTestData());
+
+                    var callback = c.Args().Last() as RestCallback;
+                    if (callback != null)
+                        callback(request, response, null);
+                });
         }
     }
 }

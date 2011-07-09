@@ -118,7 +118,7 @@ namespace MahApps.Twitter.Methods
         }
 
 
-
+        [Obsolete]
         public virtual void BeginFriendsTimeline(GenericResponseDelegate callback)
         {
             Context.BeginRequest(baseAddress + "friends_timeline.json", null, WebMethod.Get, (req, res, state) =>

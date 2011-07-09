@@ -89,6 +89,10 @@
       <Link>Data\statuses\home_timeline.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\data\statuses\mentions.json">
+      <Link>Data\statuses\mentions.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\data\statuses\public_timeline.json">
       <Link>Data\statuses\public_timeline.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

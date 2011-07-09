@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using NSubstitute.Core;
+using NUnit.Framework;
 
 namespace MahApps.Twitter.NET40.UnitTests
 {
@@ -13,6 +15,21 @@ namespace MahApps.Twitter.NET40.UnitTests
             var fileName = @".\Data\" + url;
 
             return File.ReadAllText(fileName);
+        }
+
+        public static void AssertParameter(this CallInfo c, string key, object value)
+        {
+            var parameters = c.Args()[1] as IDictionary<string, string>;
+            if (!parameters.ContainsKey(key))
+            {
+                Assert.Fail("Expected key '{0}' but was not found", key);
+            }
+
+            var actual = parameters[key];
+            if (actual != value.ToString())
+            {
+                Assert.Fail("Expected value '{0}' but got '{1}'", value, actual);
+            }
         }
     }
 }

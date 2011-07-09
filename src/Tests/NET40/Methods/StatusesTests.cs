@@ -187,7 +187,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
 
             var twitterClient = Substitute.For<IBaseTwitterClient>();
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
-             .Do(c => AssertParameter(c, "in_reply_to_status_id", inReplyToId));
+             .Do(c => c.AssertParameter("in_reply_to_status_id", inReplyToId));
             var statuses = new Statuses(twitterClient);
 
             // assert
@@ -208,8 +208,8 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
              .Do(c =>
              {
-                 AssertParameter(c, "lat", latitute);
-                 AssertParameter(c, "long", longitude);
+                 c.AssertParameter("lat", latitute);
+                 c.AssertParameter("long", longitude);
              });
             var statuses = new Statuses(twitterClient);
 
@@ -220,19 +220,76 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             statuses.BeginUpdate("some words go here", "12345", latitute, longitude, endBeginUpdate);
         }
 
-        private static void AssertParameter(CallInfo c, string key, object value)
-        {
-            var parameters = c.Args()[1] as IDictionary<string, string>;
-            if (!parameters.ContainsKey(key))
-            {
-                Assert.Fail("Expected key '{0}' but was not found", "in_reply_to_status_id");
-            }
+       
 
-            var actual = parameters[key];
-            if (actual != value.ToString())
+        [Test]
+        public void BeginMentions_WithDefaultParameters_WillReturnList()
+        {
+            // act
+            var wasCalled = false;
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            twitterClient.SetReponseBasedOnRequestPath();
+            var statuses = new Statuses(twitterClient);
+
+            // assert
+            GenericResponseDelegate endGetMentions = (a, b, c) =>
             {
-                Assert.Fail("Expected value '{0}' but got '{1}'", value, actual);
-            }
+                wasCalled = true;
+                var tweet = c as ResultsWrapper<Tweet>;
+                Assert.That(tweet, Is.Not.Null);
+                Assert.That(tweet, Is.Not.Empty);
+            };
+
+            // act
+            statuses.BeginMentions(endGetMentions);
+
+            Assert.That(wasCalled, CallbackDidNotFire);
+        }
+
+        [Test]
+        public void BeginMentions_WithDefaultParameters_HasParametersSet()
+        {
+            // act
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+             .Do(c =>
+             {
+                 c.AssertParameter("trim_user", false);
+                 c.AssertParameter("include_entities", false);
+             });
+            var statuses = new Statuses(twitterClient);
+
+            // act
+            statuses.BeginMentions((a, b, c) => { });
+        }
+
+        [Test]
+        public void BeginMentions_WithParameters_HasParametersSet()
+        {
+            // arrange
+            int sinceId = 100;
+            int maxId = 200;
+            int count = 20;
+            int page = 1;
+            bool trimUser = true;
+            bool includeEntities = true;
+            
+            // act
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+             .Do(c =>
+             {
+                 c.AssertParameter("since_id", sinceId);
+                 c.AssertParameter("max_id", maxId);
+                 c.AssertParameter("count", count);
+                 c.AssertParameter("page", page);
+                 c.AssertParameter("trim_user", trimUser);
+                 c.AssertParameter("include_entities", includeEntities);
+             });
+            var statuses = new Statuses(twitterClient);
+
+            // act
+            statuses.BeginMentions(sinceId, maxId, count, page, trimUser, includeEntities, (a, b, c) => { });
         }
     }
 }
