@@ -21,7 +21,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         {
             // act
             var twitterClient = Substitute.For<IBaseTwitterClient>();
-            twitterClient.SetInvalidResponse("foo");
+            twitterClient.SetResponse("foo");
             var account = new Account(twitterClient);
 
             // assert
@@ -40,7 +40,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         {
             // arrange
             var twitterClient = Substitute.For<IBaseTwitterClient>();
-            twitterClient.SetInvalidResponse("foo");
+            twitterClient.SetResponse("foo");
             var account = new Account(twitterClient);
 
             // assert
@@ -55,7 +55,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         {
             // arrange
             var twitterClient = Substitute.For<IBaseTwitterClient>();
-            twitterClient.SetInvalidResponse("foo");
+            twitterClient.SetResponse("foo");
             var account = new Account(twitterClient);
 
             // act

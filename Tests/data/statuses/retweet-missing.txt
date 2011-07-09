@@ -1,0 +1,4 @@
+{
+    request: "/1/statuses/show/16381610.json"
+    error: "No status found with that ID."
+}

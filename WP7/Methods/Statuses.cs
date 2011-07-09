@@ -17,9 +17,9 @@ namespace MahApps.Twitter.Methods
         {
         }
 
-        public virtual void BeginGetTweet(String Id, GenericResponseDelegate callback)
+        public virtual void BeginGetTweet(string id, GenericResponseDelegate callback)
         {
-            Context.BeginRequest(baseAddress + "show/" + Id + ".json", null, WebMethod.Get, (req, res, state) =>
+            Context.BeginRequest(string.Format("{0}show/{1}.json", baseAddress, id), null, WebMethod.Get, (req, res, state) =>
             {
                 var obj = res.Content.Deserialize<Tweet>();
                 if (callback != null)
