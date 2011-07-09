@@ -100,6 +100,10 @@
       <Link>Data\friendships\destroy.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\data\friendships\show.json">
+      <Link>Data\friendships\show.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\data\report_spam.json">
       <Link>Data\report_spam.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

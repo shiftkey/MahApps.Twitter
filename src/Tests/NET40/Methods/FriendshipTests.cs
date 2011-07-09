@@ -85,5 +85,43 @@ namespace MahApps.Twitter.Tests.Methods
             // act
             friendships.BeginDestroy(username, endSearch);
         }
+
+        [Test]
+        [Ignore("Response is not correct, specification sucks for details")]
+        public void BeginShow_WithValidUserName_ReturnsValidUser()
+        {
+            var wasCalled = false;
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            twitterClient.SetReponseBasedOnRequestPath();
+            var friendships = new Friendship(twitterClient);
+
+            // assert
+            GenericResponseDelegate endCreate = (a, b, c) =>
+            {
+                wasCalled = true;
+                var results = c as RelationshipWrapper;
+                Assert.That(results, Is.Not.Null);
+            };
+
+            // act
+            friendships.BeginShow("abcde", endCreate);
+
+            Assert.That(wasCalled, Errors.CallbackDidNotFire);
+        }
+
+        [Test]
+        public void BeginShow_WithValidUser_SetsParameter()
+        {
+            const string username = "abcde";
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+                         .Do(c => c.AssertParameter("target_screen_name", username));
+            var friendships = new Friendship(twitterClient);
+
+            GenericResponseDelegate endSearch = (a, b, c) => { };
+
+            // act
+            friendships.BeginShow(username, endSearch);
+        }
     }
 }
