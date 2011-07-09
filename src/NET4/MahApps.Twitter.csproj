@@ -93,9 +93,6 @@
     <Compile Include="..\WP7\Methods\Statuses.cs">
       <Link>Methods\Statuses.cs</Link>
     </Compile>
-    <Compile Include="..\WP7\Methods\Tweets.cs">
-      <Link>Methods\Tweets.cs</Link>
-    </Compile>
     <Compile Include="..\WP7\Methods\User.cs">
       <Link>Methods\User.cs</Link>
     </Compile>
