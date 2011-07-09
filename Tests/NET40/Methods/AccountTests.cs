@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Hammock;
@@ -11,7 +12,6 @@ using NUnit.Framework;
 
 namespace MahApps.Twitter.NET40.UnitTests.Methods
 {
-
     // TODO: can we unit test the OAuth bits?
     [TestFixture]
     public class AccountTests
@@ -19,20 +19,9 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         [Test]
         public void BeginVerifyCredentials_WithInvalidResponseFromClient_DoesNotContainUser()
         {
-            var request = Substitute.For<RestRequest>();
-            var response = Substitute.For<RestResponse>();
-            response.Content.Returns("foo");
-
+            // act
             var twitterClient = Substitute.For<IBaseTwitterClient>();
-
-            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
-                         .Do(c =>
-                                    {
-                                        var callback = c.Args().Last() as RestCallback;
-                                        if (callback != null)
-                                            callback(request, response, null);
-                                    });
-
+            twitterClient.ConfigureToReturnInvalidResponse("foo");
             var account = new Account(twitterClient);
 
             // assert
@@ -47,22 +36,38 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         }
 
         [Test]
+        public void BeginVerifyCredentials_WithCallbackRequiringUser_IsCalled()
+        {
+            // arrange
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            twitterClient.ConfigureToReturnInvalidResponse("foo");
+            var account = new Account(twitterClient);
+
+            // assert
+            Action<User> endVerifyCredentials = user => Assert.That(user, Is.Null);
+
+            // act
+            account.BeginVerifyCredentials(endVerifyCredentials);
+        }
+
+        [Test]
+        public void BeginVerifyCredentials_WithInlineAction_IsCalled()
+        {
+            // arrange
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            twitterClient.ConfigureToReturnInvalidResponse("foo");
+            var account = new Account(twitterClient);
+
+            // act
+            account.BeginVerifyCredentials(user => Assert.That(user, Is.Null));
+        }
+
+        [Test]
         public void BeginVerifyCredentials_WithValidResponseFromClient_ContainsUser()
         {
-            var request = Substitute.For<RestRequest>();
-            var response = Substitute.For<RestResponse>();
-            response.Content.Returns(" { screen_name: \"shiftkey\" } ");
-
+            // arrange
             var twitterClient = Substitute.For<IBaseTwitterClient>();
-
-            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
-                         .Do(c =>
-                         {
-                             var callback = c.Args().Last() as RestCallback;
-                             if (callback != null)
-                                 callback(request, response, null);
-                         });
-
+            twitterClient.ConfigureForValidResponse();
             var account = new Account(twitterClient);
 
             // assert
@@ -80,42 +85,20 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         [Test]
         public void BeginVerifyCredentials_WithNoCallback_DoesNotThrowException()
         {
-            var request = Substitute.For<RestRequest>();
-            var response = Substitute.For<RestResponse>();
-            response.Content.Returns(" { screen_name: \"shiftkey\" } ");
-
             var twitterClient = Substitute.For<IBaseTwitterClient>();
-
-            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
-                         .Do(c =>
-                         {
-                             var callback = c.Args().Last() as RestCallback;
-                             if (callback != null)
-                                 callback(request, response, null);
-                         });
+            twitterClient.ConfigureForValidResponse();
 
             var account = new Account(twitterClient);
 
             // act
-            account.BeginVerifyCredentials(null);
+            account.BeginVerifyCredentials(a => { });
         }
 
         [Test]
         public void BeginUpdateProfileImage_WithValidResponseFromClient_ContainsUser()
         {
             var twitterClient = Substitute.For<IBaseTwitterClient>();
-
-            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<IDictionary<string, RESTBase.File>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
-                         .Do(c =>
-                         {
-                             var response = Substitute.For<RestResponse>();
-                             response.Content.Returns(c.MapRequestPathToTestData());
-
-                             var callback = c.Args().Last() as RestCallback;
-                             if (callback != null)
-                                 callback(null, response, null);
-                         });
-
+            twitterClient.ConfigureForValidResponse();
             var account = new Account(twitterClient);
 
             // assert
@@ -137,18 +120,8 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         {
             // arrange
             var twitterClient = Substitute.For<IBaseTwitterClient>();
-
-            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<IDictionary<string, RESTBase.File>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
-                         .Do(c =>
-                         {
-                             var response = Substitute.For<RestResponse>();
-                             response.Content.Returns(c.MapRequestPathToTestData());
-
-                             var callback = c.Args().Last() as RestCallback;
-                             if (callback != null)
-                                 callback(null, response, null);
-                         });
-
+            twitterClient.ConfigureForValidResponse();
+          
             var account = new Account(twitterClient);
             var f = new FileInfo("akihabara.png");
 
@@ -192,6 +165,36 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
 
             // act
             account.BeginUpdateProfileImage(f, null);
+        }
+
+        private static void ConfigureToReturnInvalidResponse(IBaseTwitterClient twitterClient)
+        {
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+                .Do(c =>
+                {
+                    var request = Substitute.For<RestRequest>();
+                    var response = Substitute.For<RestResponse>();
+                    response.Content.Returns("foo");
+
+                    var callback = c.Args().Last() as RestCallback;
+                    if (callback != null)
+                        callback(request, response, null);
+                });
+        }
+
+        private static void ConfigureForValidResponse(IBaseTwitterClient twitterClient)
+        {
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+                .Do(c =>
+                {
+                    var request = Substitute.For<RestRequest>();
+                    var response = Substitute.For<RestResponse>();
+                    response.Content.Returns(c.MapRequestPathToTestData());
+
+                    var callback = c.Args().Last() as RestCallback;
+                    if (callback != null)
+                        callback(request, response, null);
+                });
         }
     }
 }

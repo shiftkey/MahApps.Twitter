@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Hammock.Web;
 using MahApps.RESTBase;
@@ -24,6 +25,17 @@ namespace MahApps.Twitter.Methods
                 if (callback != null)
                     callback(req, res, obj);
             });
+        }
+
+
+        public void BeginVerifyCredentials(Action<User> callback)
+        {
+            Context.BeginRequest("account/verify_credentials.json", null, WebMethod.Get, (req, res, state) =>
+                                                                                             {
+                                                                                                 var user = res.Content.Deserialize<User>() as User;
+                                                                                                 if (user != null && callback != null)
+                                                                                                     callback(user);
+                                                                                             });
         }
 
         public void BeginUpdateProfileImage(FileInfo f, GenericResponseDelegate callback)

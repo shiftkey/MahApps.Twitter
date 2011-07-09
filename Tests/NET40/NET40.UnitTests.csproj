@@ -58,6 +58,7 @@
     <Compile Include="Methods\AccountTests.cs" />
     <Compile Include="Methods\StatusesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ClientExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\NET40\MahApps.Twitter.NET40.csproj">
@@ -68,6 +69,10 @@
   <ItemGroup>
     <None Include="..\data\account\update_profile_image.json">
       <Link>Data\account\update_profile_image.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\data\account\verify_credentials.json">
+      <Link>Data\account\verify_credentials.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\data\statuses\home_timeline.json">
