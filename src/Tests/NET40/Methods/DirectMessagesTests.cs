@@ -146,7 +146,49 @@ namespace MahApps.Twitter.Tests.Methods
             var statuses = new DirectMessages(twitterClient);
 
             // act
-            statuses.BeginDirectMessages(sinceId, maxId, count, page, trimUser, includeEntities, (a, b, c) => { });
+            statuses.BeginSentDirectMessages(sinceId, maxId, count, page, trimUser, includeEntities, (a, b, c) => { });
+        }
+
+        [Test]
+        public void BeginCreate_ForAllScenarios_ReturnsNewMessage()
+        {
+            // arrange
+            var wasCalled = false;
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            twitterClient.SetReponseBasedOnRequestPath();
+            var directMessages = new DirectMessages(twitterClient);
+
+            GenericResponseDelegate endCreate = (a, b, c) =>
+            {
+                wasCalled = true;
+                var results = c as DirectMessage;
+                Assert.That(results, Is.Not.Null);
+            };
+
+            // act
+            directMessages.BeginCreate("abcde", "foo", endCreate);
+
+            // assert
+            Assert.That(wasCalled, Errors.CallbackDidNotFire);
+        }
+
+        [Test]
+        public void BeginCreate_ForAllScenarios_SetsParameter()
+        {
+            // arrange
+            var screenName = "abcde";
+            var text = "defgh";
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+             .Do(c =>
+             {
+                 c.AssertParameter("screen_name", screenName);
+                 c.AssertParameter("text", text);
+             });
+            var statuses = new DirectMessages(twitterClient);
+
+            // act
+            statuses.BeginCreate(screenName, text, (a, b, c) => { });
         }
     }
 }
