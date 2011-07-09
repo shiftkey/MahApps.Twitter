@@ -15,6 +15,7 @@ namespace MahApps.Twitter.Tests.Methods
         [Test]
         public void BeginDirectMessages_ForAllScenarios_ReturnsListOfMessages()
         {
+            // arrange
             var wasCalled = false;
             var twitterClient = Substitute.For<IBaseTwitterClient>();
             twitterClient.SetReponseBasedOnRequestPath();
@@ -38,14 +39,14 @@ namespace MahApps.Twitter.Tests.Methods
         [Test]
         public void BeginDirectMessages_ForAllScenarios_SetsParameter()
         {
-            // act
+            // arrange
             var twitterClient = Substitute.For<IBaseTwitterClient>();
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
-             .Do(c =>
-             {
-                 c.AssertParameter("trim_user", false);
-                 c.AssertParameter("include_entities", false);
-             });
+                         .Do(c =>
+                         {
+                             c.AssertParameter("trim_user", false);
+                             c.AssertParameter("include_entities", false);
+                         });
             var statuses = new DirectMessages(twitterClient);
 
             // act
@@ -56,24 +57,24 @@ namespace MahApps.Twitter.Tests.Methods
         public void BeginDirectMessages_WithCustomParameters_SetsAllParameters()
         {
             // arrange
-            var sinceId = 1234;
-            var maxId = 5678;
-            var count = 10;
-            var page = 1;
-            var trimUser = true;
-            var includeEntities = true;
+            const int sinceId = 1234;
+            const int maxId = 5678;
+            const int count = 10;
+            const int page = 1;
+            const bool trimUser = true;
+            const bool includeEntities = true;
 
             var twitterClient = Substitute.For<IBaseTwitterClient>();
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
-             .Do(c =>
-             {
-                 c.AssertParameter("trim_user", trimUser);
-                 c.AssertParameter("include_entities", includeEntities);
-                 c.AssertParameter("since_id", sinceId);
-                 c.AssertParameter("max_id", maxId);
-                 c.AssertParameter("count", count);
-                 c.AssertParameter("page", page);
-             });
+                         .Do(c =>
+                         {
+                             c.AssertParameter("trim_user", trimUser);
+                             c.AssertParameter("include_entities", includeEntities);
+                             c.AssertParameter("since_id", sinceId);
+                             c.AssertParameter("max_id", maxId);
+                             c.AssertParameter("count", count);
+                             c.AssertParameter("page", page);
+                         });
             var statuses = new DirectMessages(twitterClient);
 
             // act
@@ -110,11 +111,11 @@ namespace MahApps.Twitter.Tests.Methods
             // act
             var twitterClient = Substitute.For<IBaseTwitterClient>();
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
-             .Do(c =>
-             {
-                 c.AssertParameter("trim_user", false);
-                 c.AssertParameter("include_entities", false);
-             });
+                         .Do(c =>
+                         {
+                             c.AssertParameter("trim_user", false);
+                             c.AssertParameter("include_entities", false);
+                         });
             var statuses = new DirectMessages(twitterClient);
 
             // act
@@ -125,24 +126,24 @@ namespace MahApps.Twitter.Tests.Methods
         public void BeginSentDirectMessages_WithCustomParameters_SetsAllParameters()
         {
             // arrange
-            var sinceId = 1234;
-            var maxId = 5678;
-            var count = 10;
-            var page = 1;
-            var trimUser = true;
-            var includeEntities = true;
+            const int sinceId = 1234;
+            const int maxId = 5678;
+            const int count = 10;
+            const int page = 1;
+            const bool trimUser = true;
+            const bool includeEntities = true;
 
             var twitterClient = Substitute.For<IBaseTwitterClient>();
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
-             .Do(c =>
-             {
-                 c.AssertParameter("trim_user", trimUser);
-                 c.AssertParameter("include_entities", includeEntities);
-                 c.AssertParameter("since_id", sinceId);
-                 c.AssertParameter("max_id", maxId);
-                 c.AssertParameter("count", count);
-                 c.AssertParameter("page", page);
-             });
+                         .Do(c =>
+                         {
+                             c.AssertParameter("trim_user", trimUser);
+                             c.AssertParameter("include_entities", includeEntities);
+                             c.AssertParameter("since_id", sinceId);
+                             c.AssertParameter("max_id", maxId);
+                             c.AssertParameter("count", count);
+                             c.AssertParameter("page", page);
+                         });
             var statuses = new DirectMessages(twitterClient);
 
             // act
@@ -168,7 +169,6 @@ namespace MahApps.Twitter.Tests.Methods
             // act
             directMessages.BeginCreate("abcde", "foo", endCreate);
 
-            // assert
             Assert.That(wasCalled, Errors.CallbackDidNotFire);
         }
 
@@ -180,11 +180,11 @@ namespace MahApps.Twitter.Tests.Methods
             var text = "defgh";
             var twitterClient = Substitute.For<IBaseTwitterClient>();
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
-             .Do(c =>
-             {
-                 c.AssertParameter("screen_name", screenName);
-                 c.AssertParameter("text", text);
-             });
+                         .Do(c =>
+                         {
+                             c.AssertParameter("screen_name", screenName);
+                             c.AssertParameter("text", text);
+                         });
             var statuses = new DirectMessages(twitterClient);
 
             // act
