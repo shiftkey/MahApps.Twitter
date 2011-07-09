@@ -22,7 +22,7 @@ namespace MahApps.Twitter.NET40.UnitTests
                         });
         }
 
-        public static void SetValidResponse(this IBaseTwitterClient twitterClient)
+        public static void SetReponseBasedOnRequestPath(this IBaseTwitterClient twitterClient)
         {
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                 .Do(c =>

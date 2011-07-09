@@ -67,7 +67,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         {
             // arrange
             var twitterClient = Substitute.For<IBaseTwitterClient>();
-            twitterClient.SetValidResponse();
+            twitterClient.SetReponseBasedOnRequestPath();
             var account = new Account(twitterClient);
 
             // assert
@@ -86,7 +86,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         public void BeginVerifyCredentials_WithNoCallback_DoesNotThrowException()
         {
             var twitterClient = Substitute.For<IBaseTwitterClient>();
-            twitterClient.SetValidResponse();
+            twitterClient.SetReponseBasedOnRequestPath();
 
             var account = new Account(twitterClient);
 
@@ -98,7 +98,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         public void BeginUpdateProfileImage_WithValidResponseFromClient_ContainsUser()
         {
             var twitterClient = Substitute.For<IBaseTwitterClient>();
-            twitterClient.SetValidResponse();
+            twitterClient.SetReponseBasedOnRequestPath();
             var account = new Account(twitterClient);
 
             // assert
@@ -120,7 +120,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
         {
             // arrange
             var twitterClient = Substitute.For<IBaseTwitterClient>();
-            twitterClient.SetValidResponse();
+            twitterClient.SetReponseBasedOnRequestPath();
           
             var account = new Account(twitterClient);
             var f = new FileInfo("akihabara.png");
