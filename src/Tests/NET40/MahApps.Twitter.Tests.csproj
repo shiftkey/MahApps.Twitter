@@ -8,8 +8,8 @@
     <ProjectGuid>{BC6429F9-AE66-4336-9F16-FBD4D1B0DEF0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MahApps.Twitter.NET40.UnitTests</RootNamespace>
-    <AssemblyName>MahApps.Twitter.NET40.UnitTests</AssemblyName>
+    <RootNamespace>MahApps.Twitter.Tests</RootNamespace>
+    <AssemblyName>MahApps.Twitter.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
