@@ -42,17 +42,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hammock.WindowsPhone, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.RESTBase.1.0.8\lib\sl3-wp\Hammock.WindowsPhone.dll</HintPath>
+      <HintPath>..\..\packages\MahApps.RESTBase.1.0.8\lib\sl3-wp\Hammock.WindowsPhone.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib.WindowsPhone, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.RESTBase.1.0.8\lib\sl3-wp\ICSharpCode.SharpZipLib.WindowsPhone.dll</HintPath>
+      <HintPath>..\..\packages\MahApps.RESTBase.1.0.8\lib\sl3-wp\ICSharpCode.SharpZipLib.WindowsPhone.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.RESTBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.RESTBase.1.0.8\lib\sl3-wp\MahApps.RESTBase.dll</HintPath>
+      <HintPath>..\..\packages\MahApps.RESTBase.1.0.8\lib\sl3-wp\MahApps.RESTBase.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json.WindowsPhone">
-      <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\sl3-wp\Newtonsoft.Json.WindowsPhone.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.4.0.2\lib\sl3-wp\Newtonsoft.Json.WindowsPhone.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />

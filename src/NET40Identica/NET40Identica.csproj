@@ -32,15 +32,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hammock.ClientProfile">
-      <HintPath>..\Lib\NET4\Hammock.ClientProfile.dll</HintPath>
+    <Reference Include="Hammock.ClientProfile, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c148cfba29ed1a4d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MahApps.RESTBase.1.0.8\lib\net40\Hammock.ClientProfile.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.RESTBase">
-      <HintPath>..\Lib\NET4\MahApps.RESTBase.dll</HintPath>
+    <Reference Include="MahApps.RESTBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MahApps.RESTBase.1.0.8\lib\net40\MahApps.RESTBase.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
+    <Reference Include="Newtonsoft.Json, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\NET4\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,7 +55,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NET40\MahApps.Twitter.NET40.csproj">
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NET4\MahApps.Twitter.NET40.csproj">
       <Project>{24A55C77-8F34-47E6-9283-1F42D4F5CB50}</Project>
       <Name>MahApps.Twitter.NET40</Name>
     </ProjectReference>
