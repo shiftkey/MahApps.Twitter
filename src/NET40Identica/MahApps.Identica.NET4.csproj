@@ -58,9 +58,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NET4\MahApps.Twitter.NET40.csproj">
+    <ProjectReference Include="..\NET4\MahApps.Twitter.NET4.csproj">
       <Project>{24A55C77-8F34-47E6-9283-1F42D4F5CB50}</Project>
-      <Name>MahApps.Twitter.NET40</Name>
+      <Name>MahApps.Twitter.NET4</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

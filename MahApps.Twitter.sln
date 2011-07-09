@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Twitter.WP7", "src\WP7\MahApps.Twitter.WP7.csproj", "{5ECD7305-595D-4BA3-8D9E-D028610F41E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Twitter.NET40", "src\NET4\MahApps.Twitter.NET40.csproj", "{24A55C77-8F34-47E6-9283-1F42D4F5CB50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Twitter.NET4", "src\NET4\MahApps.Twitter.NET4.csproj", "{24A55C77-8F34-47E6-9283-1F42D4F5CB50}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{376D03A1-286E-42A9-AE93-D569619F70CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NET40.UnitTests", "src\Tests\NET40\NET40.UnitTests.csproj", "{BC6429F9-AE66-4336-9F16-FBD4D1B0DEF0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Twitter.Tests", "src\Tests\NET40\MahApps.Twitter.Tests.csproj", "{BC6429F9-AE66-4336-9F16-FBD4D1B0DEF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NET40Identica", "src\NET40Identica\NET40Identica.csproj", "{215A4573-7B76-4EEB-9EDB-AE8174E1CB2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Identica.NET4", "src\NET40Identica\MahApps.Identica.NET4.csproj", "{215A4573-7B76-4EEB-9EDB-AE8174E1CB2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
