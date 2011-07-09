@@ -10,7 +10,7 @@ namespace MahApps.Twitter.NET40.UnitTests
     {
         public  static void SetResponse(this IBaseTwitterClient twitterClient, string text)
         {
-            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), null, Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                 .Do(c =>
                         {
                             var request = Substitute.For<RestRequest>();

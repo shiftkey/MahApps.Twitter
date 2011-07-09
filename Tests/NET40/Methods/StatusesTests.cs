@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Hammock;
-using Hammock.Web;
 using MahApps.Twitter.Delegates;
 using MahApps.Twitter.Methods;
 using MahApps.Twitter.Models;
 using NSubstitute;
-using NSubstitute.Core;
 using NUnit.Framework;
 
 namespace MahApps.Twitter.NET40.UnitTests.Methods
@@ -15,6 +12,8 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
     [TestFixture]
     public class StatusesTests
     {
+        private const string CallbackDidNotFire = "A callback was expected, but did not fire";
+
         [Test]
         public void BeginPublicTimeline_ForAnonymousUser_ReturnsAtLeastOneTweet()
         {
@@ -34,7 +33,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginPublicTimeline(endPublishTimeline);
 
-            Assert.That(wasCalled, "A callback needs to occur");
+            Assert.That(wasCalled, CallbackDidNotFire);
         }
 
         [Test]
@@ -56,7 +55,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginUserTimeline("someone", endUserTimeline);
 
-            Assert.That(wasCalled, "A callback needs to occur");
+            Assert.That(wasCalled, CallbackDidNotFire);
         }
 
         [Test]
@@ -79,7 +78,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginGetTweet("16381619317248000", endGetTweet);
 
-            Assert.That(wasCalled, "A callback needs to occur");
+            Assert.That(wasCalled, CallbackDidNotFire);
         }
 
         [Test]
@@ -103,7 +102,7 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginGetTweet("12345", endGetTweet);
 
-            Assert.That(wasCalled, "A callback needs to occur");
+            Assert.That(wasCalled, CallbackDidNotFire);
         }
 
         [Test]
@@ -126,9 +125,8 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginRetweet("16381619317248000", endGetTweet);
 
-            Assert.That(wasCalled, "A callback needs to occur");
+            Assert.That(wasCalled, CallbackDidNotFire);
         }
-
 
         [Test]
         public void BeginRetweet_WhichDoesNotFindATweet_ReturnsExceptionResponse()
@@ -151,7 +149,31 @@ namespace MahApps.Twitter.NET40.UnitTests.Methods
             // act
             statuses.BeginRetweet("12345", endGetTweet);
 
-            Assert.That(wasCalled, "A callback needs to occur");
+            Assert.That(wasCalled, CallbackDidNotFire);
+        }
+
+        [Test]
+        public void BeginUpdate_WithTextOnly_ReturnsValidResult()
+        {
+            // act
+            var wasCalled = false;
+            var twitterClient = Substitute.For<IBaseTwitterClient>();
+            twitterClient.SetResponse(File.ReadAllText(@".\Data\statuses\update-plain.json"));
+            var statuses = new Statuses(twitterClient);
+
+            // assert
+            GenericResponseDelegate endBeginUpdate = (a, b, c) =>
+            {
+                wasCalled = true;
+                var tweet = c as Tweet;
+                Assert.That(tweet, Is.Not.Null);
+                Assert.That(tweet.Id, Is.EqualTo(76362320393154561));
+            };
+
+            // act
+            statuses.BeginUpdate("some words go here", endBeginUpdate);
+
+            Assert.That(wasCalled, CallbackDidNotFire);
         }
     }
 }

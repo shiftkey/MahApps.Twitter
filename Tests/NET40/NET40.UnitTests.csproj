@@ -91,6 +91,10 @@
       <Link>Data\statuses\show-missing.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\data\statuses\update-plain.json">
+      <Link>Data\statuses\update-plain.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\data\statuses\user_timeline.json">
       <Link>Data\statuses\user_timeline.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
