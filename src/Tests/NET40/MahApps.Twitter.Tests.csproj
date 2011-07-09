@@ -67,6 +67,7 @@
     <Compile Include="Methods\BlockTests.cs" />
     <Compile Include="Methods\DirectMessagesTests.cs" />
     <Compile Include="Methods\FriendshipTests.cs" />
+    <Compile Include="Methods\SearchTests.cs" />
     <Compile Include="Methods\StatusesTests.cs" />
     <Compile Include="Methods\UsersTests.cs" />
     <Compile Include="Models\GeoTests.cs" />
@@ -119,6 +120,10 @@
     </None>
     <None Include="..\data\report_spam.json">
       <Link>Data\report_spam.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\data\saved_searches.json">
+      <Link>Data\saved_searches.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\data\statuses\home_timeline.json">
