@@ -40,14 +40,20 @@ namespace MahApps.Twitter
 
         public bool Encode { get; set; }
 
-        public TwitterClient(String ConsumerKey, String ConsumerSecret, String Callback)
-            : base(new RestClient
-                       {
-                           Authority = "https://api.twitter.com/oauth/",
+        public TwitterClient(string consumerKey, string consumerSecret, string callback)
+            : this(new RestClient
+            {
+                Authority = "https://api.twitter.com/oauth/",
 #if SILVERLIGHT
-                           HasElevatedPermissions = true
+                HasElevatedPermissions = true
 #endif
-                       })
+            }, consumerKey, consumerSecret, callback)
+        {
+
+        }
+
+        public TwitterClient(IRestClient client, string consumerKey, string consumerSecret, string callback)
+            : base(client)
         {
             Encode = true;
             Statuses = new Statuses(this);
@@ -72,14 +78,55 @@ namespace MahApps.Twitter
             ServicePointManager.Expect100Continue = false;
 #endif
             Credentials = new OAuthCredentials
-                              {
-                                  ConsumerKey = ConsumerKey,
-                                  ConsumerSecret = ConsumerSecret,
-                              };
+            {
+                ConsumerKey = consumerKey,
+                ConsumerSecret = consumerSecret,
+            };
 
-            if (!String.IsNullOrEmpty(Callback))
-                ((OAuthCredentials)Credentials).CallbackUrl = Callback;
+            if (!string.IsNullOrEmpty(callback))
+                ((OAuthCredentials)Credentials).CallbackUrl = callback;
         }
+
+        //        public TwitterClient(String ConsumerKey, String ConsumerSecret, String Callback)
+        //            : base(new RestClient
+        //                       {
+        //                           Authority = "https://api.twitter.com/oauth/",
+        //#if SILVERLIGHT
+        //                           HasElevatedPermissions = true
+        //#endif
+        //                       })
+        //        {
+        //            Encode = true;
+        //            Statuses = new Statuses(this);
+        //            Account = new Account(this);
+        //            DirectMessages = new DirectMessages(this);
+        //            Favourites = new Favourites(this);
+        //            Block = new Block(this);
+        //            Friendships = new Friendship(this);
+        //            Lists = new List(this);
+        //            Search = new Search(this);
+        //            Users = new Users(this);
+        //            FriendsAndFollowers = new FriendsAndFollowers(this);
+
+        //            OAuthBase = "https://api.twitter.com/oauth/";
+        //            TokenRequestUrl = "request_token";
+        //            TokenAuthUrl = "authorize";
+        //            TokenAccessUrl = "access_token";
+        //            Authority = "https://api.twitter.com/";
+        //            Version = "1";
+
+        //#if !SILVERLIGHT
+        //            ServicePointManager.Expect100Continue = false;
+        //#endif
+        //            Credentials = new OAuthCredentials
+        //                              {
+        //                                  ConsumerKey = ConsumerKey,
+        //                                  ConsumerSecret = ConsumerSecret,
+        //                              };
+
+        //            if (!String.IsNullOrEmpty(Callback))
+        //                ((OAuthCredentials)Credentials).CallbackUrl = Callback;
+        //        }
 
         public enum Format
         {
@@ -131,7 +178,7 @@ namespace MahApps.Twitter
         #region SiteStreams
         public IAsyncResult BeginSiteStream(String UserID, TweetCallback callback)
         {
-            
+
             Callback = callback;
             ((OAuthCredentials)Credentials).CallbackUrl = null;
             var streamClient = new RestClient()
@@ -159,19 +206,19 @@ namespace MahApps.Twitter
                 //Console.WriteLine(SaneText);
                 ITwitterResponse deserialisedResponse = null;
 
-                deserialisedResponse = JsonConvert.DeserializeObject<SiteStreamsWrapper>(SaneText); 
+                deserialisedResponse = JsonConvert.DeserializeObject<SiteStreamsWrapper>(SaneText);
                 Callback(request, response, deserialisedResponse);
             }
             catch
             {
-                
+
             }
         }
 
         #endregion
 #endif
         #region User Stream bits
-#if !SILVERLIGHT 
+#if !SILVERLIGHT
         private System.Timers.Timer _timer = null;
         private System.Timers.Timer _reconnectTimer = null;
 #endif
@@ -215,14 +262,14 @@ namespace MahApps.Twitter
                 if (tracks != null)
                     req.AddParameter("track", string.Join(",", tracks.ToArray()));
 
-#if !SILVERLIGHT 
+#if !SILVERLIGHT
                 if (_timer == null)
                 {
                     _timer = new System.Timers.Timer(20 * 1000);
                     _timer.Elapsed += new ElapsedEventHandler(Timer_Elapsed);
                     _timer.Start();
                 }
-                
+
                 StreamingAsyncResult = streamClient.BeginRequest(req, StreamCallback);
 #endif
 #if SILVERLIGHT
@@ -231,7 +278,7 @@ namespace MahApps.Twitter
             }
             return StreamingAsyncResult;
         }
-#if !SILVERLIGHT 
+#if !SILVERLIGHT
         void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (StreamingAsyncResult != null)
@@ -274,10 +321,10 @@ namespace MahApps.Twitter
                 {
                     /*{"delete":{"status":{"user_id_str":"44504925","id_str":"66791879353708544","id":66791879353708544,"user_id":44504925}}}*/
                     var o = JObject.Parse(SaneText);
-                    var id = (long) o["delete"]["status"]["id"];
+                    var id = (long)o["delete"]["status"]["id"];
                     var userid = (long)o["delete"]["status"]["user_id"];
 
-                    deserialisedResponse = new Delete {Id = id, UserId = userid};
+                    deserialisedResponse = new Delete { Id = id, UserId = userid };
                 }
                 else if (SaneText.Contains("\"retweeted_status\":{"))
                 {
