@@ -131,7 +131,6 @@ namespace MahApps.Twitter
 #if !SILVERLIGHT
         public IAsyncResult BeginSiteStream(string userId, TweetCallback callback)
         {
-
             Callback = callback;
             ((OAuthCredentials)Credentials).CallbackUrl = null;
             var streamClient = new RestClient
@@ -152,7 +151,7 @@ namespace MahApps.Twitter
             return streamClient.BeginRequest(req, SiteStreamCallback);
         }
 
-        void SiteStreamCallback(RestRequest request, RestResponse response, object userState)
+        private void SiteStreamCallback(RestRequest request, RestResponse response, object userState)
         {
             try
             {
@@ -185,26 +184,31 @@ namespace MahApps.Twitter
         public event VoidDelegate StreamingDisconnectedEvent;
 
         [Obsolete("To be deprecated")]
-        public TweetCallback Callback { get; set; }
+        public TweetCallback Callback { get; private set; }
 
-        public Action<RestResponse, ITwitterResponse> CallbackNoRequest { get; set; }
-        public IAsyncResult StreamingAsyncResult { get; set; }
+        public Action<RestResponse, ITwitterResponse> CallbackNoRequest { get; private set; }
+
+        public IEnumerable<string> Tracks { get; private set; }
+
+        public IAsyncResult StreamingAsyncResult { get; private set; }
 
         public IAsyncResult BeginStream(TweetCallback callback, IEnumerable<string> tracks)
         {
             Callback = callback;
+            Tracks = tracks;
 
-            return BeginStreamInternal(tracks);
+            return BeginStreamInternal();
         }
 
         public IAsyncResult BeginStream(Action<RestResponse, ITwitterResponse> callback, IEnumerable<string> tracks)
         {
             CallbackNoRequest = callback;
+            Tracks = tracks;
 
-            return BeginStreamInternal(tracks);
+            return BeginStreamInternal();
         }
 
-        private IAsyncResult BeginStreamInternal(IEnumerable<string> tracks)
+        private IAsyncResult BeginStreamInternal()
         {
             if (StreamingAsyncResult != null)
             {
@@ -233,8 +237,8 @@ namespace MahApps.Twitter
                                                   },
                           };
 
-            if (tracks != null)
-                req.AddParameter("track", string.Join(",", tracks.ToArray()));
+            if (Tracks != null)
+                req.AddParameter("track", string.Join(",", Tracks.ToArray()));
 
 #if !SILVERLIGHT
             if (_timer == null)
@@ -269,7 +273,7 @@ namespace MahApps.Twitter
                 return;
 
             _lastConnectAttempt = DateTime.Now;
-            BeginStream(Callback, null);
+            BeginStream(Callback, Tracks);
 
             if (StreamingReconnectAttemptEvent != null)
                 StreamingReconnectAttemptEvent();
