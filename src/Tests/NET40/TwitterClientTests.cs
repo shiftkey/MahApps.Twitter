@@ -67,7 +67,7 @@ namespace MahApps.Twitter.Tests
         }
 
         [Test]
-        public void BeginStream_WithSimpleCallback_DoesSomething()
+        public void BeginStream_WithSimpleCallback_ReturnsAValue()
         {
             // arrange
             var restClient = Substitute.For<IRestClient>();
@@ -78,6 +78,36 @@ namespace MahApps.Twitter.Tests
             var result = client.BeginStream((a, b) => { }, null);
 
             Assert.That(result, Is.Not.Null);
+        }
+
+        [Test]
+        public void BeginStream_CallingASecondTime_ReturnsSameValue()
+        {
+            // arrange
+            var restClient = Substitute.For<IRestClient>();
+            const string callback = "http://something.com/foo";
+
+            // act
+            var client = new TwitterClient(restClient, "foo", "bar", callback);
+            var result = client.BeginStream((a, b) => { }, null);
+            var result2 = client.BeginStream((a, b) => { }, null);
+
+            Assert.That(result, Is.SameAs(result2));
+        }
+
+        [Test]
+        public void BeginStream_WithSimpleCallback_SetsStreamingAsyncResult()
+        {
+            // arrange
+            var restClient = Substitute.For<IRestClient>();
+            const string callback = "http://something.com/foo";
+
+            // act
+            var client = new TwitterClient(restClient, "foo", "bar", callback);
+            var result = client.BeginStream((a, b) => { }, null);
+
+            Assert.That(client.StreamingAsyncResult, Is.Not.Null);
+            Assert.That(client.StreamingAsyncResult, Is.SameAs(result));
         }
 
         [Test]

@@ -21,8 +21,7 @@ namespace MahApps.Twitter.Methods
 
         public void BeginSearch(String q, GenericResponseDelegate callback)
         {
-            Dictionary<String, String> p = new Dictionary<string, string>();
-            p.Add("q", q);
+            var p = new Dictionary<string, string> {{"q", q}};
 
             BeginRequest(p, WebMethod.Get, (req, res, state) =>
                                                   {
@@ -34,27 +33,26 @@ namespace MahApps.Twitter.Methods
         }
 
 
-        internal void BeginRequest(Dictionary<String, String> Parameters, WebMethod Method,
-                                RestCallback callback)
+        internal void BeginRequest(IDictionary<string, string> parameters, WebMethod method, RestCallback callback)
         {
             var request = new RestRequest
             {
                 Path = basePath,
-                Method = Method
+                Method = method
             };
 
-            if (Parameters != null)
-                foreach (var p in Parameters)
+            if (parameters != null)
+                foreach (var p in parameters)
                 {
                     request.AddParameter(p.Key, p.Value);
                 }
 
-            var Client = new RestClient()
+            var client = new RestClient
                              {
                                  Authority = baseAddress
                              };
 
-            Client.BeginRequest(request, callback);
+            client.BeginRequest(request, callback);
         }
 
         public void BeginGetSavedSearches(GenericResponseDelegate callback)
