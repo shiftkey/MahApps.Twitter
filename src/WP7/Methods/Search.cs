@@ -11,17 +11,25 @@ namespace MahApps.Twitter.Methods
 {
     public class Search : RestMethodsBase<IBaseTwitterClient>
     {
+        private readonly Func<string, IRestClient> _createClients;
         private String baseAddress = "http://search.twitter.com";
         private String basePath = "search.json";
 
         public Search(IBaseTwitterClient context)
+            : this(context, authority => new RestClient { Authority = authority })
+        {
+        }
+
+
+        public Search(IBaseTwitterClient context, Func<string, IRestClient> createClients)
             : base(context)
         {
+            _createClients = createClients;
         }
 
         public void BeginSearch(String q, GenericResponseDelegate callback)
         {
-            var p = new Dictionary<string, string> {{"q", q}};
+            var p = new Dictionary<string, string> { { "q", q } };
 
             BeginRequest(p, WebMethod.Get, (req, res, state) =>
                                                   {
@@ -42,16 +50,12 @@ namespace MahApps.Twitter.Methods
             };
 
             if (parameters != null)
+            {
                 foreach (var p in parameters)
-                {
                     request.AddParameter(p.Key, p.Value);
-                }
+            }
 
-            var client = new RestClient
-                             {
-                                 Authority = baseAddress
-                             };
-
+            var client = _createClients(baseAddress);
             client.BeginRequest(request, callback);
         }
 

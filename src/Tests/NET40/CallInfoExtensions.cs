@@ -11,6 +11,11 @@ namespace MahApps.Twitter.Tests
         public static string MapRequestPathToTestData(this CallInfo c)
         {
             var path = c.Args().First() as string;
+            return GetTestData(path);
+        }
+
+        public static string GetTestData(string path)
+        {
             var url = path.Replace("/", "\\");
             var fileName = @".\Data\" + url;
 

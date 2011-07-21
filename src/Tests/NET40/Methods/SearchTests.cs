@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Hammock;
 using Hammock.Web;
 using MahApps.Twitter.Delegates;
@@ -12,6 +13,7 @@ namespace MahApps.Twitter.Tests.Methods
     [TestFixture]
     public class SearchTests
     {
+        private IRestClient searchClient;
         private IBaseTwitterClient twitterClient;
         private Search search;
 
@@ -19,7 +21,9 @@ namespace MahApps.Twitter.Tests.Methods
         public void SetUp()
         {
             twitterClient = Substitute.For<IBaseTwitterClient>();
-            search = new Search(twitterClient);
+            searchClient = Substitute.For<IRestClient>();
+
+            search = new Search(twitterClient, s => searchClient);
         }
 
         [Test]
@@ -49,7 +53,7 @@ namespace MahApps.Twitter.Tests.Methods
         {
             // arrange
             var wasCalled = false;
-            twitterClient.SetReponseBasedOnRequestPath();
+            searchClient.SetResponse(CallInfoExtensions.GetTestData("search.json"));
 
             // assert
             GenericResponseDelegate endCreate = (a, b, c) =>

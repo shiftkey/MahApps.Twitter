@@ -24,6 +24,21 @@ namespace MahApps.Twitter.Tests
                         });
         }
 
+        public static void SetResponse(this IRestClient restClient, string text)
+        {
+            restClient.When(a => a.BeginRequest(Arg.Any<RestRequest>(), Arg.Any<RestCallback>()))
+                .Do(c =>
+                {
+                    var request = Substitute.For<RestRequest>();
+                    var response = Substitute.For<RestResponse>();
+                    response.Content.Returns(text);
+
+                    var callback = c.Args().Last() as RestCallback;
+                    if (callback != null)
+                        callback(request, response, null);
+                });
+        }
+
         public static void SetReponseBasedOnRequestPath(this IBaseTwitterClient twitterClient)
         {
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string,string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
