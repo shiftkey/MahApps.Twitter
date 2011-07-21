@@ -13,22 +13,6 @@ namespace MahApps.Twitter.Extensions
                 var obj = JsonConvert.DeserializeObject<T>(json);
                 return obj;
             }
-            catch (JsonSerializationException ex)
-            {
-                return new ExceptionResponse
-                           {
-                               Content = json,
-                               ErrorMessage = ex.Message
-                           };
-            }
-            //catch (NullReferenceException ex)
-            //{
-            //    return new ExceptionResponse
-            //               {
-            //                   Content = json,
-            //                   ErrorMessage = ex.Message
-            //               };
-            //}
             catch (Exception ex)
             {
                 return new ExceptionResponse
@@ -36,6 +20,19 @@ namespace MahApps.Twitter.Extensions
                                Content = json,
                                ErrorMessage = ex.Message
                            };
+            }
+        }
+
+        public static T DeserializeObject<T>(this string json)
+        {
+            try
+            {
+                var obj = JsonConvert.DeserializeObject<T>(json);
+                return obj;
+            }
+            catch (Exception)
+            {
+                return default(T);
             }
         }
     }

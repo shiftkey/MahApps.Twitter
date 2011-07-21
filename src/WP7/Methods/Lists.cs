@@ -15,9 +15,25 @@ namespace MahApps.Twitter.Methods
         {
         }
 
-        public void BeginGetSubscriptions(string Username, GenericResponseDelegate callback)
+        public void BeginGetAll(string screenName, GenericResponseDelegate callback)
         {
-            Context.BeginRequest(Username + "/lists/subscriptions.json", null, WebMethod.Get, (req, res, state) =>
+            var parameters = new Dictionary<string, string> { { "screen_name", screenName } };
+
+            Context.BeginRequest("/lists/all.json", parameters, WebMethod.Get, (req, res, state) =>
+            {
+                var obj = res.Content.DeserializeObject<List<TwitterList>>();
+
+                if (callback == null)
+                    return;
+
+                callback(req, res, obj);
+            });
+        }
+
+        [Obsolete("Obsoleted by Twitter. Use GetAll")]
+        public void BeginGetSubscriptions(string userName, GenericResponseDelegate callback)
+        {
+            Context.BeginRequest(userName + "/lists/subscriptions.json", null, WebMethod.Get, (req, res, state) =>
             {
                 ITwitterResponse obj = res.Content.Deserialize<ListResult>();
 
@@ -65,7 +81,7 @@ namespace MahApps.Twitter.Methods
 
             p.Add("include_entities", IncludeEntities.ToString());
 
-            Context.BeginRequest(Username + "/lists/"+Id+"/statuses.json", p, WebMethod.Get, (req, res, state) =>
+            Context.BeginRequest(Username + "/lists/" + Id + "/statuses.json", p, WebMethod.Get, (req, res, state) =>
             {
                 ITwitterResponse obj = res.Content.Deserialize<ResultsWrapper<Tweet>>();
 

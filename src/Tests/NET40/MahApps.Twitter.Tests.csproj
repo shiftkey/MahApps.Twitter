@@ -68,6 +68,7 @@
     <Compile Include="Methods\DirectMessagesTests.cs" />
     <Compile Include="Methods\FavouritesTests.cs" />
     <Compile Include="Methods\FriendshipTests.cs" />
+    <Compile Include="Methods\ListTests.cs" />
     <Compile Include="Methods\SearchTests.cs" />
     <Compile Include="Methods\StatusesTests.cs" />
     <Compile Include="Methods\UsersTests.cs" />
@@ -130,6 +131,10 @@
     </None>
     <None Include="..\data\friendships\show.json">
       <Link>Data\friendships\show.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\data\lists\all.json">
+      <Link>Data\lists\all.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\data\report_spam.json">
