@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hammock.ClientProfile, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c148cfba29ed1a4d, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MahApps.RESTBase.1.0.12\lib\net40\Hammock.ClientProfile.dll</HintPath>
+      <HintPath>..\..\packages\Hammock.1.2.5\lib\net40-client\Hammock.ClientProfile.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.RESTBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MahApps.RESTBase.1.0.12\lib\net40\MahApps.RESTBase.dll</HintPath>

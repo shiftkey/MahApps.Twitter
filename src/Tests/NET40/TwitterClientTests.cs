@@ -61,6 +61,26 @@ namespace MahApps.Twitter.Tests
         }
 
         [Test]
+        public void BeginStream_ForSomeSituation_DoesSomething()
+        {
+            Assert.Inconclusive();
+        }
+
+        [Test]
+        public void BeginStream_WithSimpleCallback_DoesSomething()
+        {
+            // arrange
+            var restClient = Substitute.For<IRestClient>();
+            const string callback = "http://something.com/foo";
+
+            // act
+            var client = new TwitterClient(restClient, "foo", "bar", callback);
+            var result = client.BeginStream((a, b) => { }, null);
+
+            Assert.That(result, Is.Not.Null);
+        }
+
+        [Test]
         public void DelegatedRequest_WithParameters_SetsHeaders()
         {
             Assert.Inconclusive();

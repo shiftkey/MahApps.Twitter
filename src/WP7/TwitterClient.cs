@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 #if !SILVERLIGHT
+using System.Diagnostics;
 using System.Linq;
 using System.Timers;
 #endif
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
@@ -88,9 +90,7 @@ namespace MahApps.Twitter
 
         public WebRequest DelegatedRequest(string url, Format format)
         {
-            var restClient = (RestClient)Client;
-
-            var credentials = ((OAuthCredentials) Credentials);
+            var credentials = ((OAuthCredentials)Credentials);
             credentials.Version = "1.0";
             credentials.CallbackUrl = string.Empty;
 
@@ -101,14 +101,16 @@ namespace MahApps.Twitter
                 Method = WebMethod.Get
             };
 
+            // TODO: cannot intercept BuildEndpoint without having to mock RestClient
+            var restClient = (RestClient)Client;
             var endpoint = request.BuildEndpoint(restClient);
-           
+
             var webReq = (HttpWebRequest)WebRequest.Create(url);
             webReq.Headers = new WebHeaderCollection();
             webReq.Headers["X-Auth-Service-Provider"] = endpoint.ToString();
 
             var x = new OAuthWebQueryInfo();
-            var query = Credentials.GetQueryFor(endpoint.ToString(), request, x, WebMethod.Get);
+            var query = Credentials.GetQueryFor(endpoint.ToString(), request, x, WebMethod.Get, true);
             var info = query.Info as OAuthWebQueryInfo;
             if (info != null)
             {
@@ -169,7 +171,6 @@ namespace MahApps.Twitter
 
             }
         }
-
 #endif
 
 #if !SILVERLIGHT
@@ -264,13 +265,16 @@ namespace MahApps.Twitter
             if (StreamingAsyncResult == null)
                 return;
 
-            if (!StreamingAsyncResult.IsCompleted || !Reconnect)
+            if (!StreamingAsyncResult.IsCompleted)
+                return;
+
+            if (!Reconnect)
                 return;
 
             if (StreamingDisconnectedEvent != null)
                 StreamingDisconnectedEvent();
 
-            Console.WriteLine("stream disconnected, attempting reconnect");
+            Trace.WriteLine("Stream disconnected -- attempting reconnect");
 
             if (DateTime.Now.Subtract(_lastConnectAttempt) <= TimeSpan.FromMinutes(2))
                 return;
@@ -298,7 +302,7 @@ namespace MahApps.Twitter
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error streaming: " + ex.Message + " with content '" + response.Content.Trim() + "' END");
+                Trace.WriteLine("Error streaming: " + ex.Message + " with content '" + response.Content.Trim() + "' END");
             }
         }
     }

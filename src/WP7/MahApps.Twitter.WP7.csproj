@@ -41,11 +41,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hammock.WindowsPhone, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MahApps.RESTBase.1.0.12\lib\sl3-wp\Hammock.WindowsPhone.dll</HintPath>
+    <Reference Include="Hammock.WindowsPhone">
+      <HintPath>..\..\packages\Hammock.1.2.5\lib\sl4-wp\Hammock.WindowsPhone.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib.WindowsPhone, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MahApps.RESTBase.1.0.12\lib\sl3-wp\ICSharpCode.SharpZipLib.WindowsPhone.dll</HintPath>
+    <Reference Include="ICSharpCode.SharpZipLib.WindowsPhone">
+      <HintPath>..\..\packages\Hammock.1.2.5\lib\sl4-wp\ICSharpCode.SharpZipLib.WindowsPhone.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.RESTBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MahApps.RESTBase.1.0.12\lib\sl3-wp\MahApps.RESTBase.dll</HintPath>
@@ -81,6 +81,7 @@
     <Compile Include="Models\Relationship.cs" />
     <Compile Include="Models\RelationShipEntity.cs" />
     <Compile Include="Models\ResultsWrapper.cs" />
+    <Compile Include="Models\SavedSearch.cs" />
     <Compile Include="Models\SearchTweets.cs" />
     <Compile Include="TwitterClient.cs" />
     <Compile Include="Format.cs" />
