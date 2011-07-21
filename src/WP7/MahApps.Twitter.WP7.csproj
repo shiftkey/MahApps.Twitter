@@ -84,6 +84,7 @@
     <Compile Include="Models\SearchTweets.cs" />
     <Compile Include="TwitterClient.cs" />
     <Compile Include="Format.cs" />
+    <Compile Include="StatusProcessor.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Models\DirectMessage.cs" />
     <Compile Include="Models\Geo.cs" />

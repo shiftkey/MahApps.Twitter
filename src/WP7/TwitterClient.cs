@@ -134,21 +134,21 @@ namespace MahApps.Twitter
 
             Callback = callback;
             ((OAuthCredentials)Credentials).CallbackUrl = null;
-            var streamClient = new RestClient()
-            {
-                Authority = "http://sitestream.twitter.com/",
-                VersionPath = "2b",
-                Credentials = Credentials,
-            };
+            var streamClient = new RestClient
+                                   {
+                                       Authority = "http://sitestream.twitter.com/",
+                                       VersionPath = "2b",
+                                       Credentials = Credentials,
+                                   };
 
-            var req = new RestRequest()
-            {
-                Path = "site.json?follow=" + userId,
-                StreamOptions = new StreamOptions
-                                    {
-                    ResultsPerCallback = 1,
-                },
-            };
+            var req = new RestRequest
+                          {
+                              Path = "site.json?follow=" + userId,
+                              StreamOptions = new StreamOptions
+                                                  {
+                                                      ResultsPerCallback = 1,
+                                                  },
+                          };
             return streamClient.BeginRequest(req, SiteStreamCallback);
         }
 
@@ -156,7 +156,7 @@ namespace MahApps.Twitter
         {
             try
             {
-                ITwitterResponse deserialisedResponse = JsonConvert.DeserializeObject<SiteStreamsWrapper>(response.Content.Trim());
+                ITwitterResponse deserialisedResponse = StatusProcessor.Process<SiteStreamsWrapper>(response.Content);
                 if (Callback != null)
                     Callback(request, response, deserialisedResponse);
                 else if (CallbackNoRequest != null)
@@ -187,163 +187,112 @@ namespace MahApps.Twitter
         [Obsolete("To be deprecated")]
         public TweetCallback Callback { get; set; }
 
-        public Action<RestResponse,ITwitterResponse> CallbackNoRequest { get; set; }
+        public Action<RestResponse, ITwitterResponse> CallbackNoRequest { get; set; }
         public IAsyncResult StreamingAsyncResult { get; set; }
 
         public IAsyncResult BeginStream(TweetCallback callback, IEnumerable<string> tracks)
         {
-            if (StreamingAsyncResult == null || StreamingAsyncResult.IsCompleted)
-            {
-                _lastConnectAttempt = DateTime.Now;
-                Callback = callback;
-                ((OAuthCredentials)Credentials).CallbackUrl = null;
-                var streamClient = new RestClient()
-                {
-                    Authority = "https://userstream.twitter.com",
-                    VersionPath = "2",
-                    Credentials = Credentials,
-#if SILVERLIGHT
-                    HasElevatedPermissions = true
-#endif
-                };
+            Callback = callback;
 
-                var req = new RestRequest()
-                {
-                    Path = "user.json",
-                    StreamOptions = new StreamOptions()
-                    {
-                        ResultsPerCallback = 1,
-                    },
-                };
-
-                if (tracks != null)
-                    req.AddParameter("track", string.Join(",", tracks.ToArray()));
-
-#if !SILVERLIGHT
-                if (_timer == null)
-                {
-                    _timer = new System.Timers.Timer(20 * 1000);
-                    _timer.Elapsed += new ElapsedEventHandler(TimerElapsed);
-                    _timer.Start();
-                }
-
-                StreamingAsyncResult = streamClient.BeginRequest(req, StreamCallback);
-#else
-                streamClient.BeginRequest(req, StreamCallback);
-#endif
-            }
-            return StreamingAsyncResult;
+            return BeginStreamInternal(tracks);
         }
 
-
-        public IAsyncResult BeginStream(Action<RestResponse,ITwitterResponse> callback, IEnumerable<string> tracks)
+        public IAsyncResult BeginStream(Action<RestResponse, ITwitterResponse> callback, IEnumerable<string> tracks)
         {
-            if (StreamingAsyncResult == null || StreamingAsyncResult.IsCompleted)
-            {
-                _lastConnectAttempt = DateTime.Now;
-                CallbackNoRequest = callback;
-                ((OAuthCredentials)Credentials).CallbackUrl = null;
-                var streamClient = new RestClient
-                                       {
-                    Authority = "https://userstream.twitter.com",
-                    VersionPath = "2",
-                    Credentials = Credentials,
-#if SILVERLIGHT
-                    HasElevatedPermissions = true
-#endif
-                };
+            CallbackNoRequest = callback;
 
-                var req = new RestRequest()
-                {
-                    Path = "user.json",
-                    StreamOptions = new StreamOptions()
-                    {
-                        ResultsPerCallback = 1,
-                    },
-                };
-
-                if (tracks != null)
-                    req.AddParameter("track", string.Join(",", tracks.ToArray()));
-
-#if !SILVERLIGHT
-                if (_timer == null)
-                {
-                    _timer = new System.Timers.Timer(20 * 1000);
-                    _timer.Elapsed += TimerElapsed;
-                    _timer.Start();
-                }
-
-                StreamingAsyncResult = streamClient.BeginRequest(req, StreamCallback);
-#else
-                streamClient.BeginRequest(req, StreamCallback);
-#endif
-            }
-            return StreamingAsyncResult;
+            return BeginStreamInternal(tracks);
         }
 
-
-#if !SILVERLIGHT
-        void TimerElapsed(object sender, ElapsedEventArgs e)
+        private IAsyncResult BeginStreamInternal(IEnumerable<string> tracks)
         {
             if (StreamingAsyncResult != null)
-                if (StreamingAsyncResult.IsCompleted == true && Reconnect == true)
-                {
-                    if (StreamingDisconnectedEvent != null)
-                        StreamingDisconnectedEvent();
-                    Console.WriteLine("stream disconnected, attempting reconnect");
+            {
+                if (!StreamingAsyncResult.IsCompleted)
+                    return StreamingAsyncResult;
+            }
 
-                    if (DateTime.Now.Subtract(_lastConnectAttempt) > TimeSpan.FromMinutes(2))
-                    {
-                        _lastConnectAttempt = DateTime.Now;
-                        BeginStream(Callback, null);
-                        if (StreamingReconnectAttemptEvent != null)
-                            StreamingReconnectAttemptEvent();
-                    }
-                }
+            _lastConnectAttempt = DateTime.Now;
+            ((OAuthCredentials)Credentials).CallbackUrl = null;
+            var streamClient = new RestClient
+                                   {
+                                       Authority = "https://userstream.twitter.com",
+                                       VersionPath = "2",
+                                       Credentials = Credentials,
+#if SILVERLIGHT
+                                       HasElevatedPermissions = true
+#endif
+                                   };
+
+            var req = new RestRequest
+                          {
+                              Path = "user.json",
+                              StreamOptions = new StreamOptions
+                                                  {
+                                                      ResultsPerCallback = 1,
+                                                  },
+                          };
+
+            if (tracks != null)
+                req.AddParameter("track", string.Join(",", tracks.ToArray()));
+
+#if !SILVERLIGHT
+            if (_timer == null)
+            {
+                _timer = new System.Timers.Timer(20 * 1000);
+                _timer.Elapsed += TimerElapsed;
+                _timer.Start();
+            }
+
+            StreamingAsyncResult = streamClient.BeginRequest(req, StreamCallback);
+#else
+            streamClient.BeginRequest(req, StreamCallback);
+#endif
+            return StreamingAsyncResult;
+        }
+
+#if !SILVERLIGHT
+        private void TimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            if (StreamingAsyncResult == null) 
+                return;
+
+            if (!StreamingAsyncResult.IsCompleted || !Reconnect) 
+                return;
+
+            if (StreamingDisconnectedEvent != null)
+                StreamingDisconnectedEvent();
+
+            Console.WriteLine("stream disconnected, attempting reconnect");
+
+            if (DateTime.Now.Subtract(_lastConnectAttempt) <= TimeSpan.FromMinutes(2)) 
+                return;
+
+            _lastConnectAttempt = DateTime.Now;
+            BeginStream(Callback, null);
+
+            if (StreamingReconnectAttemptEvent != null)
+                StreamingReconnectAttemptEvent();
         }
 #endif
 
-        void StreamCallback(RestRequest request, RestResponse response, object userState)
+        private void StreamCallback(RestRequest request, RestResponse response, object userState)
         {
             try
             {
-                var saneText = response.Content.Trim();
-                ITwitterResponse deserialisedResponse = null;
+                var deserialisedResponse = StatusProcessor.Process(response.Content);
 
-                if (saneText.StartsWith("{\"direct_message\""))
-                {
-                    var obj = JsonConvert.DeserializeObject<DirectMessageContainer>(saneText);
-                    deserialisedResponse = obj.DirectMessage;
-                }
-                else if (saneText.StartsWith("{\"target\":"))
-                {
-                    deserialisedResponse = JsonConvert.DeserializeObject<StreamEvent>(saneText);
-                }
-                else if (saneText.StartsWith("{\"delete\":"))
-                {
-                    /*{"delete":{"status":{"user_id_str":"44504925","id_str":"66791879353708544","id":66791879353708544,"user_id":44504925}}}*/
-                    var o = JObject.Parse(saneText);
-                    var id = (long)o["delete"]["status"]["id"];
-                    var userid = (long)o["delete"]["status"]["user_id"];
+                if (deserialisedResponse == null)
+                    return;
 
-                    deserialisedResponse = new Delete { Id = id, UserId = userid };
-                }
-                else if (saneText.Contains("\"retweeted_status\":{"))
-                {
-                    deserialisedResponse = JsonConvert.DeserializeObject<Tweet>(saneText);
-                }
-                else
-                {
-                    deserialisedResponse = JsonConvert.DeserializeObject<Tweet>(saneText);
-                }
-
-                if (deserialisedResponse != null)
+                if (Callback != null)
                     Callback(request, response, deserialisedResponse);
+                else if (CallbackNoRequest != null)
+                    CallbackNoRequest(response, deserialisedResponse);
             }
-
             catch (Exception ex)
             {
-                Console.WriteLine("Error streaming:" + ex.Message + response.Content.Trim() + "END ERROR");
+                Console.WriteLine("Error streaming: " + ex.Message + " with content '" + response.Content.Trim() + "' END");
             }
         }
     }

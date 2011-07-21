@@ -141,6 +141,9 @@
     <Compile Include="..\WP7\Models\User.cs">
       <Link>Models\User.cs</Link>
     </Compile>
+    <Compile Include="..\WP7\StatusProcessor.cs">
+      <Link>StatusProcessor.cs</Link>
+    </Compile>
     <Compile Include="..\WP7\TwitterClient.cs">
       <Link>TwitterClient.cs</Link>
     </Compile>
