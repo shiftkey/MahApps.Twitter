@@ -8,11 +8,26 @@ using MahApps.Twitter.Models;
 
 namespace MahApps.Twitter.Methods
 {
+    // TODO: use /lists.json to query for entire set of lists associated with a user?
+
     public class List : RestMethodsBase<IBaseTwitterClient>
     {
         public List(IBaseTwitterClient context)
             : base(context)
         {
+        }
+
+        public void BeginGetAll(GenericResponseDelegate callback)
+        {
+            Context.BeginRequest("/lists/all.json", null, WebMethod.Get, (req, res, state) =>
+            {
+                var obj = res.Content.DeserializeObject<List<TwitterList>>();
+
+                if (callback == null)
+                    return;
+
+                callback(req, res, obj);
+            });
         }
 
         public void BeginGetAll(string screenName, GenericResponseDelegate callback)
@@ -30,7 +45,37 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        [Obsolete("Obsoleted by Twitter. Use GetAll")]
+        public void BeginGetList(int listId, GenericResponseDelegate callback)
+        {
+            var dictionary = new Dictionary<string, string> { { "list_id", listId.ToString() } };
+
+            BeginGetList(dictionary, callback);
+        }
+
+        private void BeginGetList(IDictionary<string, string> parameters, GenericResponseDelegate callback)
+        {
+            Context.BeginRequest("/lists/statuses.json", parameters, WebMethod.Get, (req, res, state) =>
+            {
+                var obj = res.Content.DeserializeObject<List<Tweet>>();
+
+                if (callback == null)
+                    return;
+
+                callback(req, res, obj);
+            });
+        }
+
+        public void BeginGetList(string slug, string ownerScreenName, GenericResponseDelegate callback)
+        {
+
+        }
+
+        public void BeginGetList(string slug, long ownerId, GenericResponseDelegate callback)
+        {
+
+        }
+
+        [Obsolete("Obsoleted by Twitter. Use BeginGetAll")]
         public void BeginGetSubscriptions(string userName, GenericResponseDelegate callback)
         {
             Context.BeginRequest(userName + "/lists/subscriptions.json", null, WebMethod.Get, (req, res, state) =>
@@ -48,6 +93,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
+        [Obsolete("Deprecated by Twitter. Use BeginGetAll")]
         public void BeginGetUserLists(string Username, GenericResponseDelegate callback)
         {
             Context.BeginRequest(Username + "/lists.json", null, WebMethod.Get, (req, res, state) =>
@@ -64,6 +110,7 @@ namespace MahApps.Twitter.Methods
             });
         }
 
+        [Obsolete("Deprecated by Twitter. Use BeginGetList")]
         public void BeginGetList(string Username, string Id, long? SinceId, long? MaxId, long? Count, int? Page, bool IncludeEntities, GenericResponseDelegate callback)
         {
             Dictionary<String, String> p = new Dictionary<string, string>();

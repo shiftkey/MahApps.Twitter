@@ -133,8 +133,15 @@
       <Link>Data\friendships\show.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\data\lists.json">
+      <Link>lists.json</Link>
+    </None>
     <None Include="..\data\lists\all.json">
       <Link>Data\lists\all.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\data\lists\statuses.json">
+      <Link>Data\lists\statuses.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\data\report_spam.json">

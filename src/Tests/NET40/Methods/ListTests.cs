@@ -43,6 +43,15 @@ namespace MahApps.Twitter.Tests.Methods
             Assert.That(wasCalled);
         }
 
+        [Test]
+        public void BeginGetAll_WithNullCallback_DoesNotThrowException()
+        {
+            // arrange
+            twitterClient.SetReponseBasedOnRequestPath();
+            
+            // act
+            lists.BeginGetAll("myself", null);
+        }
 
         [Test]
         public void BeginGetAll_ForSomeUser_SetsParameter()
@@ -52,6 +61,78 @@ namespace MahApps.Twitter.Tests.Methods
                       .Do(c => c.AssertParameter("screen_name", "myself"));
             // act
             lists.BeginGetAll("myself", (a,b,c)=> { });
+        }
+
+        [Test]
+        public void BeginGetAll_WithNoUser_ReturnsListOfSubscriptions()
+        {
+            // arrange
+            twitterClient.SetReponseBasedOnRequestPath();
+            var wasCalled = false;
+            GenericResponseDelegate callback = (a, b, c) =>
+            {
+                wasCalled = true;
+                var results = c as IEnumerable<TwitterList>;
+                Assert.That(results, Is.Not.Null);
+                Assert.That(results, Is.Not.Empty);
+            };
+
+            // act
+            lists.BeginGetAll(callback);
+
+            Assert.That(wasCalled);
+        }
+
+        [Test]
+        public void BeginGetAll_WithNoUser_DoesNotThrowException()
+        {
+            // arrange
+            twitterClient.SetReponseBasedOnRequestPath();
+
+            // act
+            lists.BeginGetAll(null);
+        }
+
+        [Test]
+        public void BeginGetAll_WithNoUser_DoesNotSetsParameter()
+        {
+            // arrange
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+                      .Do(c => c.AssertNotSet("screen_name"));
+            // act
+            lists.BeginGetAll((a, b, c) => { });
+        }
+
+        [Test]
+        public void BeginGetList_UsingListId_ReturnsListOfUpdates()
+        {
+            // arrange
+            twitterClient.SetReponseBasedOnRequestPath();
+            var wasCalled = false;
+            GenericResponseDelegate callback = (a, b, c) =>
+            {
+                wasCalled = true;
+                var results = c as IEnumerable<Tweet>;
+                Assert.That(results, Is.Not.Null);
+                Assert.That(results, Is.Not.Empty);
+            };
+
+            // act
+            lists.BeginGetList(123, callback);
+
+            Assert.That(wasCalled);
+        }
+
+
+
+        [Test]
+        public void BeginGetList_UsingListId_DoesNotSetsParameter()
+        {
+            // arrange
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+                      .Do(c => c.AssertParameter("list_id", 123));
+            // act
+            lists.BeginGetList(123, (a, b, c) => { });
         }
     }
 }

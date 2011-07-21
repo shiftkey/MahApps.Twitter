@@ -21,6 +21,15 @@ namespace MahApps.Twitter.Tests
 
             return File.ReadAllText(fileName);
         }
+        public static void AssertNotSet(this CallInfo c, string key)
+        {
+            var parameters = c.Args()[1] as IDictionary<string, string>;
+            if (parameters == null)
+                return;
+
+            if (parameters.ContainsKey(key))
+                Assert.Fail("Expected key '{0}' but was not found", key);
+        }
 
         public static void AssertParameter(this CallInfo c, string key, object value)
         {
