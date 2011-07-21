@@ -52,6 +52,21 @@ namespace MahApps.Twitter.Methods
             BeginGetList(dictionary, callback);
         }
 
+       
+        public void BeginGetList(string slug, string ownerScreenName, GenericResponseDelegate callback)
+        {
+            var dictionary = new Dictionary<string, string> { { "slug", slug }, { "owner_screen_name", ownerScreenName } };
+
+            BeginGetList(dictionary, callback);
+        }
+
+        public void BeginGetList(string slug, long ownerId, GenericResponseDelegate callback)
+        {
+            var dictionary = new Dictionary<string, string> { { "slug", slug }, { "owner_id", ownerId.ToString() } };
+
+            BeginGetList(dictionary, callback);
+        }
+
         private void BeginGetList(IDictionary<string, string> parameters, GenericResponseDelegate callback)
         {
             Context.BeginRequest("/lists/statuses.json", parameters, WebMethod.Get, (req, res, state) =>
@@ -65,15 +80,6 @@ namespace MahApps.Twitter.Methods
             });
         }
 
-        public void BeginGetList(string slug, string ownerScreenName, GenericResponseDelegate callback)
-        {
-
-        }
-
-        public void BeginGetList(string slug, long ownerId, GenericResponseDelegate callback)
-        {
-
-        }
 
         [Obsolete("Obsoleted by Twitter. Use BeginGetAll")]
         public void BeginGetSubscriptions(string userName, GenericResponseDelegate callback)

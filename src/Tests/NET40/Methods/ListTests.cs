@@ -123,8 +123,6 @@ namespace MahApps.Twitter.Tests.Methods
             Assert.That(wasCalled);
         }
 
-
-
         [Test]
         public void BeginGetList_UsingListId_DoesNotSetsParameter()
         {
@@ -134,5 +132,38 @@ namespace MahApps.Twitter.Tests.Methods
             // act
             lists.BeginGetList(123, (a, b, c) => { });
         }
+
+        [Test]
+        public void BeginGetList_UsingScreenName_ReturnsListOfUpdates()
+        {
+            // arrange
+            twitterClient.SetReponseBasedOnRequestPath();
+            var wasCalled = false;
+            GenericResponseDelegate callback = (a, b, c) =>
+            {
+                wasCalled = true;
+                var results = c as IEnumerable<Tweet>;
+                Assert.That(results, Is.Not.Null);
+                Assert.That(results, Is.Not.Empty);
+            };
+
+            // act
+            lists.BeginGetList("list", "someone", callback);
+
+            Assert.That(wasCalled);
+        }
+
+        [Test]
+        public void BeginGetList_UsingScreenName_DoesSetParameters()
+        {
+            // arrange
+            twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
+                .Do(c =>
+                        {
+                            c.AssertParameter("slug", "myslug");
+                            c.AssertParameter("owner_screen_name", "owner");
+                        });
+            // act
+            lists.BeginGetList("myslug", "owner", (a, b, c) => { });}
     }
 }
