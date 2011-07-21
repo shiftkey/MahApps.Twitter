@@ -112,6 +112,14 @@
       <Link>Data\favorites.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="..\data\favorites\create\1234.json">
+      <Link>Data\favorites\create\1234.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\data\favorites\destroy\1234.json">
+      <Link>Data\favorites\destroy\1234.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\data\friendships\create.json">
       <Link>Data\friendships\create.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

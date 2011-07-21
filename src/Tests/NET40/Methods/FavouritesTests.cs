@@ -13,16 +13,24 @@ namespace MahApps.Twitter.Tests.Methods
     [TestFixture]
     public class FavouritesTests
     {
+        private IBaseTwitterClient twitterClient;
+        private Favourites favourites;
+
+        [SetUp]
+        public void SetUp()
+        {
+            twitterClient = Substitute.For<IBaseTwitterClient>();
+            favourites = new Favourites(twitterClient);
+        }
+
         [Test]
         public void BeginGetFavourites_ForAllScenarios_ReturnsStatus()
         {
             // arrange
             var wasCalled = false;
-            var twitterClient = Substitute.For<IBaseTwitterClient>();
             twitterClient.SetReponseBasedOnRequestPath();
-            var directMessages = new Favourites(twitterClient);
 
-            GenericResponseDelegate endCreate = (a, b, c) =>
+            GenericResponseDelegate callback = (a, b, c) =>
             {
                 wasCalled = true;
                 var results = c as IEnumerable<Tweet>;
@@ -31,7 +39,7 @@ namespace MahApps.Twitter.Tests.Methods
             };
 
             // act
-            directMessages.BeginGetFavourites(endCreate);
+            favourites.BeginGetFavourites(callback);
 
             Assert.That(wasCalled, Errors.CallbackDidNotFire);
         }
@@ -41,7 +49,6 @@ namespace MahApps.Twitter.Tests.Methods
         {
             // arrange
             var wasReceived = false;
-            var twitterClient = Substitute.For<IBaseTwitterClient>();
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
                                  {
@@ -49,11 +56,31 @@ namespace MahApps.Twitter.Tests.Methods
                                      var url = c.Args().First().ToString();
                                      Assert.That(url.EndsWith("1234.json"));
                                  });
-            var statuses = new Favourites(twitterClient);
+            
+            // act
+            favourites.BeginCreate("1234", (a, b, c) => { });
+
+            Assert.That(wasReceived);
+        }
+
+        [Test]
+        public void BeginCreate_ForAllScenarios_ReturnsAValidTweet()
+        {
+            // arrange
+            var wasCalled = false;
+            twitterClient.SetReponseBasedOnRequestPath();
+
+            GenericResponseDelegate callback = (a, b, c) =>
+            {
+                wasCalled = true;
+                var results = c as Tweet;
+                Assert.That(results, Is.Not.Null);
+            };
 
             // act
-            statuses.BeginCreate("1234", (a, b, c) => { });
-            Assert.That(wasReceived);
+            favourites.BeginCreate("1234", callback);
+
+            Assert.That(wasCalled);
         }
 
         [Test]
@@ -61,7 +88,6 @@ namespace MahApps.Twitter.Tests.Methods
         {
             // arrange
             var wasReceived = false;
-            var twitterClient = Substitute.For<IBaseTwitterClient>();
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                          .Do(c =>
                          {
@@ -69,11 +95,31 @@ namespace MahApps.Twitter.Tests.Methods
                              var url = c.Args().First().ToString();
                              Assert.That(url.EndsWith("1234.json"));
                          });
-            var statuses = new Favourites(twitterClient);
+            
+            // act
+            favourites.BeginDestroy("1234", (a, b, c) => { });
+
+            Assert.That(wasReceived);
+        }
+
+        [Test]
+        public void BeginDestroy_ForAllScenarios_ReturnsAValidTweet()
+        {
+            // arrange
+            var wasCalled = false;
+            twitterClient.SetReponseBasedOnRequestPath();
+
+            GenericResponseDelegate callback = (a, b, c) =>
+            {
+                wasCalled = true;
+                var results = c as Tweet;
+                Assert.That(results, Is.Not.Null);
+            };
 
             // act
-            statuses.BeginDestroy("1234", (a, b, c) => { });
-            Assert.That(wasReceived);
+            favourites.BeginDestroy("1234", callback);
+
+            Assert.That(wasCalled);
         }
     }
 }

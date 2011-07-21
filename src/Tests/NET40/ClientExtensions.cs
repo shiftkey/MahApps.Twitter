@@ -54,7 +54,7 @@ namespace MahApps.Twitter.Tests
                         });
         }
 
-        public static void SetFileReponseBasedOnRequestPath(this IBaseTwitterClient twitterClient)
+        public static void SetResponseWitHFileBasedOnRequestPath(this IBaseTwitterClient twitterClient)
         {
             twitterClient.When(a => a.BeginRequest(Arg.Any<string>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<IDictionary<string,File>>(), Arg.Any<WebMethod>(), Arg.Any<RestCallback>()))
                 .Do(c =>

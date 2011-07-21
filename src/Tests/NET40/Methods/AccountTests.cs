@@ -98,7 +98,7 @@ namespace MahApps.Twitter.Tests.Methods
         public void BeginUpdateProfileImage_WithValidResponseFromClient_ContainsUser()
         {
             var twitterClient = Substitute.For<IBaseTwitterClient>();
-            twitterClient.SetFileReponseBasedOnRequestPath();
+            twitterClient.SetResponseWitHFileBasedOnRequestPath();
             var account = new Account(twitterClient);
 
             // assert
@@ -120,7 +120,7 @@ namespace MahApps.Twitter.Tests.Methods
         {
             // arrange
             var twitterClient = Substitute.For<IBaseTwitterClient>();
-            twitterClient.SetFileReponseBasedOnRequestPath();
+            twitterClient.SetResponseWitHFileBasedOnRequestPath();
           
             var account = new Account(twitterClient);
             var f = new FileInfo("akihabara.png");
