@@ -33,10 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hammock.ClientProfile, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c148cfba29ed1a4d, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Hammock.1.2.5\lib\net40-client\Hammock.ClientProfile.dll</HintPath>
+      <HintPath>..\..\packages\MahApps.RESTBase.1.0.14\lib\net40\Hammock.ClientProfile.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.RESTBase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MahApps.RESTBase.1.0.12\lib\net40\MahApps.RESTBase.dll</HintPath>
+      <HintPath>..\..\packages\MahApps.RESTBase.1.0.14\lib\net40\MahApps.RESTBase.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
